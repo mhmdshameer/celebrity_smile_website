@@ -15,6 +15,7 @@ import {
 import offer1 from "@/assets/offer-1.jpg";
 import offer2 from "@/assets/offer-2.jpg";
 import offer3 from "@/assets/offer-3.jpg";
+import clinicHero from "@/assets/clinic-hero.jpg";
 
 // Demo doctors data
 const demoDoctors = [
@@ -56,21 +57,19 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      {/* Hero Section with Video Background */}
+      {/* Hero Section with Image Background */}
       <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-dentist-treating-a-patient-in-a-clinic-4804-large.mp4" type="video/mp4" />
-        </video>
+        {/* Image Background */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${clinicHero})` }}
+        />
         
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Brand Color Overlay */}
+        <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        
+        {/* Dark Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/30" />
         
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4">
