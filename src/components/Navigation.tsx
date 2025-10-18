@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const menuItems = [
     { key: "home", path: "/" },
@@ -31,13 +33,22 @@ const Navigation = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1">
-            {menuItems.map((item) => (
-              <Link key={item.key} to={item.path}>
-                <Button variant="ghost" className="text-sm">
-                  {t(item.key)}
-                </Button>
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link key={item.key} to={item.path}>
+                  <Button 
+                    variant="ghost" 
+                    className={cn(
+                      "text-sm",
+                      isActive && "bg-primary/10 text-primary font-semibold"
+                    )}
+                  >
+                    {t(item.key)}
+                  </Button>
+                </Link>
+              );
+            })}
           </div>
 
           {/* Language Switcher */}
@@ -65,18 +76,27 @@ const Navigation = () => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2">
-            {menuItems.map((item) => (
-              <Link
-                key={item.key}
-                to={item.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block"
-              >
-                <Button variant="ghost" className="w-full justify-start">
-                  {t(item.key)}
-                </Button>
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.key}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block"
+                >
+                  <Button 
+                    variant="ghost" 
+                    className={cn(
+                      "w-full justify-start",
+                      isActive && "bg-primary/10 text-primary font-semibold"
+                    )}
+                  >
+                    {t(item.key)}
+                  </Button>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>
