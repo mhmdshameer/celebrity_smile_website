@@ -49,6 +49,24 @@ const translations = {
     loading: "Loading...",
     submit: "Submit",
     cancel: "Cancel",
+    
+    // Statistics
+    yearsExperience: "Years of Experience",
+    happyPatients: "Happy Patients",
+    expertDoctors: "Expert Doctors",
+    successRate: "Success Rate",
+    
+    // Testimonials
+    testimonials: "What Our Patients Say",
+    
+    // Technology
+    ourTechnology: "State-of-the-Art Technology",
+    techDesc: "We invest in the latest dental technology to provide you with the best possible care",
+    
+    // CTA
+    readyToSmile: "Ready to Transform Your Smile?",
+    ctaDescription: "Schedule your appointment today and experience world-class dental care",
+    contactUs: "Contact Us Now",
   },
   ar: {
     // Navigation
@@ -90,6 +108,24 @@ const translations = {
     loading: "جاري التحميل...",
     submit: "إرسال",
     cancel: "إلغاء",
+    
+    // Statistics
+    yearsExperience: "سنوات من الخبرة",
+    happyPatients: "مريض سعيد",
+    expertDoctors: "طبيب خبير",
+    successRate: "معدل النجاح",
+    
+    // Testimonials
+    testimonials: "ماذا يقول مرضانا",
+    
+    // Technology
+    ourTechnology: "أحدث التقنيات",
+    techDesc: "نستثمر في أحدث تقنيات طب الأسنان لنقدم لك أفضل رعاية ممكنة",
+    
+    // CTA
+    readyToSmile: "هل أنت مستعد لتحويل ابتسامتك؟",
+    ctaDescription: "احجز موعدك اليوم واختبر رعاية أسنان عالمية المستوى",
+    contactUs: "اتصل بنا الآن",
   },
 };
 

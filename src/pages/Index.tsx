@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone, ArrowRight } from "lucide-react";
+import { Phone, ArrowRight, Award, Users, TrendingUp, Star } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
@@ -271,8 +271,44 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Statistics Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="h-8 w-8 text-primary" />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">15+</div>
+              <p className="text-muted-foreground">{t("yearsExperience")}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-primary" />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">50,000+</div>
+              <p className="text-muted-foreground">{t("happyPatients")}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="h-8 w-8 text-primary" />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">25+</div>
+              <p className="text-muted-foreground">{t("expertDoctors")}</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <TrendingUp className="h-8 w-8 text-primary" />
+              </div>
+              <div className="text-4xl font-bold text-primary mb-2">99%</div>
+              <p className="text-muted-foreground">{t("successRate")}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
-      <section className="py-20 bg-muted/50">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -309,6 +345,131 @@ const Index = () => {
                 </p>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-muted/50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12">{t("testimonials")}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  "Exceptional service! The team at Celebrity Smile Clinic made me feel comfortable throughout my treatment. My smile has never looked better!"
+                </p>
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <span className="text-lg font-semibold text-primary">SM</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Sarah Mitchell</p>
+                    <p className="text-sm text-muted-foreground">Verified Patient</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  "Professional, caring, and skilled. I had dental implants done and the results exceeded my expectations. Highly recommend!"
+                </p>
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <span className="text-lg font-semibold text-primary">JA</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">James Anderson</p>
+                    <p className="text-sm text-muted-foreground">Verified Patient</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  "Best dental experience I've ever had. The modern facilities and friendly staff make every visit pleasant. Thank you!"
+                </p>
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-3">
+                    <span className="text-lg font-semibold text-primary">LW</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Lisa Wang</p>
+                    <p className="text-sm text-muted-foreground">Verified Patient</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">{t("ourTechnology")}</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("techDesc")}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <Card className="text-center p-6">
+              <div className="text-4xl mb-4">🔬</div>
+              <h3 className="text-lg font-semibold mb-2">3D Imaging</h3>
+              <p className="text-sm text-muted-foreground">Advanced diagnostic precision</p>
+            </Card>
+            <Card className="text-center p-6">
+              <div className="text-4xl mb-4">💉</div>
+              <h3 className="text-lg font-semibold mb-2">Laser Dentistry</h3>
+              <p className="text-sm text-muted-foreground">Minimally invasive treatments</p>
+            </Card>
+            <Card className="text-center p-6">
+              <div className="text-4xl mb-4">🖥️</div>
+              <h3 className="text-lg font-semibold mb-2">Digital Smile Design</h3>
+              <p className="text-sm text-muted-foreground">Preview your new smile</p>
+            </Card>
+            <Card className="text-center p-6">
+              <div className="text-4xl mb-4">🦾</div>
+              <h3 className="text-lg font-semibold mb-2">CAD/CAM Technology</h3>
+              <p className="text-sm text-muted-foreground">Same-day restorations</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 bg-gradient-to-r from-primary/10 to-primary/5">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl font-bold mb-4">{t("readyToSmile")}</h2>
+            <p className="text-lg text-muted-foreground mb-8">{t("ctaDescription")}</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" onClick={handleWhatsAppBooking}>
+                <Phone className="mr-2 h-5 w-5" />
+                {t("bookAppointment")}
+              </Button>
+              <Link to="/contact">
+                <Button size="lg" variant="outline">
+                  {t("contactUs")}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
