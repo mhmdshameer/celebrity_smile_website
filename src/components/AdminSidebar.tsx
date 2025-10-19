@@ -23,21 +23,17 @@ import {
 } from "@/components/ui/sidebar";
 
 const adminItems = [
-  { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
-  { title: "Doctors", url: "/admin/doctors", icon: Users },
-  { title: "Services", url: "/admin/services", icon: Briefcase },
-  { title: "Departments", url: "/admin/departments", icon: Building2 },
-  { title: "Offers", url: "/admin/offers", icon: Tag },
-  { title: "Price List", url: "/admin/price-list", icon: DollarSign },
-  { title: "Blog", url: "/admin/blog", icon: FileText },
+  { title: "Dashboard", url: "/admin", icon: LayoutDashboard, end: true },
+  { title: "Doctors", url: "/admin/doctors", icon: Users, end: false },
+  { title: "Services", url: "/admin/services", icon: Briefcase, end: false },
+  { title: "Departments", url: "/admin/departments", icon: Building2, end: false },
+  { title: "Offers", url: "/admin/offers", icon: Tag, end: false },
+  { title: "Price List", url: "/admin/price-list", icon: DollarSign, end: false },
+  { title: "Blog", url: "/admin/blog", icon: FileText, end: false },
 ];
 
 export function AdminSidebar() {
   const { open } = useSidebar();
-  const location = useLocation();
-
-  const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    isActive ? "bg-primary/10 text-primary font-semibold" : "hover:bg-muted/50";
 
   return (
     <Sidebar collapsible="icon">
@@ -52,19 +48,24 @@ export function AdminSidebar() {
           <SidebarGroupLabel>Management</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {adminItems.map((item) => {
-                const isActive = location.pathname === item.url;
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink to={item.url} end className={getNavCls}>
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
+              {adminItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink 
+                      to={item.url} 
+                      end={item.end}
+                      className={({ isActive }) =>
+                        isActive 
+                          ? "bg-primary/10 text-primary font-semibold" 
+                          : "hover:bg-muted/50"
+                      }
+                    >
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
