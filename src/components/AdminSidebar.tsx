@@ -34,6 +34,7 @@ const adminItems = [
 
 export function AdminSidebar() {
   const { open } = useSidebar();
+  const location = useLocation();
 
   return (
     <Sidebar collapsible="icon">
@@ -48,24 +49,26 @@ export function AdminSidebar() {
           <SidebarGroupLabel>Management</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {adminItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink 
-                      to={item.url} 
-                      end={item.end}
-                      className={({ isActive }) =>
-                        isActive 
-                          ? "bg-primary/10 text-primary font-semibold" 
-                          : "hover:bg-muted/50"
-                      }
+              {adminItems.map((item) => {
+                const isActive = item.end 
+                  ? location.pathname === item.url 
+                  : location.pathname.startsWith(item.url);
+                
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton 
+                      asChild 
+                      isActive={isActive}
+                      className={isActive ? "bg-primary/10 text-primary font-semibold" : ""}
                     >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                      <NavLink to={item.url}>
+                        <item.icon className="h-4 w-4" />
+                        <span>{item.title}</span>
+                      </NavLink>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
