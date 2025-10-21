@@ -54,34 +54,34 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-accent/10 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-accent/10 p-3 sm:p-6 md:p-8">
       <div className="w-full max-w-md">
         <Card className="border-border/50 shadow-2xl backdrop-blur-sm bg-card/95">
-          <CardHeader className="space-y-1 text-center pb-8">
-            <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-              <Lock className="w-8 h-8 text-primary" />
+          <CardHeader className="space-y-1 text-center pb-6 sm:pb-8 px-4 sm:px-6">
+            <div className="mx-auto w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mb-3 sm:mb-4">
+              <Lock className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
             </div>
-            <CardTitle className="text-3xl font-bold tracking-tight">Welcome Back</CardTitle>
-            <CardDescription className="text-base">
+            <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight">Welcome Back</CardTitle>
+            <CardDescription className="text-sm sm:text-base px-2">
               Enter your credentials to access your account
             </CardDescription>
           </CardHeader>
           
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-5">
+          <CardContent className="px-4 sm:px-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-sm font-medium">
                   Username
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                   <Input
                     id="username"
                     type="text"
                     placeholder="Enter your username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="pl-10 h-11"
+                    className="pl-10 h-11 sm:h-12 text-base"
                     disabled={isLoading}
                     autoComplete="username"
                   />
@@ -93,43 +93,44 @@ const SignIn = () => {
                   Password
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 h-11"
+                    className="pl-10 pr-12 h-11 sm:h-12 text-base"
                     disabled={isLoading}
                     autoComplete="current-password"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1 touch-manipulation"
                     tabIndex={-1}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
+                      <EyeOff className="h-5 w-5 sm:h-4 sm:w-4" />
                     ) : (
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-5 w-5 sm:h-4 sm:w-4" />
                     )}
                   </button>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 text-sm">
+                <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
                   <input 
                     type="checkbox" 
-                    className="rounded border-input accent-primary"
+                    className="rounded border-input accent-primary w-4 h-4"
                   />
                   <span className="text-muted-foreground">Remember me</span>
                 </label>
                 <Link 
                   to="/forgot-password" 
-                  className="text-primary hover:text-primary/80 font-medium transition-colors"
+                  className="text-primary hover:text-primary/80 font-medium transition-colors touch-manipulation"
                 >
                   Forgot password?
                 </Link>
@@ -137,7 +138,7 @@ const SignIn = () => {
 
               <Button
                 type="submit"
-                className="w-full h-11 text-base font-semibold"
+                className="w-full h-12 sm:h-11 text-base font-semibold touch-manipulation"
                 disabled={isLoading}
               >
                 {isLoading ? "Signing in..." : "Sign In"}
@@ -145,12 +146,12 @@ const SignIn = () => {
             </form>
           </CardContent>
 
-          <CardFooter className="flex flex-col space-y-4 pt-6 border-t">
-            <p className="text-sm text-center text-muted-foreground">
+          <CardFooter className="flex flex-col space-y-4 pt-6 border-t px-4 sm:px-6">
+            <p className="text-sm sm:text-base text-center text-muted-foreground">
               Don't have an account?{" "}
               <Link 
                 to="/signup" 
-                className="text-primary hover:text-primary/80 font-semibold transition-colors"
+                className="text-primary hover:text-primary/80 font-semibold transition-colors touch-manipulation"
               >
                 Sign up
               </Link>
@@ -158,8 +159,8 @@ const SignIn = () => {
           </CardFooter>
         </Card>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-foreground transition-colors">
+        <p className="mt-4 sm:mt-6 text-center text-sm text-muted-foreground px-4">
+          <Link to="/" className="hover:text-foreground transition-colors touch-manipulation inline-block py-2">
             ← Back to home
           </Link>
         </p>
