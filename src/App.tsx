@@ -14,6 +14,7 @@ import PriceList from "./pages/PriceList";
 import PrivilegeCard from "./pages/PrivilegeCard";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import SignIn from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminDoctors from "./pages/admin/AdminDoctors";
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/privilege-card" element={<PrivilegeCard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/signin" element={<SignIn />} />
             
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
