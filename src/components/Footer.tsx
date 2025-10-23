@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-primary">Celebrity Smile</h3>
+            <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-14 w-auto mb-2" />
             <p className="text-sm text-muted-foreground mb-4">
               {t("aboutDescription")}
             </p>

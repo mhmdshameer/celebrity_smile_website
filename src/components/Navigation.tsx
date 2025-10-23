@@ -28,7 +28,8 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-primary">Celebrity Smile</span>
+            <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-14 w-auto" />
+            {/* <span className="text-2xl font-bold text-primary">Celebrity Smile</span> */}
           </Link>
 
           {/* Desktop Menu */}
