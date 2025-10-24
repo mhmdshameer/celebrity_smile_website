@@ -1,57 +1,102 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import AddDoctor from "@/components/AddDoctor";
+import { getDoctorsApi, getDoctorApi, deleteDoctorApi, type DoctorResponse } from "@/api/doctor";
 
 type Doctor = {
   id: string;
   name: string;
-  specialty: string;
-  qualification: string;
-  experience: string;
-  image: string;
+  nameAr: string;
+  specialties: string[];
+  specialtiesAr?: string[];
+  image: {
+    url: string;
+    public_id: string;
+  };
+  slug?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export default function AdminDoctors() {
   const { toast } = useToast();
-  const [doctors, setDoctors] = useState<Doctor[]>([
-    { id: "1", name: "Dr. Sarah Johnson", specialty: "Orthodontist", qualification: "DDS, MS", experience: "15 years", image: "" },
-    { id: "2", name: "Dr. Michael Chen", specialty: "Prosthodontist", qualification: "DDS, PhD", experience: "12 years", image: "" },
-  ]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null);
-  const [formData, setFormData] = useState({ name: "", specialty: "", qualification: "", experience: "", image: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (editingDoctor) {
-      setDoctors(doctors.map(d => d.id === editingDoctor.id ? { ...formData, id: editingDoctor.id } : d));
-      toast({ title: "Doctor updated successfully" });
-    } else {
-      setDoctors([...doctors, { ...formData, id: Date.now().toString() }]);
-      toast({ title: "Doctor added successfully" });
+  const handleAddDoctor = (doctor: Doctor) => {
+    setDoctors([...doctors, doctor]);
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteDoctorApi(id);
+      setDoctors(doctors.filter(d => d.id !== id));
+      toast({ title: "Doctor deleted successfully", variant: "success" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      toast({ title: "Failed to delete doctor", description: message, variant: "destructive" });
     }
-    setIsOpen(false);
-    setFormData({ name: "", specialty: "", qualification: "", experience: "", image: "" });
+  };
+
+  const handleEdit = async (id: string) => {
+    try {
+      const d = await getDoctorApi(id);
+      const mapped: Doctor = {
+        id: d._id,
+        name: d.name,
+        nameAr: d.nameAr,
+        specialties: d.specialties ?? [],
+        specialtiesAr: d.specialtiesAr ?? [],
+        image: d.image,
+        slug: d.slug,
+        createdAt: d.createdAt,
+        updatedAt: d.updatedAt,
+      };
+      setEditingDoctor(mapped);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      toast({ title: "Failed to load doctor", description: message, variant: "destructive" });
+    }
+  };
+
+  const handleUpdateDoctor = (doctor: Doctor) => {
+    setDoctors(doctors.map(d => d.id === doctor.id ? doctor : d));
     setEditingDoctor(null);
   };
 
-  const handleEdit = (doctor: Doctor) => {
-    setEditingDoctor(doctor);
-    setFormData(doctor);
-    setIsOpen(true);
+  const handleClose = () => {
+    setEditingDoctor(null);
   };
 
-  const handleDelete = (id: string) => {
-    setDoctors(doctors.filter(d => d.id !== id));
-    toast({ title: "Doctor deleted successfully" });
-  };
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const list: DoctorResponse[] = await getDoctorsApi();
+        if (!isMounted) return;
+        const mapped: Doctor[] = list.map((d) => ({
+          id: d._id,
+          name: d.name,
+          nameAr: d.nameAr,
+          specialties: d.specialties ?? [],
+          specialtiesAr: d.specialtiesAr ?? [],
+          image: d.image,
+          slug: d.slug,
+          createdAt: d.createdAt,
+          updatedAt: d.updatedAt,
+        }));
+        setDoctors(mapped);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        toast({ title: "Failed to load doctors", description: message, variant: "destructive" });
+      }
+    })();
+    return () => { isMounted = false; };
+  }, [toast]);
 
   return (
     <div className="space-y-6">
@@ -60,41 +105,12 @@ export default function AdminDoctors() {
           <h1 className="text-3xl font-bold">Doctors Management</h1>
           <p className="text-muted-foreground">Manage your medical team</p>
         </div>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => { setEditingDoctor(null); setFormData({ name: "", specialty: "", qualification: "", experience: "", image: "" }); }}>
-              <Plus className="mr-2 h-4 w-4" /> Add Doctor
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>{editingDoctor ? "Edit Doctor" : "Add New Doctor"}</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required />
-              </div>
-              <div>
-                <Label htmlFor="specialty">Specialty</Label>
-                <Input id="specialty" value={formData.specialty} onChange={e => setFormData({ ...formData, specialty: e.target.value })} required />
-              </div>
-              <div>
-                <Label htmlFor="qualification">Qualification</Label>
-                <Input id="qualification" value={formData.qualification} onChange={e => setFormData({ ...formData, qualification: e.target.value })} required />
-              </div>
-              <div>
-                <Label htmlFor="experience">Experience</Label>
-                <Input id="experience" value={formData.experience} onChange={e => setFormData({ ...formData, experience: e.target.value })} required />
-              </div>
-              <div>
-                <Label htmlFor="image">Image URL</Label>
-                <Input id="image" value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} />
-              </div>
-              <Button type="submit" className="w-full">{editingDoctor ? "Update" : "Add"} Doctor</Button>
-            </form>
-          </DialogContent>
-        </Dialog>
+        <AddDoctor
+          onAddDoctor={handleAddDoctor}
+          editingDoctor={editingDoctor}
+          onUpdateDoctor={handleUpdateDoctor}
+          onClose={handleClose}
+        />
       </div>
 
       <Card>
@@ -105,22 +121,43 @@ export default function AdminDoctors() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead>Specialty</TableHead>
-                <TableHead>Qualification</TableHead>
-                <TableHead>Experience</TableHead>
+                <TableHead>Specialties</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {doctors.map((doctor) => (
                 <TableRow key={doctor.id}>
-                  <TableCell className="font-medium">{doctor.name}</TableCell>
-                  <TableCell>{doctor.specialty}</TableCell>
-                  <TableCell>{doctor.qualification}</TableCell>
-                  <TableCell>{doctor.experience}</TableCell>
+                  <TableCell>
+                    {doctor.image.url ? (
+                      <img
+                        src={doctor.image.url}
+                        alt={doctor.name}
+                        className="h-10 w-10 rounded-full object-cover border"
+                      />
+                    ) : (
+                      <div className="h-10 w-10 rounded-full bg-muted border" />
+                    )}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    <div>
+                      <p>{doctor.name}</p>
+                      <p className="text-sm text-muted-foreground">{doctor.nameAr}</p>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-wrap gap-1">
+                      {doctor.specialties.map((specialty, index) => (
+                        <span key={index} className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs">
+                          {specialty}
+                        </span>
+                      ))}
+                    </div>
+                  </TableCell>
                   <TableCell className="text-right space-x-2">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(doctor)}>
+                    <Button variant="ghost" size="icon" onClick={() => handleEdit(doctor.id)}>
                       <Pencil className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => handleDelete(doctor.id)}>
