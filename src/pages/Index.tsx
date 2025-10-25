@@ -144,43 +144,45 @@ const Index = () => {
       {/* Featured Doctors */}
       <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold text-primary">Meet Our Doctors</h2>
-            <Link to="/doctors">
-              <Button variant="outline">
-                View All Doctors <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {loadingDoctors && (
-              <p className="col-span-full text-center text-muted-foreground">{t("loading")}</p>
-            )}
-            {!loadingDoctors && doctors.length === 0 && (
-              <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>
-            )}
-            {!loadingDoctors && doctors.slice(0, 6).map((d) => {
-              const displayName = language === "ar" ? d.nameAr : d.name;
-              const displaySpecsArr = language === "ar" ? (d.specialtiesAr ?? []) : (d.specialties ?? []);
-              const displaySpec = displaySpecsArr[0] ?? "";
-              const imgSrc = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
-              return (
-                <Card key={d._id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={imgSrc}
-                      alt={displayName}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <CardContent className="p-6 text-center">
-                    <h3 className="text-xl font-semibold mb-2">{displayName}</h3>
-                    {displaySpec && <p className="text-muted-foreground">{displaySpec}</p>}
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-12">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Meet Our Doctors</h2>
+              <Link to="/doctors">
+                <Button variant="outline">
+                  View All Doctors <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {loadingDoctors && (
+                <p className="col-span-full text-center text-muted-foreground">{t("loading")}</p>
+              )}
+              {!loadingDoctors && doctors.length === 0 && (
+                <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>
+              )}
+              {!loadingDoctors && doctors.slice(0, 6).map((d) => {
+                const displayName = language === "ar" ? d.nameAr : d.name;
+                const displaySpecsArr = language === "ar" ? (d.specialtiesAr ?? []) : (d.specialties ?? []);
+                const displaySpec = displaySpecsArr[0] ?? "";
+                const imgSrc = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+                return (
+                  <Card key={d._id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <div className="aspect-square overflow-hidden">
+                      <img
+                        src={imgSrc}
+                        alt={displayName}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
+                    </div>
+                    <CardContent className="p-6 text-center">
+                      <h3 className="text-xl font-semibold mb-2">{displayName}</h3>
+                      {displaySpec && <p className="text-muted-foreground">{displaySpec}</p>}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -188,15 +190,16 @@ const Index = () => {
       {/* Services Preview */}
       <section className="py-20 bg-muted/50 animate-fade-in">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold text-primary">Our Services</h2>
-            <Link to="/services">
-              <Button variant="outline">
-                View All Services <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="relative overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-12">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Our Services</h2>
+              <Link to="/services">
+                <Button variant="outline">
+                  View All Services <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="relative overflow-hidden">
             {loadingServices && (
               <Card className="p-6 text-center"><CardContent className="p-0">{t("loading")}</CardContent></Card>
             )}
@@ -218,7 +221,7 @@ const Index = () => {
                           {initial}
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-base font-semibold mb-1 line-clamp-1">{title}</h3>
+                          <h3 className="text-base font-semibold mb-1">{title}</h3>
                           <p className="text-sm text-muted-foreground line-clamp-3">{desc}</p>
                         </div>
                         <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -234,6 +237,7 @@ const Index = () => {
                 to { transform: translateX(-50%); }
               }
             `}</style>
+            </div>
           </div>
         </div>
       </section>
@@ -241,15 +245,15 @@ const Index = () => {
       {/* Special Offers Carousel */}
       <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold text-primary">Special Offers</h2>
-            <Link to="/offers">
-              <Button variant="outline">
-                View All Offers <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-12">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Special Offers</h2>
+              <Link to="/offers">
+                <Button variant="outline">
+                  View All Offers <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
             <Carousel className="w-full">
               <CarouselContent>
                 <CarouselItem>
@@ -272,27 +276,29 @@ const Index = () => {
       {/* Departments Preview */}
       <section className="py-20 bg-muted/50 animate-fade-in">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold text-primary">Our Departments</h2>
-            <Link to="/departments">
-              <Button variant="outline">
-                View All Departments <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">Emergency Care</h3>
-              <p className="text-muted-foreground">24/7 emergency dental services for urgent care needs.</p>
-            </Card>
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">Surgical Department</h3>
-              <p className="text-muted-foreground">Advanced surgical procedures with expert care.</p>
-            </Card>
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">Preventive Care</h3>
-              <p className="text-muted-foreground">Regular check-ups and preventive treatments.</p>
-            </Card>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-12">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Our Departments</h2>
+              <Link to="/departments">
+                <Button variant="outline">
+                  View All Departments <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="p-6">
+                <h3 className="text-xl font-semibold mb-3">Emergency Care</h3>
+                <p className="text-muted-foreground">24/7 emergency dental services for urgent care needs.</p>
+              </Card>
+              <Card className="p-6">
+                <h3 className="text-xl font-semibold mb-3">Surgical Department</h3>
+                <p className="text-muted-foreground">Advanced surgical procedures with expert care.</p>
+              </Card>
+              <Card className="p-6">
+                <h3 className="text-xl font-semibold mb-3">Preventive Care</h3>
+                <p className="text-muted-foreground">Regular check-ups and preventive treatments.</p>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -300,36 +306,38 @@ const Index = () => {
       {/* Blog Preview */}
       <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl font-bold text-primary">Latest From Our Blog</h2>
-            <Link to="/blog">
-              <Button variant="outline">
-                View All Posts <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-3">5 Tips for Healthy Teeth</h3>
-                <p className="text-muted-foreground mb-4">Learn the best practices for maintaining oral health...</p>
-                <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-3">Benefits of Teeth Whitening</h3>
-                <p className="text-muted-foreground mb-4">Discover how professional whitening can transform your smile...</p>
-                <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-3">Understanding Dental Implants</h3>
-                <p className="text-muted-foreground mb-4">Everything you need to know about dental implant procedures...</p>
-                <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              </CardContent>
-            </Card>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-center mb-12">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Latest From Our Blog</h2>
+              <Link to="/blog">
+                <Button variant="outline">
+                  View All Posts <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">5 Tips for Healthy Teeth</h3>
+                  <p className="text-muted-foreground mb-4">Learn the best practices for maintaining oral health...</p>
+                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">Benefits of Teeth Whitening</h3>
+                  <p className="text-muted-foreground mb-4">Discover how professional whitening can transform your smile...</p>
+                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">Understanding Dental Implants</h3>
+                  <p className="text-muted-foreground mb-4">Everything you need to know about dental implant procedures...</p>
+                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
