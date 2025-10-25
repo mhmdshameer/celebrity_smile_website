@@ -108,7 +108,7 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-12 animate-fade-in">
+      <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12 text-primary">
@@ -142,7 +142,7 @@ const Index = () => {
       </section>
 
       {/* Featured Doctors */}
-      <section className="py-12 animate-fade-in">
+      <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-primary">Meet Our Doctors</h2>
@@ -186,7 +186,7 @@ const Index = () => {
       </section>
 
       {/* Services Preview */}
-      <section className="py-12 bg-muted/50 animate-fade-in">
+      <section className="py-20 bg-muted/50 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-primary">Our Services</h2>
@@ -239,7 +239,7 @@ const Index = () => {
       </section>
 
       {/* Special Offers Carousel */}
-      <section className="py-12 animate-fade-in">
+      <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-primary">Special Offers</h2>
@@ -270,7 +270,7 @@ const Index = () => {
       </section>
 
       {/* Departments Preview */}
-      <section className="py-12 bg-muted/50 animate-fade-in">
+      <section className="py-20 bg-muted/50 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-primary">Our Departments</h2>
@@ -298,7 +298,7 @@ const Index = () => {
       </section>
 
       {/* Blog Preview */}
-      <section className="py-12 animate-fade-in">
+      <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl font-bold text-primary">Latest From Our Blog</h2>
@@ -335,7 +335,7 @@ const Index = () => {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-12 bg-primary/5 animate-fade-in">
+      <section className="py-20 bg-primary/5 animate-fade-in">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
@@ -371,7 +371,7 @@ const Index = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-12 animate-fade-in">
+      <section className="py-20 animate-fade-in">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
