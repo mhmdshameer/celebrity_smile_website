@@ -18,6 +18,7 @@ import offer2 from "@/assets/offer-2.jpg";
 import offer3 from "@/assets/offer-3.jpg";
 import clinicHero from "@/assets/clinic-hero.jpg";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
+import { getServicesApi, type ServiceResponse } from "@/api/service";
 
 // Real doctors will be fetched from API
 
@@ -25,6 +26,8 @@ const Index = () => {
   const { t, language } = useLanguage();
   const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+  const [services, setServices] = useState<ServiceResponse[]>([]);
+  const [loadingServices, setLoadingServices] = useState<boolean>(false);
 
   useEffect(() => {
     let mounted = true;
@@ -41,6 +44,24 @@ const Index = () => {
       }
     };
     load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    const loadServices = async () => {
+      try {
+        setLoadingServices(true);
+        const list = await getServicesApi();
+        if (!mounted) return;
+        setServices(list);
+      } finally {
+        if (mounted) setLoadingServices(false);
+      }
+    };
+    loadServices();
     return () => {
       mounted = false;
     };
@@ -175,23 +196,44 @@ const Index = () => {
               </Button>
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            <Card className="text-center p-6">
-              <div className="text-4xl mb-4">🦷</div>
-              <h3 className="text-lg font-semibold">General Dentistry</h3>
-            </Card>
-            <Card className="text-center p-6">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="text-lg font-semibold">Cosmetic Dentistry</h3>
-            </Card>
-            <Card className="text-center p-6">
-              <div className="text-4xl mb-4">🔧</div>
-              <h3 className="text-lg font-semibold">Orthodontics</h3>
-            </Card>
-            <Card className="text-center p-6">
-              <div className="text-4xl mb-4">🌟</div>
-              <h3 className="text-lg font-semibold">Dental Implants</h3>
-            </Card>
+          <div className="relative overflow-hidden">
+            {loadingServices && (
+              <Card className="p-6 text-center"><CardContent className="p-0">{t("loading")}</CardContent></Card>
+            )}
+            {!loadingServices && services.length > 0 && (
+              <div className="flex gap-4 w-max"
+                   style={{
+                     animation: `scroll 30s linear infinite`,
+                     animationDirection: (language === "ar" ? "reverse" : "normal") as "normal" | "reverse",
+                   }}>
+                {[...services, ...services].slice(0, Math.max(services.length * 2, 8)).map((s) => {
+                  const title = language === "ar" ? s.serviceAr : s.service;
+                  const desc = language === "ar" ? s.descriptionAr : s.description;
+                  const initial = title?.trim()?.charAt(0) || "";
+                  return (
+                    <Card key={`${s._id}-${title}`}
+                          className="p-5 flex-none w-[280px] sm:w-[320px] border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 group bg-background/50 backdrop-blur-sm">
+                      <div className="flex items-start gap-4">
+                        <div className="h-10 w-10 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                          {initial}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-base font-semibold mb-1 line-clamp-1">{title}</h3>
+                          <p className="text-sm text-muted-foreground line-clamp-3">{desc}</p>
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
+            <style>{`
+              @keyframes scroll {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+              }
+            `}</style>
           </div>
         </div>
       </section>
