@@ -19,6 +19,7 @@ import offer3 from "@/assets/offer-3.jpg";
 import clinicHero from "@/assets/clinic-hero.jpg";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 import { getServicesApi, type ServiceResponse } from "@/api/service";
+import { motion } from "framer-motion";
 
 // Real doctors will be fetched from API
 
@@ -108,7 +109,13 @@ const Index = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 animate-fade-in">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12 text-primary">
@@ -139,10 +146,16 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Featured Doctors */}
-      <section className="py-20 animate-fade-in">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-12">
@@ -185,10 +198,16 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Services Preview */}
-      <section className="py-20 bg-muted/50 animate-fade-in">
+      <motion.section 
+        className="py-20 bg-muted/50"
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-12">
@@ -240,10 +259,16 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Special Offers Carousel */}
-      <section className="py-20 animate-fade-in">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-12">
@@ -271,10 +296,16 @@ const Index = () => {
             </Carousel>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Departments Preview */}
-      <section className="py-20 bg-muted/50 animate-fade-in">
+      <motion.section 
+        className="py-20 bg-muted/50"
+        initial={{ opacity: 0, y: 50, rotate: -2 }}
+        whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-12">
@@ -301,10 +332,16 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Blog Preview */}
-      <section className="py-20 animate-fade-in">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center mb-12">
@@ -340,10 +377,16 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Statistics Section */}
-      <section className="py-20 bg-primary/5 animate-fade-in">
+      <motion.section 
+        className="py-20 bg-primary/5"
+        initial={{ opacity: 0, y: -50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+      >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <div className="text-center">
@@ -376,10 +419,16 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Why Choose Us */}
-      <section className="py-20 animate-fade-in">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -418,10 +467,16 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-muted/50">
+      <motion.section 
+        className="py-20 bg-muted/50"
+        initial={{ opacity: 0, rotateY: 90 }}
+        whileInView={{ opacity: 1, rotateY: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">{t("testimonials")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -490,10 +545,16 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Technology Section */}
-      <section className="py-20">
+      <motion.section 
+        className="py-20"
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
+      >
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">{t("ourTechnology")}</h2>
@@ -522,10 +583,16 @@ const Index = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 to-primary/5">
+      <motion.section 
+        className="py-20 bg-gradient-to-r from-primary/10 to-primary/5"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-4">{t("readyToSmile")}</h2>
@@ -543,7 +610,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <Footer />
     </div>
