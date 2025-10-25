@@ -219,14 +219,13 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
 
   // Paired specialties for dropdown selection
   const DENTAL_SPECIALTIES: { en: string; ar: string }[] = [
-    { en: "Orthodontics", ar: "تقويم الأسنان" },
-    { en: "Endodontics", ar: "علاج جذور الأسنان" },
-    { en: "Periodontics", ar: "علاج اللثة" },
-    { en: "Prosthodontics", ar: "تركيبات الأسنان" },
-    { en: "Oral Surgery", ar: "جراحة الفم" },
-    { en: "Pediatric Dentistry", ar: "أسنان الأطفال" },
-    { en: "Cosmetic Dentistry", ar: "تجميل الأسنان" },
-    { en: "Dental Implants", ar: "زراعة الأسنان" }
+    { en: "ORTHODONTICS", ar: "تقويم الأسنان" },
+    { en: "DENTOFACIAL ORTHOPEDICS", ar: "تقويم الفكين والوجه" },
+    { en: "GENERAL DENTIST", ar: "طبيب أسنان عام" },
+    { en: "PROSTHODONTIC SPECIALIST (CROWN)", ar: "أخصائي تركيبات (تيجان)" },
+    { en: "ENDODONTIC SPECIALIST (RCT)", ar: "أخصائي علاج جذور الأسنان (حشو العصب)" },
+    { en: "MAXILLOFACIAL SURGEON (IMPLANT)", ar: "جراح وجه وفكين (زراعة الأسنان)" },
+    { en: "PEDODONTIST (CHILDREN)", ar: "أخصائي أسنان الأطفال" },
   ];
 
   const addSpecialtyPair = (pair: { en: string; ar: string }) => {
@@ -424,7 +423,6 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
                 onChange={handleFileSelect}
                 className="flex-1"
               />
-              <Upload className="h-4 w-4 text-muted-foreground" />
             </div>
 
             {/* Image Preview */}

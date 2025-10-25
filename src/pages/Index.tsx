@@ -1,4 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, ArrowRight, Award, Users, TrendingUp, Star } from "lucide-react";
@@ -16,37 +17,34 @@ import offer1 from "@/assets/offer-1.jpg";
 import offer2 from "@/assets/offer-2.jpg";
 import offer3 from "@/assets/offer-3.jpg";
 import clinicHero from "@/assets/clinic-hero.jpg";
+import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 
-// Demo doctors data
-const demoDoctors = [
-  {
-    id: 1,
-    name: "Dr. Sarah Johnson",
-    nameAr: "د. سارة جونسون",
-    specialty: "Cosmetic Dentistry",
-    specialtyAr: "طب الأسنان التجميلي",
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Dr. Michael Chen",
-    nameAr: "د. مايكل تشين",
-    specialty: "Orthodontics",
-    specialtyAr: "تقويم الأسنان",
-    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Dr. Emily Parker",
-    nameAr: "د. إيميلي باركر",
-    specialty: "Pediatric Dentistry",
-    specialtyAr: "طب أسنان الأطفال",
-    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop",
-  },
-];
+// Real doctors will be fetched from API
 
 const Index = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
+  const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        setLoadingDoctors(true);
+        const list = await getDoctorsApi();
+        if (!mounted) return;
+        setDoctors(list);
+      } catch (e) {
+        // silently ignore on home; could add toast if desired
+      } finally {
+        if (mounted) setLoadingDoctors(false);
+      }
+    };
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleWhatsAppBooking = () => {
     const message = encodeURIComponent("Hello! I would like to book an appointment at Celebrity Smile Clinic.");
@@ -91,22 +89,32 @@ const Index = () => {
       {/* About Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-4xl font-bold text-center mb-12 text-primary">
               {t("aboutTitle")}
             </h2>
-            <Card className="border-primary/20">
-              <CardContent className="p-8">
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  {t("aboutDescription")}
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Our state-of-the-art facility is equipped with the latest dental technology, ensuring that every treatment is performed with precision and care. Our team of experienced dentists and specialists are dedicated to providing personalized care tailored to your unique needs.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  From routine check-ups to advanced cosmetic procedures, we offer a comprehensive range of dental services designed to keep your smile healthy and beautiful. Trust Celebrity Smile Clinic for all your dental care needs.
-                </p>
-              </CardContent>
+            <Card className="border-primary/20 overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="relative h-full min-h-[320px]">
+                  <img
+                    src="/CLINIC PHOTO.jpeg"
+                    alt="Celebrity Smile Clinic"
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardContent className="p-8">
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    {t("aboutDescription")}
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                    Our state-of-the-art facility is equipped with the latest dental technology, ensuring that every treatment is performed with precision and care. Our team of experienced dentists and specialists are dedicated to providing personalized care tailored to your unique needs.
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    From routine check-ups to advanced cosmetic procedures, we offer a comprehensive range of dental services designed to keep your smile healthy and beautiful. Trust Celebrity Smile Clinic for all your dental care needs.
+                  </p>
+                </CardContent>
+              </div>
             </Card>
           </div>
         </div>
@@ -124,21 +132,34 @@ const Index = () => {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {demoDoctors.map((doctor) => (
-              <Card key={doctor.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={doctor.image}
-                    alt={doctor.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <CardContent className="p-6 text-center">
-                  <h3 className="text-xl font-semibold mb-2">{doctor.name}</h3>
-                  <p className="text-muted-foreground">{doctor.specialty}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {loadingDoctors && (
+              <p className="col-span-full text-center text-muted-foreground">{t("loading")}</p>
+            )}
+            {!loadingDoctors && doctors.length === 0 && (
+              <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>
+            )}
+            {!loadingDoctors && doctors.slice(0, 6).map((d) => {
+              const displayName = language === "ar" ? d.nameAr : d.name;
+              const displaySpecsArr = language === "ar" ? (d.specialtiesAr ?? []) : (d.specialties ?? []);
+              const displaySpec = displaySpecsArr[0] ?? "";
+              const imgSrc = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+              return (
+                <Card key={d._id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={imgSrc}
+                      alt={displayName}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                  <CardContent className="p-6 text-center">
+                    <h3 className="text-xl font-semibold mb-2">{displayName}</h3>
+                    {displaySpec && <p className="text-muted-foreground">{displaySpec}</p>}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>

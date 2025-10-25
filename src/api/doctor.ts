@@ -25,6 +25,7 @@ const API_BASE = "http://localhost:5000";
 
 // Add doctor
 export async function addDoctorApi(payload: NewDoctorPayload): Promise<DoctorResponse> {
+    console.log("Payload:", payload)
   const form = new FormData();
   form.append("name", payload.name);
   form.append("nameAr", payload.nameAr);
