@@ -113,7 +113,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -153,7 +153,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -205,7 +205,7 @@ const Index = () => {
         className="py-20 bg-muted/50"
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -266,7 +266,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, x: 100 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -303,7 +303,7 @@ const Index = () => {
         className="py-20 bg-muted/50"
         initial={{ opacity: 0, y: 50, rotate: -2 }}
         whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
       >
         <div className="container mx-auto px-4">
@@ -339,7 +339,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
       >
         <div className="container mx-auto px-4">
@@ -384,7 +384,7 @@ const Index = () => {
         className="py-20 bg-primary/5"
         initial={{ opacity: 0, y: -50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
       >
         <div className="container mx-auto px-4">
@@ -426,7 +426,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -474,7 +474,7 @@ const Index = () => {
         className="py-20 bg-muted/50"
         initial={{ opacity: 0, rotateY: 90 }}
         whileInView={{ opacity: 1, rotateY: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
@@ -552,7 +552,7 @@ const Index = () => {
         className="py-20"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
       >
         <div className="container mx-auto px-4">
@@ -590,7 +590,7 @@ const Index = () => {
         className="py-20 bg-gradient-to-r from-primary/10 to-primary/5"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <div className="container mx-auto px-4">
