@@ -69,7 +69,7 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="w-full max-w-xl mx-auto bg-background/98 backdrop-blur-md border border-primary/30 rounded-xl shadow-2xl p-6"
+      className="w-full max-w-xl mx-auto bg-background/98 backdrop-blur-md border border-primary/30 rounded-xl shadow-2xl p-4"
     >
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-primary">

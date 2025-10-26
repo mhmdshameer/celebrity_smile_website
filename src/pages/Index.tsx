@@ -13,14 +13,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import offer1 from "@/assets/offer-1.jpg";
-import offer2 from "@/assets/offer-2.jpg";
-import offer3 from "@/assets/offer-3.jpg";
 import clinicHero from "@/assets/clinic-hero.jpg";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 import { getServicesApi, type ServiceResponse } from "@/api/service";
 import { motion } from "framer-motion";
 import AppointmentForm from "@/components/AppointmentForm";
+import { getOffersApi, type OfferResponse } from "@/api/offer";
 
 // Real doctors will be fetched from API
 
@@ -30,6 +28,8 @@ const Index = () => {
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
   const [services, setServices] = useState<ServiceResponse[]>([]);
   const [loadingServices, setLoadingServices] = useState<boolean>(false);
+  const [offers, setOffers] = useState<OfferResponse[]>([]);
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(false);
   const [appointmentFormOpen, setAppointmentFormOpen] = useState(false);
 
   useEffect(() => {
@@ -73,6 +73,26 @@ const Index = () => {
   const handleWhatsAppBooking = () => {
     setAppointmentFormOpen(true);
   };
+
+  useEffect(() => {
+    let mounted = true;
+    const loadOffers = async () => {
+      try {
+        setLoadingOffers(true);
+        const list = await getOffersApi();
+        if (!mounted) return;
+        setOffers(list);
+      } catch (e) {
+        console.error('Failed to load offers:', e);
+      } finally {
+        if (mounted) setLoadingOffers(false);
+      }
+    };
+    loadOffers();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -129,7 +149,7 @@ const Index = () => {
 
       {/* About Section */}
       <motion.section 
-        className={`py-20 transition-all duration-500 ${appointmentFormOpen ? 'mt-80' : ''}`}
+        className={`py-20 transition-all duration-500 ${appointmentFormOpen ? 'mt-60' : ''}`}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.2 }}
@@ -180,7 +200,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-12">
               <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Meet Our Doctors</h2>
               <Link to="/doctors">
-                <Button variant="outline">
+                <Button variant="default">
                   View All Doctors <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -232,7 +252,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-12">
               <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Our Services</h2>
               <Link to="/services">
-                <Button variant="outline">
+                <Button variant="default">
                   View All Services <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -282,37 +302,61 @@ const Index = () => {
 
       {/* Special Offers Carousel */}
       <motion.section 
-        className="py-20"
-        initial={{ opacity: 0, x: 100 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="py-20 bg-muted/20"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="flex justify-between items-center mb-12">
-              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Special Offers</h2>
+            <div className="flex justify-between items-center mb-8">
+              <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>
+                Special Offers
+              </h2>
               <Link to="/offers">
-                <Button variant="outline">
+                <Button variant="default">
                   View All Offers <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
-            <Carousel className="w-full">
-              <CarouselContent>
-                <CarouselItem>
-                  <img src={offer1} alt="Offer 1" className="w-full rounded-lg" />
-                </CarouselItem>
-                <CarouselItem>
-                  <img src={offer2} alt="Offer 2" className="w-full rounded-lg" />
-                </CarouselItem>
-                <CarouselItem>
-                  <img src={offer3} alt="Offer 3" className="w-full rounded-lg" />
-                </CarouselItem>
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+            {loadingOffers ? (
+              <div className="text-center py-12">Loading offers...</div>
+            ) : offers.length > 0 ? (
+              <Carousel 
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {offers.map((offer) => (
+                    <CarouselItem key={offer._id} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="p-2">
+                        <Card className="overflow-hidden h-full flex flex-col hover:shadow-lg transition-shadow">
+                          <div className="h-80 bg-muted/50 flex items-center justify-center overflow-hidden p-2">
+                            {offer.offerPoster?.url ? (
+                              <img 
+                                src={offer.offerPoster.url} 
+                                alt="Special Offer"
+                                className="h-full w-full object-contain"
+                              />
+                            ) : (
+                              <div className="text-muted-foreground">No image available</div>
+                            )}
+                          </div>
+                        </Card>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-2 md:left-4" />
+                <CarouselNext className="right-2 md:right-4" />
+              </Carousel>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground">No special offers available at the moment.</div>
+            )}
           </div>
         </div>
       </motion.section>
@@ -330,7 +374,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-12">
               <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Our Departments</h2>
               <Link to="/departments">
-                <Button variant="outline">
+                <Button variant="default">
                   View All Departments <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -366,7 +410,7 @@ const Index = () => {
             <div className="flex justify-between items-center mb-12">
               <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>Latest From Our Blog</h2>
               <Link to="/blog">
-                <Button variant="outline">
+                <Button variant="default">
                   View All Posts <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
