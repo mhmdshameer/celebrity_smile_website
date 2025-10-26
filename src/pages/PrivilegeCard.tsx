@@ -61,7 +61,7 @@ const PrivilegeCard = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 container mx-auto px-4 py-12">
+      <div className="flex-1 container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4">
             <CreditCard className="w-10 h-10 text-primary" />

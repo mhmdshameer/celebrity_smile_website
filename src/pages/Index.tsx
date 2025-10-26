@@ -20,6 +20,7 @@ import { motion } from "framer-motion";
 import AppointmentForm from "@/components/AppointmentForm";
 import { getOffersApi, type OfferResponse } from "@/api/offer";
 import { getAllBlogs, type BlogPost } from "@/api/blog";
+import BlogCard from "@/components/BlogCard";
 
 // Real doctors will be fetched from API
 
@@ -116,7 +117,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-hidden pt-16">
       <Navigation />
       
       {/* Hero Section with Image Background */}
@@ -436,29 +437,7 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-3">5 Tips for Healthy Teeth</h3>
-                  <p className="text-muted-foreground mb-4">Learn the best practices for maintaining oral health...</p>
-                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-3">Benefits of Teeth Whitening</h3>
-                  <p className="text-muted-foreground mb-4">Discover how professional whitening can transform your smile...</p>
-                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-3">Understanding Dental Implants</h3>
-                  <p className="text-muted-foreground mb-4">Everything you need to know about dental implant procedures...</p>
-                  <Button variant="link" className="p-0">Read More <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                </CardContent>
-              </Card>
-            </div>
+            <BlogCard limit={3} showViewAll={false} />
           </div>
         </div>
       </motion.section>
