@@ -1,19 +1,44 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import offer1 from "@/assets/offer-1.jpg";
-import offer2 from "@/assets/offer-2.jpg";
-import offer3 from "@/assets/offer-3.jpg";
+import { useEffect, useState } from "react";
+import { getOffersApi, type OfferResponse } from "@/api/offer";
+import { useToast } from "@/hooks/use-toast";
+import { Calendar, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Offers = () => {
   const { t, language } = useLanguage();
+  const { toast } = useToast();
+  const [offers, setOffers] = useState<OfferResponse[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const offers = [
-    { id: 1, image: offer1, alt: "Special Offer 1" },
-    { id: 2, image: offer2, alt: "Special Offer 2" },
-    { id: 3, image: offer3, alt: "Special Offer 3" },
-  ];
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const data = await getOffersApi();
+        setOffers(data);
+      } catch (error) {
+        toast({ title: "Failed to load offers", variant: "destructive" });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOffers();
+  }, [toast]);
+
+  const isOfferExpired = (endDate: string) => {
+    return new Date(endDate) < new Date();
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(language === "ar" ? "ar-SA" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -29,25 +54,70 @@ const Offers = () => {
             : "Discover our special offers and exclusive discounts on dental services"}
         </p>
 
-        <div className="max-w-4xl mx-auto">
-          <Carousel className="w-full">
-            <CarouselContent>
-              {offers.map((offer) => (
-                <CarouselItem key={offer.id}>
-                  <div className="p-4">
-                    <img
-                      src={offer.image}
-                      alt={offer.alt}
-                      className="w-full h-auto rounded-lg shadow-lg object-cover"
-                    />
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-muted rounded-lg aspect-[3/4] mb-4" />
+                <div className="h-4 bg-muted rounded w-3/4" />
+              </div>
+            ))}
+          </div>
+        ) : offers.length === 0 ? (
+          <div className="text-center py-12">
+            <Clock className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+            <p className="text-lg text-muted-foreground">
+              {language === "ar"
+                ? "لا توجد عروض متاحة حاليًا"
+                : "No offers available at the moment"}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {offers.map((offer) => {
+              const expired = isOfferExpired(offer.offerEndDate);
+              return (
+                <div
+                  key={offer._id}
+                  className={`group relative overflow-hidden rounded-lg border bg-card shadow-lg transition-all hover:shadow-xl ${
+                    expired ? "opacity-60" : ""
+                  }`}
+                >
+                  {offer.offerPoster?.url && (
+                    <div className="aspect-[3/4] overflow-hidden">
+                      <img
+                        src={offer.offerPoster.url}
+                        alt="Special Offer"
+                        className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-white">
+                        <Calendar className="h-4 w-4" />
+                        <span className="text-sm">
+                          {language === "ar" ? "صالح حتى" : "Valid until"}
+                        </span>
+                      </div>
+                      {expired && (
+                        <Badge variant="destructive" className="text-xs">
+                          {language === "ar" ? "منتهي" : "Expired"}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="mt-1 text-sm font-medium text-white">
+                      {formatDate(offer.offerEndDate)}
+                    </p>
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </div>
+                  {!expired && (
+                    <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/5" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         <div className="mt-12 text-center">
           <p className="text-muted-foreground">
