@@ -20,6 +20,7 @@ import clinicHero from "@/assets/clinic-hero.jpg";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 import { getServicesApi, type ServiceResponse } from "@/api/service";
 import { motion } from "framer-motion";
+import AppointmentForm from "@/components/AppointmentForm";
 
 // Real doctors will be fetched from API
 
@@ -29,6 +30,7 @@ const Index = () => {
   const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
   const [services, setServices] = useState<ServiceResponse[]>([]);
   const [loadingServices, setLoadingServices] = useState<boolean>(false);
+  const [appointmentFormOpen, setAppointmentFormOpen] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -69,8 +71,7 @@ const Index = () => {
   }, []);
 
   const handleWhatsAppBooking = () => {
-    const message = encodeURIComponent("Hello! I would like to book an appointment at Celebrity Smile Clinic.");
-    window.open(`https://wa.me/1234567890?text=${message}`, "_blank");
+    setAppointmentFormOpen(true);
   };
 
   return (
@@ -613,6 +614,12 @@ const Index = () => {
       </motion.section>
 
       <Footer />
+      
+      <AppointmentForm 
+        open={appointmentFormOpen} 
+        onOpenChange={setAppointmentFormOpen}
+        phoneNumber="1234567890"
+      />
     </div>
   );
 };
