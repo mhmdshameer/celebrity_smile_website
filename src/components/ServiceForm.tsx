@@ -16,7 +16,7 @@ export type ServiceFormValues = {
   description: string;
   descriptionAr: string;
   servicePrice: number | "";
-  file?: File | null;
+//   file?: File | null;
 };
 
 export function ServiceForm({
@@ -38,7 +38,7 @@ export function ServiceForm({
     description: "",
     descriptionAr: "",
     servicePrice: "",
-    file: null,
+    // file: null,
   });
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function ServiceForm({
         description: "",
         descriptionAr: "",
         servicePrice: "",
-        file: null,
+        // file: null,
       });
   }, [initialValues, open]);
 

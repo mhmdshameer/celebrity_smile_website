@@ -109,9 +109,3 @@ export async function deleteServiceApi(id: string): Promise<void> {
     throw new Error(`Failed to delete service: ${res.status} ${text}`);
   }
 }
-
-export const getServices = async () => {
-    const response = await fetch("http://localhost:5000/service");
-    const data = await response.json();
-    return data;
-}
