@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -16,7 +15,7 @@ interface AppointmentFormProps {
   phoneNumber?: string;
 }
 
-export default function AppointmentForm({ onClose, phoneNumber = "1234567890" }: AppointmentFormProps) {
+export default function AppointmentForm({ onClose, phoneNumber = "+966 55 600 5567" }: AppointmentFormProps) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
