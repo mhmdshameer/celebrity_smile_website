@@ -65,125 +65,102 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95, y: -20 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full max-w-2xl mx-auto bg-background/95 backdrop-blur-sm border border-primary/20 rounded-lg shadow-2xl p-8"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="w-full max-w-xl mx-auto bg-background/98 backdrop-blur-md border border-primary/30 rounded-xl shadow-2xl p-6"
     >
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h2 className="text-3xl font-bold text-primary mb-2">
-            {language === "ar" ? "حجز موعد" : "Book an Appointment"}
-          </h2>
-          <p className="text-muted-foreground">
-            {language === "ar" 
-              ? "املأ النموذج أدناه وسنتواصل معك عبر واتساب" 
-              : "Fill in the form below and we'll contact you via WhatsApp"}
-          </p>
-        </div>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-primary">
+          {language === "ar" ? "حجز موعد" : "Book Appointment"}
+        </h2>
         <Button
           variant="ghost"
           size="icon"
           onClick={onClose}
-          className="hover:bg-primary/10"
+          className="hover:bg-primary/10 h-8 w-8"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">
-                    {language === "ar" ? "الاسم" : "Name"} <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder={language === "ar" ? "أدخل اسمك" : "Enter your name"}
-                    required
-                  />
-                </div>
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <Input
+          id="name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          placeholder={language === "ar" ? "الاسم *" : "Name *"}
+          required
+          className="h-10"
+        />
 
-                <div className="space-y-2">
-                  <Label htmlFor="phone">
-                    {language === "ar" ? "رقم الهاتف" : "Phone Number"} <span className="text-destructive">*</span>
-                  </Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder={language === "ar" ? "أدخل رقم هاتفك" : "Enter your phone number"}
-                    required
-                  />
-                </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Input
+            id="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            placeholder={language === "ar" ? "رقم الهاتف *" : "Phone *"}
+            required
+            className="h-10"
+          />
+          <Input
+            id="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder={language === "ar" ? "البريد الإلكتروني" : "Email"}
+            className="h-10"
+          />
+        </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">{language === "ar" ? "البريد الإلكتروني" : "Email"}</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder={language === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
-                  />
-                </div>
+        <Input
+          id="service"
+          value={formData.service}
+          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+          placeholder={language === "ar" ? "نوع الخدمة" : "Service type"}
+          className="h-10"
+        />
 
-                <div className="space-y-2">
-                  <Label htmlFor="service">{language === "ar" ? "الخدمة" : "Service"}</Label>
-                  <Input
-                    id="service"
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    placeholder={language === "ar" ? "نوع الخدمة المطلوبة" : "Type of service needed"}
-                  />
-                </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className={cn(
+                "w-full justify-start text-left font-normal h-10",
+                !date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date ? format(date, "PPP") : <span>{language === "ar" ? "اختر تاريخاً" : "Pick a date"}</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              initialFocus
+              disabled={(date) => date < new Date()}
+            />
+          </PopoverContent>
+        </Popover>
 
-                <div className="space-y-2">
-                  <Label>{language === "ar" ? "التاريخ المفضل" : "Preferred Date"}</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !date && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>{language === "ar" ? "اختر تاريخاً" : "Pick a date"}</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        initialFocus
-                        disabled={(date) => date < new Date()}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
+        <Textarea
+          id="message"
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          placeholder={language === "ar" ? "رسالة إضافية..." : "Additional message..."}
+          rows={2}
+          className="resize-none"
+        />
 
-                <div className="space-y-2">
-                  <Label htmlFor="message">{language === "ar" ? "رسالة إضافية" : "Additional Message"}</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder={language === "ar" ? "أي تفاصيل إضافية..." : "Any additional details..."}
-                    rows={3}
-                  />
-                </div>
-
-        <div className="flex gap-3 pt-4">
-          <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+        <div className="flex gap-3 pt-2">
+          <Button type="button" variant="outline" onClick={onClose} className="flex-1 h-10">
             {language === "ar" ? "إلغاء" : "Cancel"}
           </Button>
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="flex-1 h-10">
             {language === "ar" ? "إرسال عبر واتساب" : "Send via WhatsApp"}
           </Button>
         </div>

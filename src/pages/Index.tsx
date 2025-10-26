@@ -79,7 +79,7 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section with Image Background */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden py-20">
+      <section className="relative h-[600px] flex items-center justify-center overflow-visible">
         {/* Image Background */}
         <div 
           className="absolute inset-0 w-full h-full bg-cover bg-center"
@@ -94,36 +94,42 @@ const Index = () => {
         
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4">
-          {!appointmentFormOpen ? (
-            <motion.div 
-              className="max-w-3xl mx-auto text-center text-white"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-                Celebrity Smile Clinic
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 drop-shadow-lg">
-                Your smile is our priority. Experience world-class dental care with cutting-edge technology and compassionate professionals.
-              </p>
-              <Button size="lg" onClick={handleWhatsAppBooking} className="text-lg">
-                <Phone className="mr-2 h-5 w-5" />
-                {t("bookAppointment")}
-              </Button>
-            </motion.div>
-          ) : (
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+              Celebrity Smile Clinic
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 drop-shadow-lg">
+              Your smile is our priority. Experience world-class dental care with cutting-edge technology and compassionate professionals.
+            </p>
+            {!appointmentFormOpen && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Button size="lg" onClick={handleWhatsAppBooking} className="text-lg">
+                  <Phone className="mr-2 h-5 w-5" />
+                  {t("bookAppointment")}
+                </Button>
+              </motion.div>
+            )}
+          </div>
+        </div>
+        
+        {/* Form overlapping hero and about section */}
+        {appointmentFormOpen && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 w-full px-4">
             <AppointmentForm 
               onClose={() => setAppointmentFormOpen(false)}
               phoneNumber="1234567890"
             />
-          )}
-        </div>
+          </div>
+        )}
       </section>
 
       {/* About Section */}
       <motion.section 
-        className="py-20"
+        className={`py-20 transition-all duration-500 ${appointmentFormOpen ? 'mt-80' : ''}`}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.2 }}
