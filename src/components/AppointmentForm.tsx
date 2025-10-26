@@ -1,30 +1,22 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AppointmentFormProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
   phoneNumber?: string;
 }
 
-export default function AppointmentForm({ open, onOpenChange, phoneNumber = "1234567890" }: AppointmentFormProps) {
+export default function AppointmentForm({ onClose, phoneNumber = "1234567890" }: AppointmentFormProps) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
@@ -68,32 +60,39 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
       message: "",
     });
     setDate(undefined);
-    onOpenChange(false);
+    onClose();
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <DialogHeader>
-                <DialogTitle className="text-2xl">
-                  {language === "ar" ? "حجز موعد" : "Book an Appointment"}
-                </DialogTitle>
-                <DialogDescription>
-                  {language === "ar" 
-                    ? "املأ النموذج أدناه وسنتواصل معك عبر واتساب" 
-                    : "Fill in the form below and we'll contact you via WhatsApp"}
-                </DialogDescription>
-              </DialogHeader>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: -20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="w-full max-w-2xl mx-auto bg-background/95 backdrop-blur-sm border border-primary/20 rounded-lg shadow-2xl p-8"
+    >
+      <div className="flex justify-between items-start mb-6">
+        <div>
+          <h2 className="text-3xl font-bold text-primary mb-2">
+            {language === "ar" ? "حجز موعد" : "Book an Appointment"}
+          </h2>
+          <p className="text-muted-foreground">
+            {language === "ar" 
+              ? "املأ النموذج أدناه وسنتواصل معك عبر واتساب" 
+              : "Fill in the form below and we'll contact you via WhatsApp"}
+          </p>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onClose}
+          className="hover:bg-primary/10"
+        >
+          <X className="h-5 w-5" />
+        </Button>
+      </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">
                     {language === "ar" ? "الاسم" : "Name"} <span className="text-destructive">*</span>
@@ -180,19 +179,15 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
                   />
                 </div>
 
-                <div className="flex gap-3 pt-2">
-                  <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
-                    {language === "ar" ? "إلغاء" : "Cancel"}
-                  </Button>
-                  <Button type="submit" className="flex-1">
-                    {language === "ar" ? "إرسال عبر واتساب" : "Send via WhatsApp"}
-                  </Button>
-                </div>
-              </form>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </DialogContent>
-    </Dialog>
+        <div className="flex gap-3 pt-4">
+          <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            {language === "ar" ? "إلغاء" : "Cancel"}
+          </Button>
+          <Button type="submit" className="flex-1">
+            {language === "ar" ? "إرسال عبر واتساب" : "Send via WhatsApp"}
+          </Button>
+        </div>
+      </form>
+    </motion.div>
   );
 }
