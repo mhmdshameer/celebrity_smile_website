@@ -1,15 +1,25 @@
 const API_URL = 'http://localhost:5000/blog';
 
-interface BlogPost {
+export interface Author {
+  _id: string;
+  name: string;
+  nameAr: string;
+  image: {
+    url: string;
+    public_id: string;
+  };
+}
+
+export interface BlogPost {
   _id?: string;
   title: string;
   titleAr: string;
-  authorId: string;
-  authorName?: string;
+  authorId: string | Author;  // Can be either string ID or Author object
   date: string;
   content: string;
   contentAr: string;
   published: boolean;
+  __v?: number;
 }
 
 const handleResponse = async (response: Response) => {
@@ -23,12 +33,18 @@ const handleResponse = async (response: Response) => {
 // Create a new blog post
 export const createBlogPost = async (postData: Omit<BlogPost, '_id' | 'authorName'>) => {
   try {
+    // Ensure authorId is a string when sending to the server
+    const payload = {
+      ...postData,
+      authorId: typeof postData.authorId === 'object' ? postData.authorId._id : postData.authorId
+    };
+
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(payload),
     });
     return handleResponse(response);
   } catch (error) {
@@ -62,12 +78,20 @@ export const getBlogPost = async (id: string): Promise<BlogPost> => {
 // Update a blog post
 export const updateBlogPost = async (id: string, postData: Partial<BlogPost>): Promise<BlogPost> => {
   try {
+    // Ensure authorId is a string when sending to the server
+    const payload = {
+      ...postData,
+      ...(postData.authorId && {
+        authorId: typeof postData.authorId === 'object' ? postData.authorId._id : postData.authorId
+      })
+    };
+
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(payload),
     });
     return handleResponse(response);
   } catch (error) {

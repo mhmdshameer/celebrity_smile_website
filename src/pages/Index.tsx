@@ -19,6 +19,7 @@ import { getServicesApi, type ServiceResponse } from "@/api/service";
 import { motion } from "framer-motion";
 import AppointmentForm from "@/components/AppointmentForm";
 import { getOffersApi, type OfferResponse } from "@/api/offer";
+import { getAllBlogs, type BlogPost } from "@/api/blog";
 
 // Real doctors will be fetched from API
 
@@ -31,6 +32,8 @@ const Index = () => {
   const [offers, setOffers] = useState<OfferResponse[]>([]);
   const [loadingOffers, setLoadingOffers] = useState<boolean>(false);
   const [appointmentFormOpen, setAppointmentFormOpen] = useState(false);
+  // Blog posts state kept for future use
+  const [, setBlogPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -76,6 +79,7 @@ const Index = () => {
 
   useEffect(() => {
     let mounted = true;
+    
     const loadOffers = async () => {
       try {
         setLoadingOffers(true);
@@ -88,7 +92,24 @@ const Index = () => {
         if (mounted) setLoadingOffers(false);
       }
     };
+
+    const loadBlogs = async () => {
+      try {
+        const posts = await getAllBlogs();
+        if (!mounted) return;
+        // Store blog posts for potential future use
+        const publishedPosts = posts
+          .filter(post => post.published)
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setBlogPosts(publishedPosts);
+      } catch (e) {
+        console.error('Failed to load blog posts:', e);
+      }
+    };
+
     loadOffers();
+    loadBlogs();
+    
     return () => {
       mounted = false;
     };
@@ -675,7 +696,7 @@ const Index = () => {
         </div>
       </motion.section>
 
-      <Footer />
+<Footer />
     </div>
   );
 };

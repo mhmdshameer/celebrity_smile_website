@@ -51,11 +51,13 @@ const formSchema = z.object({
     message: "Arabic content is required.",
   }),
   published: z.boolean().default(false),
+  // Add _id as optional since it's only present when editing
+  _id: z.string().optional(),
 });
 
-type BlogFormValues = z.infer<typeof formSchema>;
+export type BlogFormValues = z.infer<typeof formSchema>;
 
-interface BlogFormProps {
+export interface BlogFormProps {
   initialData?: {
     _id?: string;
     title: string;
@@ -79,7 +81,7 @@ export function BlogForm({ initialData, onSubmit, onCancel, isSubmitting }: Blog
     resolver: zodResolver(formSchema),
     defaultValues: initialData ? {
       ...initialData,
-      date: new Date(initialData.date)
+      date: initialData.date ? new Date(initialData.date) : new Date(),
     } : {
       title: "",
       titleAr: "",
@@ -107,10 +109,11 @@ export function BlogForm({ initialData, onSubmit, onCancel, isSubmitting }: Blog
   }, []);
 
   const handleSubmit = (data: BlogFormValues) => {
-    onSubmit({
+    const submitData = {
       ...data,
-      date: data.date.toISOString()
-    });
+      date: data.date ? data.date.toISOString() : new Date().toISOString(),
+    };
+    onSubmit(submitData);
   };
 
   if (loading) {
