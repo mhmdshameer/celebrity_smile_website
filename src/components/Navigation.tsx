@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -59,17 +60,30 @@ const Navigation = () => {
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
-                <Link key={item.key} to={item.path}>
-                  <Button 
-                    variant="ghost" 
+                <Link key={item.key} to={item.path} className="relative">
+                  <Button
+                    variant="ghost"
                     className={cn(
-                      "text-sm transition-colors",
-                      isActive && "bg-primary/10 text-primary font-semibold",
+                      "text-sm transition-colors relative",
+                      isActive && "text-primary font-semibold",
                       !isScrolled && "text-white hover:bg-white/20 hover:text-white"
                     )}
                   >
                     {t(item.key)}
                   </Button>
+                  {/* Animated underline */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                      layoutId="activeTab"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
@@ -79,10 +93,13 @@ const Navigation = () => {
           <div className="flex items-center space-x-2">
             <Button
               variant="outline"
-              size="sm"
+              size="default"
               className={cn(
-                "transition-colors",
-                !isScrolled && "border-white/30  hover:bg-white/20 hover:border-white/50"
+                "transition-all duration-300 font-semibold px-4 py-2 border-2 text-sm",
+                "bg-background/80 backdrop-blur-sm",
+                isScrolled
+                  ? "border-primary text-primary hover:bg-primary hover:text-white shadow-sm"
+                  : "border-white/40 text-black hover:bg-white/20 hover:border-white/60 hover:text-white shadow-lg"
               )}
               onClick={() => setLanguage(language === "en" ? "ar" : "en")}
             >
@@ -117,18 +134,31 @@ const Navigation = () => {
                   key={item.key}
                   to={item.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block"
+                  className="block relative"
                 >
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-start transition-colors",
-                      isActive && "bg-primary/10 text-primary font-semibold",
+                      "w-full justify-start transition-colors relative",
+                      isActive && "text-primary font-semibold",
                       !isScrolled && "text-white hover:bg-white/20 hover:text-white"
                     )}
                   >
                     {t(item.key)}
                   </Button>
+                  {/* Animated underline for mobile */}
+                  {isActive && (
+                    <motion.div
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
+                      layoutId="activeMobileTab"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
