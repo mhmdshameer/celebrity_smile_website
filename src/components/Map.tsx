@@ -1,26 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Map = () => {
   const { language } = useLanguage();
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [token, setToken] = useState('');
-  const [isTokenSet, setIsTokenSet] = useState(false);
 
   useEffect(() => {
-    if (!mapContainer.current || !isTokenSet || !token) return;
+    if (!mapContainer.current) return;
 
-    mapboxgl.accessToken = token;
+    // TODO: Replace with your Mapbox public token from https://account.mapbox.com/access-tokens/
+    mapboxgl.accessToken = 'YOUR_MAPBOX_PUBLIC_TOKEN_HERE';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [39.233263, 21.5917608],
+      center: [39.233263, 21.5917608], // 3247 Al Ajawad St, Al Rabi', Jeddah 23462, Saudi Arabia
       zoom: 15,
     });
 
@@ -31,7 +28,7 @@ const Map = () => {
         new mapboxgl.Popup().setHTML(
           `<div style="padding: 8px;">
             <h3 style="font-weight: bold; margin-bottom: 4px;">Celebrity Smile Dental Clinic</h3>
-            <p style="font-size: 14px;">${language === 'ar' ? 'جدة، المملكة العربية السعودية' : 'Jeddah, Saudi Arabia'}</p>
+            <p style="font-size: 14px;">3247 Al Ajawad St, Al Rabi'<br/>Jeddah 23462, Saudi Arabia</p>
           </div>`
         )
       )
@@ -42,47 +39,7 @@ const Map = () => {
     return () => {
       map.current?.remove();
     };
-  }, [isTokenSet, token, language]);
-
-  if (!isTokenSet) {
-    return (
-      <div className="w-full p-6 bg-card rounded-lg border">
-        <h3 className="text-lg font-semibold mb-4">
-          {language === 'ar' ? 'إعداد الخريطة' : 'Map Setup'}
-        </h3>
-        <p className="text-sm text-muted-foreground mb-4">
-          {language === 'ar' 
-            ? 'الرجاء إدخال رمز Mapbox العام الخاص بك لعرض الخريطة'
-            : 'Please enter your Mapbox public token to display the map'}
-        </p>
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            placeholder="pk.eyJ1..."
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            className="flex-1"
-          />
-          <Button onClick={() => setIsTokenSet(true)} disabled={!token}>
-            {language === 'ar' ? 'عرض الخريطة' : 'Show Map'}
-          </Button>
-        </div>
-        <p className="text-xs text-muted-foreground mt-2">
-          {language === 'ar' 
-            ? 'احصل على رمز من'
-            : 'Get your token from'}{' '}
-          <a 
-            href="https://account.mapbox.com/access-tokens/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            mapbox.com
-          </a>
-        </p>
-      </div>
-    );
-  }
+  }, [language]);
 
   return (
     <div className="relative w-full h-[400px] rounded-lg overflow-hidden border shadow-lg">
