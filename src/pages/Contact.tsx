@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import Map from "@/components/Map";
 
 const Contact = () => {
   const { t, language } = useLanguage();
@@ -157,6 +158,14 @@ const Contact = () => {
                 {language === "ar" ? "تواصل عبر واتساب" : "Contact via WhatsApp"}
               </Button>
             </div>
+          </div>
+
+          {/* Map Section */}
+          <div className="mt-12 max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-6 text-primary">
+              {language === "ar" ? "موقعنا" : "Our Location"}
+            </h2>
+            <Map />
           </div>
         </div>
       </div>
