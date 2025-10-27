@@ -15,8 +15,8 @@ const Map = () => {
     width: "100%"
   };
 
-  // TODO: Replace with your Google Maps API key from https://console.cloud.google.com/google/maps-apis
-  const googleMapsApiKey = "YOUR_GOOGLE_MAPS_API_KEY_HERE";
+  // Get Google Maps API key from environment variables
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "YOUR_GOOGLE_MAPS_API_KEY_HERE";
 
   return (
     <div className="relative w-full h-[400px] rounded-lg overflow-hidden border shadow-lg">
@@ -26,10 +26,10 @@ const Map = () => {
           zoom={15}
           center={center}
         >
-          <Marker 
+          <Marker
             position={center}
-            title={language === 'ar' 
-              ? 'عيادة سيليبريتي سمايل لطب الأسنان' 
+            title={language === 'ar'
+              ? 'عيادة ابتسامة المشاهير للأسنان'
               : 'Celebrity Smile Dental Clinic'}
           />
         </GoogleMap>

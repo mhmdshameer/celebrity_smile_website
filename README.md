@@ -20,21 +20,23 @@ If you want to work locally using your own IDE, you can clone this repo and push
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+## Setup Instructions
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Google Maps Integration
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+To enable the interactive map on the contact page, you'll need to set up a Google Maps API key:
 
-# Step 3: Install the necessary dependencies.
-npm i
+1. Go to [Google Cloud Console](https://console.cloud.google.com/google/maps-apis)
+2. Create a new project or select an existing one
+3. Enable the Maps JavaScript API
+4. Create credentials (API key)
+5. Copy your API key and create a `.env` file in the project root:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```env
+VITE_GOOGLE_MAPS_API_KEY=your_api_key_here
 ```
+
+6. The map will show the clinic location at: 3247 Al Ajawad St, Al Rabi', Jeddah 23462, Saudi Arabia
 
 **Edit a file directly in GitHub**
 

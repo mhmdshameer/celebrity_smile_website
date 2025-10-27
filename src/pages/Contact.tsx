@@ -14,7 +14,7 @@ const Contact = () => {
   const { t, language } = useLanguage();
 
   const handleWhatsAppContact = () => {
-    const phoneNumber = "966XXXXXXXXX"; // Replace with actual WhatsApp number
+    const phoneNumber = "966556005567"; // Correct WhatsApp number from Footer
     const message = encodeURIComponent(
       language === "ar"
         ? "مرحباً، أود الاستفسار عن خدماتكم"
@@ -105,9 +105,9 @@ const Contact = () => {
                         {language === "ar" ? "العنوان" : "Address"}
                       </p>
                       <p className="text-muted-foreground">
-                        {language === "ar" 
-                          ? "الرياض، المملكة العربية السعودية"
-                          : "Riyadh, Saudi Arabia"}
+                        {language === "ar"
+                          ? "3247 شارع العجواد، الرابية، جدة 23462، المملكة العربية السعودية"
+                          : "3247 Al Ajawad St, Al Rabi', Jeddah 23462, Saudi Arabia"}
                       </p>
                     </div>
                   </div>
@@ -118,7 +118,7 @@ const Contact = () => {
                       <p className="font-semibold">
                         {language === "ar" ? "الهاتف" : "Phone"}
                       </p>
-                      <p className="text-muted-foreground" dir="ltr">+966 XX XXX XXXX</p>
+                      <p className="text-muted-foreground" dir="ltr">+966 55 600 5567</p>
                     </div>
                   </div>
 
@@ -128,7 +128,7 @@ const Contact = () => {
                       <p className="font-semibold">
                         {language === "ar" ? "البريد الإلكتروني" : "Email"}
                       </p>
-                      <p className="text-muted-foreground">info@celebritysmile.com</p>
+                      <p className="text-muted-foreground">ce.sm.dental.1@gmail.com</p>
                     </div>
                   </div>
 
