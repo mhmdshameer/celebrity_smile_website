@@ -27,12 +27,40 @@ const Services = () => {
   return (
     <>
       <Navigation />
-      <div className="container mx-auto px-4 pt-20 pb-16">
-        <h1
-          className={`text-4xl md:text-5xl font-bold mb-4 text-primary ${language === "ar" ? "text-right" : "text-left"}`}
-        >
-          {language === "ar" ? "خدماتنا" : "Our Services"}
-        </h1>
+
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/services.jpg"
+            alt="Dental Services"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <section className="relative bg-background py-16">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
+              {language === "ar" ? "التميز في الرعاية الأسنان" : "Excellence in Dental Care"}
+            </h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
+              {language === "ar" ? "تقديم خدمات رعاية أسنان استثنائية" : "Providing Exceptional Dental Care Services"}
+            </h2>
+            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
+              {language === "ar"
+                ? "استمتع بمجموعة شاملة من خدمات طب الأسنان المصممة لتلبية جميع احتياجاتك. من الفحوصات الروتينية إلى العلاجات المتقدمة، نحن ملتزمون بتقديم أعلى مستويات الرعاية والاهتمام الشخصي."
+                : "Discover our comprehensive range of dental services designed to meet all your needs. From routine check-ups to advanced treatments, we're committed to providing the highest level of care and personal attention."
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 pt-16 pb-16">
         <Card className="mt-8">
           <CardHeader className={language === "ar" ? "text-right" : "text-left"}>
             <CardTitle>{language === "ar" ? "خدماتنا" : "Our Services"}</CardTitle>

@@ -36,18 +36,41 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <div className="flex-1 pt-20 pb-16">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
-            {t("contact")}
-          </h1>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            {language === "ar" 
-              ? "تواصل معنا للحصول على استشارة أو حجز موعد"
-              : "Get in touch with us for a consultation or to book an appointment"}
-          </p>
 
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/contact.jpg"
+            alt="Contact Us"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <section className="relative bg-background py-16">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
+              {language === "ar" ? "تواصل معنا" : "Contact Us"}
+            </h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
+              {language === "ar" ? "نحن هنا لمساعدتك" : "We're Here to Help"}
+            </h2>
+            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
+              {language === "ar"
+                ? "تواصل معنا للحصول على استشارة أو حجز موعد. فريقنا المتخصص جاهز للإجابة على جميع أسئلتك وتقديم أفضل الخدمات الطبية الأسنان."
+                : "Get in touch with us for a consultation or to book an appointment. Our specialized team is ready to answer all your questions and provide the best dental healthcare services."
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="flex-1 pt-16 pb-16">
+        <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Contact Form */}
             <Card>

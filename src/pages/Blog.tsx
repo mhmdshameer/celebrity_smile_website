@@ -74,17 +74,40 @@ const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
-          {t("blog")}
-        </h1>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          {language === "ar"
-            ? "اكتشف أحدث النصائح والمعلومات حول صحة الأسنان والعناية بالفم"
-            : "Discover the latest tips and information about dental health and oral care"}
-        </p>
 
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/blog.jpg"
+            alt="Dental Health Blog"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <section className="relative bg-background py-16">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
+              {language === "ar" ? "مدونة صحة الأسنان" : "Dental Health Blog"}
+            </h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
+              {language === "ar" ? "نصائح ومعلومات قيمة" : "Valuable Tips & Information"}
+            </h2>
+            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
+              {language === "ar"
+                ? "اكتشف أحدث النصائح والمعلومات حول صحة الأسنان والعناية بالفم. مقالاتنا المفيدة تغطي مجموعة واسعة من المواضيع لمساعدتك في الحفاظ على ابتسامة صحية وجميلة."
+                : "Discover the latest tips and information about dental health and oral care. Our informative articles cover a wide range of topics to help you maintain a healthy and beautiful smile."
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="flex-1 container mx-auto px-4 pt-16 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {blogPosts.map((post, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow flex flex-col">

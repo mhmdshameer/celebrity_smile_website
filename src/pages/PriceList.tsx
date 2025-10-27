@@ -58,17 +58,40 @@ const PriceList = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
-          {t("priceList")}
-        </h1>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          {language === "ar"
-            ? "أسعارنا الشفافة لجميع خدمات الأسنان. الأسعار قابلة للتغيير وقد تختلف حسب الحالة"
-            : "Our transparent pricing for all dental services. Prices are subject to change and may vary based on individual cases"}
-        </p>
 
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/pricelist.jpg"
+            alt="Transparent Pricing"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <section className="relative bg-background py-16">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
+              {language === "ar" ? "التسعير الشفاف" : "Transparent Pricing"}
+            </h1>
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
+              {language === "ar" ? "أسعار واضحة ومنافسة" : "Clear and Competitive Pricing"}
+            </h2>
+            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
+              {language === "ar"
+                ? "اكتشف أسعارنا الشفافة لجميع خدمات الأسنان. نحن ملتزمون بالتسعير العادل والتنافسي مع ضمان أعلى مستويات الجودة في جميع علاجاتنا."
+                : "Discover our transparent pricing for all dental services. We're committed to fair and competitive pricing while ensuring the highest quality in all our treatments."
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="flex-1 container mx-auto px-4 pt-16 pb-16">
         <div className="space-y-8 max-w-5xl mx-auto">
           {priceCategories.map((category, index) => (
             <Card key={index}>
