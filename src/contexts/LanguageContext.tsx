@@ -55,6 +55,20 @@ const translations = {
     happyPatients: "Happy Patients",
     expertDoctors: "Expert Doctors",
     successRate: "Success Rate",
+
+    // New Statistics Section
+    doctorsExperienceTitle: "Experience of our doctors",
+    doctorsExperienceDesc: "At Celebrity Smile Clinic, we redefine the dental care experience with solutions rooted in quality and innovation. Our professional team delivers exceptional care that elevates the standards of dentistry. We are committed to using the latest technologies and advancements to provide outstanding medical solutions, making us the top choice in the region.",
+
+    // Service Statistics
+    smileMakeoverCases: "Smile makeover case",
+    dentalImplants: "Dental implant",
+    clearAlignerCases: "Clear aligner case",
+
+    // Experience Statistics
+    yearsExcellence: "years of excellence",
+    certifiedDoctors: "Internationally certified doctors",
+    multilingualTeam: "Multilingual team",
     
     // Testimonials
     testimonials: "What Our Patients Say",
@@ -114,6 +128,20 @@ const translations = {
     happyPatients: "مريض سعيد",
     expertDoctors: "طبيب خبير",
     successRate: "معدل النجاح",
+
+    // New Statistics Section
+    doctorsExperienceTitle: "خبرة أطبائنا",
+    doctorsExperienceDesc: "في عيادة ابتسامة المشاهير، نعيد تعريف تجربة رعاية الأسنان بحلول متجذرة في الجودة والابتكار. يقدم فريقنا المهني رعاية استثنائية ترفع من معايير طب الأسنان. نحن ملتزمون باستخدام أحدث التقنيات والتطورات لتقديم حلول طبية متميزة، مما يجعلنا الخيار الأول في المنطقة.",
+
+    // Service Statistics
+    smileMakeoverCases: "حالات تجميل الابتسامة",
+    dentalImplants: "زراعة الأسنان",
+    clearAlignerCases: "حالات التقويم الشفاف",
+
+    // Experience Statistics
+    yearsExcellence: "سنوات من التميز",
+    certifiedDoctors: "أطباء معتمدون دولياً",
+    multilingualTeam: "فريق متعدد اللغات",
     
     // Testimonials
     testimonials: "ماذا يقول مرضانا",

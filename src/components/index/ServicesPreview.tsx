@@ -4,16 +4,32 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { type ServiceResponse } from "@/api/service";
+import { useEffect, useState } from "react";
+import { getServicesApi, type ServiceResponse } from "@/api/service";
 import favicon from "/favicon.png";
 
-interface ServicesPreviewProps {
-  services: ServiceResponse[];
-  loadingServices: boolean;
-}
-
-const ServicesPreview = ({ services, loadingServices }: ServicesPreviewProps) => {
+const ServicesPreview = () => {
   const { language } = useLanguage();
+  const [services, setServices] = useState<ServiceResponse[]>([]);
+  const [loadingServices, setLoadingServices] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const loadServices = async () => {
+      try {
+        setLoadingServices(true);
+        const list = await getServicesApi();
+        if (!mounted) return;
+        setServices(list);
+      } finally {
+        if (mounted) setLoadingServices(false);
+      }
+    };
+    loadServices();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <motion.section

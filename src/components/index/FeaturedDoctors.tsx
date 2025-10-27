@@ -4,16 +4,37 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { type DoctorResponse } from "@/api/doctor";
+import { useEffect, useState } from "react";
+import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 
 interface FeaturedDoctorsProps {
-  doctors: DoctorResponse[];
-  loadingDoctors: boolean;
-  t: (key: string) => string;
+  t?: (key: string) => string;
 }
 
-const FeaturedDoctors = ({ doctors, loadingDoctors, t }: FeaturedDoctorsProps) => {
+const FeaturedDoctors = ({ t }: FeaturedDoctorsProps) => {
   const { language } = useLanguage();
+  const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
+  const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        setLoadingDoctors(true);
+        const list = await getDoctorsApi();
+        if (!mounted) return;
+        setDoctors(list);
+      } catch (e) {
+        // silently ignore on home; could add toast if desired
+      } finally {
+        if (mounted) setLoadingDoctors(false);
+      }
+    };
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <motion.section
@@ -37,7 +58,7 @@ const FeaturedDoctors = ({ doctors, loadingDoctors, t }: FeaturedDoctorsProps) =
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {loadingDoctors && (
-              <p className="col-span-full text-center text-muted-foreground">{t("loading")}</p>
+              <p className="col-span-full text-center text-muted-foreground">{t ? t("loading") : "Loading..."}</p>
             )}
             {!loadingDoctors && doctors.length === 0 && (
               <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>

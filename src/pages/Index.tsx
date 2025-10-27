@@ -1,7 +1,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Phone,} from "lucide-react";
+import { Phone } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AboutSection from "@/components/index/AboutSection";
@@ -15,106 +15,18 @@ import WhyChooseUs from "@/components/index/WhyChooseUs";
 import DepartmentsPreview from "@/components/index/DepartmentsPreview";
 import BlogPreview from "@/components/index/BlogPreview";
 import { Link } from "react-router-dom";
-import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
-import { getServicesApi, type ServiceResponse } from "@/api/service";
 import { motion } from "framer-motion";
 import AppointmentForm from "@/components/AppointmentForm";
-import { getOffersApi, type OfferResponse } from "@/api/offer";
-import { getAllBlogs, type BlogPost } from "@/api/blog";
 
 // Real doctors will be fetched from API
 
 const Index = () => {
   const { t, language } = useLanguage();
-  const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
-  const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
-  const [services, setServices] = useState<ServiceResponse[]>([]);
-  const [loadingServices, setLoadingServices] = useState<boolean>(false);
-  const [offers, setOffers] = useState<OfferResponse[]>([]);
-  const [loadingOffers, setLoadingOffers] = useState<boolean>(false);
   const [appointmentFormOpen, setAppointmentFormOpen] = useState(false);
-  // Blog posts state kept for future use
-  const [, setBlogPosts] = useState<BlogPost[]>([]);
-
-  useEffect(() => {
-    let mounted = true;
-    const load = async () => {
-      try {
-        setLoadingDoctors(true);
-        const list = await getDoctorsApi();
-        if (!mounted) return;
-        setDoctors(list);
-      } catch (e) {
-        // silently ignore on home; could add toast if desired
-      } finally {
-        if (mounted) setLoadingDoctors(false);
-      }
-    };
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-    const loadServices = async () => {
-      try {
-        setLoadingServices(true);
-        const list = await getServicesApi();
-        if (!mounted) return;
-        setServices(list);
-      } finally {
-        if (mounted) setLoadingServices(false);
-      }
-    };
-    loadServices();
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const handleWhatsAppBooking = () => {
     setAppointmentFormOpen(true);
   };
-
-  useEffect(() => {
-    let mounted = true;
-    
-    const loadOffers = async () => {
-      try {
-        setLoadingOffers(true);
-        const list = await getOffersApi();
-        if (!mounted) return;
-        setOffers(list);
-      } catch (e) {
-        console.error('Failed to load offers:', e);
-      } finally {
-        if (mounted) setLoadingOffers(false);
-      }
-    };
-
-    const loadBlogs = async () => {
-      try {
-        const posts = await getAllBlogs();
-        if (!mounted) return;
-        // Store blog posts for potential future use
-        const publishedPosts = posts
-          .filter(post => post.published)
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setBlogPosts(publishedPosts);
-      } catch (e) {
-        console.error('Failed to load blog posts:', e);
-      }
-    };
-
-    loadOffers();
-    loadBlogs();
-    
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   return (
     <div
@@ -229,24 +141,13 @@ const Index = () => {
       />
 
       {/* Featured Doctors */}
-      <FeaturedDoctors
-        doctors={doctors}
-        loadingDoctors={loadingDoctors}
-        t={t}
-      />
+      <FeaturedDoctors t={t} />
 
       {/* Services Preview */}
-      <ServicesPreview
-        services={services}
-        loadingServices={loadingServices}
-      />
+      <ServicesPreview />
 
       {/* Special Offers Carousel */}
-      <SpecialOffers
-        offers={offers}
-        loadingOffers={loadingOffers}
-        language={language}
-      />
+      <SpecialOffers language={language} />
 
       {/* Departments Preview */}
       <DepartmentsPreview />

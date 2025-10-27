@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Carousel,
   CarouselContent,
@@ -10,15 +12,39 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { type OfferResponse } from "@/api/offer";
+import { getOffersApi, type OfferResponse } from "@/api/offer";
 
 interface SpecialOffersProps {
-  offers: OfferResponse[];
-  loadingOffers: boolean;
-  language: string;
+  language?: string;
 }
 
-const SpecialOffers = ({ offers, loadingOffers, language }: SpecialOffersProps) => {
+const SpecialOffers = ({ language: _language }: SpecialOffersProps) => {
+  const { language } = useLanguage();
+  const [offers, setOffers] = useState<OfferResponse[]>([]);
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadOffers = async () => {
+      try {
+        setLoadingOffers(true);
+        const list = await getOffersApi();
+        if (!mounted) return;
+        setOffers(list);
+      } catch (e) {
+        console.error('Failed to load offers:', e);
+      } finally {
+        if (mounted) setLoadingOffers(false);
+      }
+    };
+
+    loadOffers();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
   return (
     <motion.section
       className="py-20 bg-muted/20"
