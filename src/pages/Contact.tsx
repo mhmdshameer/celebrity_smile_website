@@ -36,7 +36,7 @@ const Contact = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 py-16">
+      <div className="flex-1 pt-20 pb-16">
         <div className="container mx-auto px-4 py-12">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
             {t("contact")}

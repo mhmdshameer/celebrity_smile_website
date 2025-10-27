@@ -2,13 +2,23 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const menuItems = [
     { key: "home", path: "/" },
@@ -23,12 +33,24 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <nav className={cn(
+      "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+      isScrolled
+        ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        : "bg-transparent"
+    )}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-14 w-auto" />
+            <img
+              src="/CSDC-LOGO.png"
+              alt="CSDC Logo"
+              className={cn(
+                "h-16 w-auto transition-all duration-300",
+                !isScrolled && "drop-shadow-lg"
+              )}
+            />
             {/* <span className="text-2xl font-bold text-primary">Celebrity Smile</span> */}
           </Link>
 
@@ -41,8 +63,9 @@ const Navigation = () => {
                   <Button 
                     variant="ghost" 
                     className={cn(
-                      "text-sm",
-                      isActive && "bg-primary/10 text-primary font-semibold"
+                      "text-sm transition-colors",
+                      isActive && "bg-primary/10 text-primary font-semibold",
+                      !isScrolled && "text-white hover:bg-white/20 hover:text-white"
                     )}
                   >
                     {t(item.key)}
@@ -57,6 +80,10 @@ const Navigation = () => {
             <Button
               variant="outline"
               size="sm"
+              className={cn(
+                "transition-colors",
+                !isScrolled && "border-white/30  hover:bg-white/20 hover:border-white/50"
+              )}
               onClick={() => setLanguage(language === "en" ? "ar" : "en")}
             >
               {language === "en" ? "العربية" : "English"}
@@ -66,7 +93,10 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className={cn(
+                "md:hidden transition-colors",
+                !isScrolled && "text-white hover:bg-white/20 hover:text-white"
+              )}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <Menu className="h-5 w-5" />
@@ -76,7 +106,10 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-2">
+          <div className={cn(
+            "md:hidden py-4 space-y-2",
+            !isScrolled && "bg-black/80 backdrop-blur-sm"
+          )}>
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
@@ -86,11 +119,12 @@ const Navigation = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block"
                 >
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className={cn(
-                      "w-full justify-start",
-                      isActive && "bg-primary/10 text-primary font-semibold"
+                      "w-full justify-start transition-colors",
+                      isActive && "bg-primary/10 text-primary font-semibold",
+                      !isScrolled && "text-white hover:bg-white/20 hover:text-white"
                     )}
                   >
                     {t(item.key)}

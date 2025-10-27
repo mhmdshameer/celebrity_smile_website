@@ -55,7 +55,7 @@ const Departments = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 container mx-auto px-4 py-16">
+      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
           {t("departments")}
         </h1>

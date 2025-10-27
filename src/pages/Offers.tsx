@@ -44,7 +44,7 @@ const Offers = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 container mx-auto px-4 py-16">
+      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
           {t("offers")}
         </h1>
@@ -92,7 +92,7 @@ const Offers = () => {
                       />
                     </div>
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-white">
                         <Calendar className="h-4 w-4" />
@@ -109,7 +109,7 @@ const Offers = () => {
                     <p className="mt-1 text-sm font-medium text-white">
                       {formatDate(offer.offerEndDate)}
                     </p>
-                  </div>
+                  </div> */}
                   {!expired && (
                     <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/5" />
                   )}
