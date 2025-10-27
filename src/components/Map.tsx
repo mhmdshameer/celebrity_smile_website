@@ -1,49 +1,39 @@
-import React, { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React from 'react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Map = () => {
   const { language } = useLanguage();
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
 
-  useEffect(() => {
-    if (!mapContainer.current) return;
+  const center = {
+    lat: 21.5917608,
+    lng: 39.233263
+  };
 
-    // TODO: Replace with your Mapbox public token from https://account.mapbox.com/access-tokens/
-    mapboxgl.accessToken = 'YOUR_MAPBOX_PUBLIC_TOKEN_HERE';
-    
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: [39.233263, 21.5917608], // 3247 Al Ajawad St, Al Rabi', Jeddah 23462, Saudi Arabia
-      zoom: 15,
-    });
+  const mapStyles = {
+    height: "400px",
+    width: "100%"
+  };
 
-    // Add marker for Celebrity Smile Dental Clinic
-    new mapboxgl.Marker({ color: '#0EA5E9' })
-      .setLngLat([39.233263, 21.5917608])
-      .setPopup(
-        new mapboxgl.Popup().setHTML(
-          `<div style="padding: 8px;">
-            <h3 style="font-weight: bold; margin-bottom: 4px;">Celebrity Smile Dental Clinic</h3>
-            <p style="font-size: 14px;">3247 Al Ajawad St, Al Rabi'<br/>Jeddah 23462, Saudi Arabia</p>
-          </div>`
-        )
-      )
-      .addTo(map.current);
-
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    return () => {
-      map.current?.remove();
-    };
-  }, [language]);
+  // TODO: Replace with your Google Maps API key from https://console.cloud.google.com/google/maps-apis
+  const googleMapsApiKey = "YOUR_GOOGLE_MAPS_API_KEY_HERE";
 
   return (
     <div className="relative w-full h-[400px] rounded-lg overflow-hidden border shadow-lg">
-      <div ref={mapContainer} className="absolute inset-0" />
+      <LoadScript googleMapsApiKey={googleMapsApiKey}>
+        <GoogleMap
+          mapContainerStyle={mapStyles}
+          zoom={15}
+          center={center}
+        >
+          <Marker 
+            position={center}
+            title={language === 'ar' 
+              ? 'عيادة سيليبريتي سمايل لطب الأسنان' 
+              : 'Celebrity Smile Dental Clinic'}
+          />
+        </GoogleMap>
+      </LoadScript>
     </div>
   );
 };
