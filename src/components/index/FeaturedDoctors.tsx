@@ -1,33 +1,28 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
+import Slider from "react-slick"; 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-interface FeaturedDoctorsProps {
-  t?: (key: string) => string;
-}
-
-const FeaturedDoctors = ({ t }: FeaturedDoctorsProps) => {
+const FeaturedDoctors = () => {
   const { language } = useLanguage();
   const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
-  const [loadingDoctors, setLoadingDoctors] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let mounted = true;
     const load = async () => {
       try {
-        setLoadingDoctors(true);
+        setLoading(true);
         const list = await getDoctorsApi();
-        if (!mounted) return;
-        setDoctors(list);
-      } catch (e) {
-        // silently ignore on home; could add toast if desired
+        if (mounted) setDoctors(list);
       } finally {
-        if (mounted) setLoadingDoctors(false);
+        if (mounted) setLoading(false);
       }
     };
     load();
@@ -36,56 +31,111 @@ const FeaturedDoctors = ({ t }: FeaturedDoctorsProps) => {
     };
   }, []);
 
+  // Slider settings
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3500,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
+  };
+
+  const title =
+    language === "ar"
+      ? "تعرف على فريق أطباء الأسنان المحترفين لدينا"
+      : "Meet Our Team of Professional Dentists";
+
+  const subtitle =
+    language === "ar"
+      ? "يضم فريقنا نخبة من أطباء الأسنان ذوي الخبرة العالية، المكرسين لتقديم أفضل رعاية لابتسامتك."
+      : "Our team of highly experienced dentists is dedicated to providing exceptional care and creating your perfect smile.";
+
   return (
     <motion.section
-      className="py-20"
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      className="py-24 bg-background"
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: false, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>
-              Meet Our Doctors
-            </h2>
-            <Link to="/doctors">
-              <Button variant="default">
-                View All Doctors <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {loadingDoctors && (
-              <p className="col-span-full text-center text-muted-foreground">{t ? t("loading") : "Loading..."}</p>
-            )}
-            {!loadingDoctors && doctors.length === 0 && (
-              <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>
-            )}
-            {!loadingDoctors && doctors.slice(0, 6).map((d) => {
-              const displayName = language === "ar" ? d.nameAr : d.name;
-              const displaySpecsArr = language === "ar" ? (d.specialtiesAr ?? []) : (d.specialties ?? []);
-              const displaySpec = displaySpecsArr[0] ?? "";
-              const imgSrc = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+      <div className="container mx-auto px-6 md:px-10">
+        {/* Header */}
+        <div
+          className={`text-center max-w-3xl mx-auto mb-16 ${
+            language === "ar" ? "text-right" : "text-center"
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-4">
+            {title}
+          </h2>
+          <p className="text-muted-foreground font-semibold text-lg">{subtitle}</p>
+        </div>
+
+        {/* Slider */}
+        {loading ? (
+          <p className="text-center text-muted-foreground">
+            {language === "ar" ? "جاري التحميل..." : "Loading..."}
+          </p>
+        ) : doctors.length === 0 ? (
+          <p className="text-center text-muted-foreground">
+            {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
+          </p>
+        ) : (
+          <Slider {...settings}>
+            {doctors.map((d) => {
+              const name = language === "ar" ? d.nameAr : d.name;
+              const specs = language === "ar" ? d.specialtiesAr : d.specialties;
+              const specialization = specs?.[0] ?? "";
+              const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+
               return (
-                <Card key={d._id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={imgSrc}
-                      alt={displayName}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
+                <motion.div
+                  key={d._id}
+                  className="px-4"
+                  initial={{ opacity: 0, x: language === "ar" ? 100 : -100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <div className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 text-center border border-gray-100">
+                    <div className="overflow-hidden">
+                      <img
+                        src={img}
+                        alt={name}
+                        className="w-full h-[380px] object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2 text-pink-500">{name}</h3>
+                      {specialization && (
+                        <p className="text-muted-foreground font-semibold text-pink-500">{specialization}</p>
+                      )}
+                    </div>
                   </div>
-                  <CardContent className="p-6 text-center">
-                    <h3 className="text-xl font-semibold mb-2">{displayName}</h3>
-                    {displaySpec && <p className="text-muted-foreground">{displaySpec}</p>}
-                  </CardContent>
-                </Card>
+                </motion.div>
               );
             })}
-          </div>
+          </Slider>
+        )}
+
+        {/* Button */}
+        <div
+          className={`flex justify-center mt-12 ${
+            language === "ar" ? "flex-row-reverse" : ""
+          }`}
+        >
+          <Link to="/doctors">
+            <Button className="text-lg px-6 py-5">
+              {language === "ar" ? "عرض جميع الأطباء" : "View All Doctors"}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </motion.section>

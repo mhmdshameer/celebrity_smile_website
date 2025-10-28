@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-interface AboutSectionProps {
-  className?: string;
-}
 
-const AboutSection = ({ className }: AboutSectionProps) => {
+const AboutSection = () => {
   const { language } = useLanguage();
 
   // Texts in English and Arabic
@@ -21,7 +18,7 @@ const AboutSection = ({ className }: AboutSectionProps) => {
 
   return (
     <section
-      className={`py-24 bg-background transition-all duration-500 ${className || ""}`}
+      className={`py-24 bg-background transition-all duration-500`}
     >
       <div className="container mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
         {/* 🖼️ Image */}

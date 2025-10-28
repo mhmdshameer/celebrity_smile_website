@@ -135,12 +135,14 @@ const Index = () => {
       </section>
 
          {/* Statistics Section */}
-      <StatisticsSection t={t} />
+      <StatisticsSection 
+      t={t}
+       className={appointmentFormOpen ? 'mt-60' : ''}
+      />
 
       {/* About Section */}
       <AboutSection
-        t={t}
-        className={appointmentFormOpen ? 'mt-60' : ''}
+       
       />
 
       {/* Featured Doctors */}

@@ -1,17 +1,16 @@
-import { useLanguage } from "@/contexts/LanguageContext";
 import { Users, Clock, Shield, Globe, StarIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface StatisticsSectionProps {
   t: (key: string) => string;
+  className?: string;
 }
 
-const StatisticsSection = ({ t }: StatisticsSectionProps) => {
-  const { language } = useLanguage();
+const StatisticsSection = ({ t, className }: StatisticsSectionProps) => {
 
   return (
     <motion.section
-      className="py-20"
+      className={`py-20 ${className || ""}`}
       initial={{ opacity: 0, y: -50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.2 }}
