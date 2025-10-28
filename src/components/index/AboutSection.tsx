@@ -49,7 +49,7 @@ const AboutSection = () => {
               : "items-start text-left"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent leading-tight">
             {title}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">

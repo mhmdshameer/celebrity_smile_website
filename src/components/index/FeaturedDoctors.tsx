@@ -58,7 +58,7 @@ const FeaturedDoctors = () => {
 
   return (
     <motion.section
-      className="py-24 bg-background"
+      className="py-16 bg-background"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -71,7 +71,7 @@ const FeaturedDoctors = () => {
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4">
             {title}
           </h2>
           <p className="text-muted-foreground font-semibold text-lg">{subtitle}</p>

@@ -26,7 +26,7 @@ const StatisticsSection = ({ t, className }: StatisticsSectionProps) => {
             <span className="text-2xl">
               <StarIcon/>
             </span>
-            <h2 className="text-5xl font-bold text-primary mx-4">
+            <h2 className="text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mx-4">
               {t("doctorsExperienceTitle")}
             </h2>
             <span className="text-2xl">

@@ -54,7 +54,7 @@ const ServicesPreview = () => {
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4">
             {title}
           </h2>
           <p className="text-muted-foreground text-lg">{subtitle}</p>

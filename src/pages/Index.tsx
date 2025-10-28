@@ -142,8 +142,10 @@ const Index = () => {
 
       {/* About Section */}
       <AboutSection
-       
       />
+
+        {/* Why Choose Us */}
+      <WhyChooseUs />
 
       {/* Featured Doctors */}
       <FeaturedDoctors />
@@ -160,9 +162,6 @@ const Index = () => {
       {/* Blog Preview */}
       <BlogPreview />
 
-      {/* Why Choose Us */}
-      <WhyChooseUs />
-
       {/* Testimonials */}
       <TestimonialsSection t={t} />
 
@@ -171,16 +170,27 @@ const Index = () => {
 
       {/* Final CTA */}
       <motion.section 
-        className="py-20 bg-gradient-to-r from-primary/10 to-primary/5"
+        className="relative py-24 overflow-hidden -mb-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <div className="container mx-auto px-4">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 -z-10">
+          <img 
+            src="/bg.jpg" 
+            alt="" 
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">{t("readyToSmile")}</h2>
-            <p className="text-lg text-muted-foreground mb-8">{t("ctaDescription")}</p>
+            <h2 className="text-4xl font-bold text-primary mb-4">{t("readyToSmile")}</h2>
+            <p className="text-lg text-primary mb-8">{t("ctaDescription")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" onClick={handleWhatsAppBooking}>
                 <Phone className="mr-2 h-5 w-5" />
