@@ -1,73 +1,73 @@
+// -----------------------------
+// Types
+// -----------------------------
+
 export interface ServiceResponse {
   _id: string;
   service: string;
   serviceAr: string;
   description: string;
   descriptionAr: string;
-  servicePrice: number;
+  serviceImage: {
+    url: string;
+    public_id: string;
+  };
   slug?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
+// When creating a service, image file is required
 export interface NewServicePayload {
   service: string;
   serviceAr: string;
   description: string;
   descriptionAr: string;
-  servicePrice: number;
-  file?: File; // optional image file if backend expects it as 'image'
+  file: File; // actual image file (required)
 }
 
+// When updating, image file is optional
 export interface UpdateServicePayload {
   service?: string;
   serviceAr?: string;
   description?: string;
   descriptionAr?: string;
-  servicePrice?: number;
+  file?: File | null; // optional new image file
 }
 
-const API_BASE = "http://localhost:5000";
+// -----------------------------
+// API Base URL
+// -----------------------------
 
-// Create service (multipart if file provided)
+const API_BASE = "http://localhost:5000"; // adjust if needed
+
+// -----------------------------
+// API Functions
+// -----------------------------
+
+// 🟢 CREATE Service (multipart/form-data)
 export async function addServiceApi(payload: NewServicePayload): Promise<ServiceResponse> {
-  // If an image file is provided, send multipart/form-data; otherwise, send JSON
-  if (payload.file) {
-    const form = new FormData();
-    form.append("service", payload.service);
-    form.append("serviceAr", payload.serviceAr);
-    form.append("description", payload.description);
-    form.append("descriptionAr", payload.descriptionAr);
-    form.append("servicePrice", String(payload.servicePrice));
-    form.append("image", payload.file);
-
-    const res = await fetch(`${API_BASE}/service`, { method: "POST", body: form });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(`Failed to add service: ${res.status} ${text}`);
-    }
-    return res.json();
-  }
+  const form = new FormData();
+  form.append("service", payload.service);
+  form.append("serviceAr", payload.serviceAr);
+  form.append("description", payload.description);
+  form.append("descriptionAr", payload.descriptionAr);
+  form.append("image", payload.file); // backend expects 'image' key
 
   const res = await fetch(`${API_BASE}/service`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      service: payload.service,
-      serviceAr: payload.serviceAr,
-      description: payload.description,
-      descriptionAr: payload.descriptionAr,
-      servicePrice: payload.servicePrice,
-    }),
+    body: form,
   });
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`Failed to add service: ${res.status} ${text}`);
   }
+
   return res.json();
 }
 
-// Read - list services
+// 🟡 READ - All Services
 export async function getServicesApi(): Promise<ServiceResponse[]> {
   const res = await fetch(`${API_BASE}/service`);
   if (!res.ok) {
@@ -77,7 +77,7 @@ export async function getServicesApi(): Promise<ServiceResponse[]> {
   return res.json();
 }
 
-// Read - single service
+// 🟡 READ - Single Service
 export async function getServiceApi(id: string): Promise<ServiceResponse> {
   const res = await fetch(`${API_BASE}/service/${id}`);
   if (!res.ok) {
@@ -87,21 +87,51 @@ export async function getServiceApi(id: string): Promise<ServiceResponse> {
   return res.json();
 }
 
-// Update service (JSON body)
+// 🟠 UPDATE Service (multipart if image, JSON otherwise)
 export async function updateServiceApi(id: string, payload: UpdateServicePayload): Promise<ServiceResponse> {
+  // If a new image file is provided, send multipart/form-data
+  if (payload.file) {
+    const form = new FormData();
+    if (payload.service) form.append("service", payload.service);
+    if (payload.serviceAr) form.append("serviceAr", payload.serviceAr);
+    if (payload.description) form.append("description", payload.description);
+    if (payload.descriptionAr) form.append("descriptionAr", payload.descriptionAr);
+    form.append("image", payload.file);
+
+    const res = await fetch(`${API_BASE}/service/${id}`, {
+      method: "PUT",
+      body: form,
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Failed to update service: ${res.status} ${text}`);
+    }
+
+    return res.json();
+  }
+
+  // Otherwise send JSON (no image change)
   const res = await fetch(`${API_BASE}/service/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      service: payload.service,
+      serviceAr: payload.serviceAr,
+      description: payload.description,
+      descriptionAr: payload.descriptionAr,
+    }),
   });
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`Failed to update service: ${res.status} ${text}`);
   }
+
   return res.json();
 }
 
-// Delete service
+// 🔴 DELETE Service
 export async function deleteServiceApi(id: string): Promise<void> {
   const res = await fetch(`${API_BASE}/service/${id}`, { method: "DELETE" });
   if (!res.ok) {

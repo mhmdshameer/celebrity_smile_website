@@ -15,8 +15,11 @@ export type ServiceFormValues = {
   serviceAr: string;
   description: string;
   descriptionAr: string;
-  servicePrice: number | "";
-//   file?: File | null;
+  serviceImage: {
+    url: string;
+    public_id: string;
+  };
+  file?: File | null;
 };
 
 export function ServiceForm({
@@ -37,8 +40,11 @@ export function ServiceForm({
     serviceAr: "",
     description: "",
     descriptionAr: "",
-    servicePrice: "",
-    // file: null,
+    serviceImage: {
+      url: "",
+      public_id: "",
+    },
+    file: null,
   });
 
   useEffect(() => {
@@ -49,18 +55,17 @@ export function ServiceForm({
         serviceAr: "",
         description: "",
         descriptionAr: "",
-        servicePrice: "",
+        serviceImage: {
+          url: "",
+          public_id: "",
+        },
         // file: null,
       });
   }, [initialValues, open]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const priceNum =
-      typeof values.servicePrice === "string"
-        ? Number(values.servicePrice)
-        : values.servicePrice;
-    onSubmit({ ...values, servicePrice: priceNum });
+    onSubmit({ ...values });
   };
 
   return (
@@ -121,18 +126,14 @@ export function ServiceForm({
           </div>
 
           <div>
-            <Label htmlFor="servicePrice">Service Price</Label>
+            <Label htmlFor="serviceImage">Service Image</Label>
             <Input
-              id="servicePrice"
-              type="number"
-              step="0.01"
-              value={values.servicePrice}
+              id="serviceImage"
+              type="file"
+              accept="image/*"
               onChange={(e) => {
-                const val = e.target.value;
-                setValues((v) => ({
-                  ...v,
-                  servicePrice: val === "" ? "" : Number(val),
-                }));
+                const f = e.target.files && e.target.files[0] ? e.target.files[0] : null;
+                setValues((v) => ({ ...v, file: f }));
               }}
               required
             />

@@ -134,6 +134,9 @@ const Index = () => {
         )}
       </section>
 
+         {/* Statistics Section */}
+      <StatisticsSection t={t} />
+
       {/* About Section */}
       <AboutSection
         t={t}
@@ -154,9 +157,6 @@ const Index = () => {
 
       {/* Blog Preview */}
       <BlogPreview />
-
-      {/* Statistics Section */}
-      <StatisticsSection t={t} />
 
       {/* Why Choose Us */}
       <WhyChooseUs />
