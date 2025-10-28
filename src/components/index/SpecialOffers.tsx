@@ -1,107 +1,128 @@
-import { Card } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { getOffersApi, type OfferResponse } from "@/api/offer";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { getOffersApi, type OfferResponse } from "@/api/offer";
 
-interface SpecialOffersProps {
-  language?: string;
-}
-
-const SpecialOffers = ({ language: _language }: SpecialOffersProps) => {
+const SpecialOffers = () => {
   const { language } = useLanguage();
   const [offers, setOffers] = useState<OfferResponse[]>([]);
-  const [loadingOffers, setLoadingOffers] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-
     const loadOffers = async () => {
       try {
-        setLoadingOffers(true);
+        setLoading(true);
         const list = await getOffersApi();
-        if (!mounted) return;
-        setOffers(list);
-      } catch (e) {
-        console.error('Failed to load offers:', e);
+        if (mounted) setOffers(list);
       } finally {
-        if (mounted) setLoadingOffers(false);
+        if (mounted) setLoading(false);
       }
     };
-
     loadOffers();
-
     return () => {
       mounted = false;
     };
   }, []);
+
+  // Change every 6 seconds instead of 3
+  useEffect(() => {
+    if (offers.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % offers.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [offers]);
+
+  const currentOffer = offers[currentIndex];
+
+  // Text translations
+  const title =
+    language === "ar"
+      ? "اكتشف العروض الحصرية التي تجعل ابتسامتك أكثر إشراقًا وصحة"
+      : "Discover Exclusive Dental Offers That Make Your Smile Brighter and Healthier";
+
+  const description =
+    language === "ar"
+      ? "نقدم لمرضانا أفضل الخصومات والعروض على العلاجات السنية. من تبييض الأسنان إلى تجميل الابتسامة، نقدم لك باقات خاصة مصممة خصيصًا لك. لمعرفة المزيد من العروض، تفضل بزيارة صفحة العروض."
+      : "We’re offering our patients the best discounts and treatment packages for their dental care. From teeth whitening to cosmetic dentistry, we bring you great deals designed just for you. To see more offers, please visit our offers page.";
+
+  const isArabic = language === "ar";
+
   return (
     <motion.section
-      className="py-20 bg-muted/20"
+      className="py-24 bg-background"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>
-              Special Offers
-            </h2>
-            <Link to="/offers">
-              <Button variant="default">
-                View All Offers <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          {loadingOffers ? (
-            <div className="text-center py-12">Loading offers...</div>
+      <div
+        className={`container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-12 ${
+          isArabic ? "md:flex-row-reverse text-right" : ""
+        }`}
+      >
+        {/* Text Section */}
+        <div className={`${isArabic ? "order-2" : "order-1"}`}>
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-6 text-primary leading-snug"
+            initial={{ opacity: 0, x: isArabic ? 100 : -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            {title}
+          </motion.h2>
+          <motion.p
+            className="text-muted-foreground text-lg mb-8 max-w-xl"
+            initial={{ opacity: 0, x: isArabic ? 100 : -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9 }}
+          >
+            {description}
+          </motion.p>
+
+          <Link to="/offers" className={`${isArabic ? "flex justify-end" : ""}`}>
+            <Button size="lg">
+              {isArabic ? "عرض جميع العروض" : "View All Offers"}
+              <ArrowRight
+                className={`ml-2 h-5 w-5 transition-transform ${
+                  isArabic ? "rotate-180 mr-2 ml-0" : ""
+                }`}
+              />
+            </Button>
+          </Link>
+        </div>
+
+        {/* Image Section */}
+        <div
+          className={`relative w-full h-[380px] md:h-[460px] rounded-2xl overflow-hidden shadow-lg border border-border/30 bg-muted/20 ${
+            isArabic ? "order-1" : "order-2"
+          }`}
+        >
+          {loading ? (
+            <div className="flex items-center justify-center h-full text-muted-foreground">
+              {isArabic ? "جارٍ تحميل العروض..." : "Loading offers..."}
+            </div>
           ) : offers.length > 0 ? (
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                {offers.map((offer) => (
-                  <CarouselItem key={offer._id} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-2">
-                      <Card className="overflow-hidden h-full flex flex-col hover:shadow-lg transition-shadow">
-                        <div className="h-80 bg-muted/50 flex items-center justify-center overflow-hidden p-2">
-                          {offer.offerPoster?.url ? (
-                            <img
-                              src={offer.offerPoster.url}
-                              alt="Special Offer"
-                              className="h-full w-full object-contain"
-                            />
-                          ) : (
-                            <div className="text-muted-foreground">No image available</div>
-                          )}
-                        </div>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-2 md:left-4" />
-              <CarouselNext className="right-2 md:right-4" />
-            </Carousel>
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentOffer?._id}
+                src={currentOffer?.offerPoster?.url || "https://via.placeholder.com/800x600"}
+                alt={isArabic ? "عرض خاص" : "Special Offer"}
+                className="absolute inset-0 w-full h-full object-contain bg-white"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2 }}
+              />
+            </AnimatePresence>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              No special offers available at the moment.
+            <div className="flex items-center justify-center h-full text-muted-foreground">
+              {isArabic ? "لا توجد عروض متاحة حاليًا" : "No offers available."}
             </div>
           )}
         </div>

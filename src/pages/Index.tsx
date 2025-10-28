@@ -152,7 +152,7 @@ const Index = () => {
       <ServicesPreview />
 
       {/* Special Offers Carousel */}
-      <SpecialOffers language={language} />
+      <SpecialOffers />
 
       {/* Departments Preview */}
       <DepartmentsPreview />
