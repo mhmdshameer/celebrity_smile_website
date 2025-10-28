@@ -146,7 +146,7 @@ const Index = () => {
       />
 
       {/* Featured Doctors */}
-      <FeaturedDoctors t={t} />
+      <FeaturedDoctors />
 
       {/* Services Preview */}
       <ServicesPreview />

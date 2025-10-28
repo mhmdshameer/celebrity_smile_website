@@ -6,95 +6,141 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getServicesApi, type ServiceResponse } from "@/api/service";
-import favicon from "/favicon.png";
 
 const ServicesPreview = () => {
   const { language } = useLanguage();
   const [services, setServices] = useState<ServiceResponse[]>([]);
-  const [loadingServices, setLoadingServices] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-    const loadServices = async () => {
+    const load = async () => {
       try {
-        setLoadingServices(true);
+        setLoading(true);
         const list = await getServicesApi();
-        if (!mounted) return;
-        setServices(list);
+        if (mounted) setServices(list);
       } finally {
-        if (mounted) setLoadingServices(false);
+        if (mounted) setLoading(false);
       }
     };
-    loadServices();
+    load();
     return () => {
       mounted = false;
     };
   }, []);
 
+  const title =
+    language === "ar"
+      ? "خدماتنا المتميزة"
+      : "Our Specialized Dental Services";
+
+  const subtitle =
+    language === "ar"
+      ? "نقدم مجموعة متكاملة من خدمات طب الأسنان لضمان ابتسامتك المثالية."
+      : "We offer a comprehensive range of dental services designed to give you the perfect smile.";
+
   return (
     <motion.section
-      className="py-20 bg-muted/50"
-      initial={{ opacity: 0, x: -100 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      className="py-24 bg-background"
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className={`text-4xl font-bold text-primary ${language === "ar" ? "pr-5" : "pl-5"}`}>
-              Our Services
-            </h2>
-            <Link to="/services">
-              <Button variant="default">
-                View All Services <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-          <div className="relative overflow-hidden">
-            {loadingServices && (
-              <Card className="p-6 text-center">
-                <div className="text-muted-foreground">Loading...</div>
-              </Card>
-            )}
-            {!loadingServices && services.length > 0 && (
-              <div className="flex gap-4 w-max"
-                   style={{
-                     animation: `scroll 30s linear infinite`,
-                     animationDirection: (language === "ar" ? "reverse" : "normal") as "normal" | "reverse",
-                   }}>
-                {[...services, ...services].slice(0, Math.max(services.length * 2, 8)).map((s) => {
-                  const title = language === "ar" ? s.serviceAr : s.service;
-                  const desc = language === "ar" ? s.descriptionAr : s.description;
-                  return (
-                    <Card key={`${s._id}-${title}`}
-                          className="p-5 flex-none w-[280px] sm:w-[320px] border-primary/10 hover:border-primary/30 hover:shadow-lg transition-all duration-200 group bg-background/50 backdrop-blur-sm">
-                      <div className="flex items-start gap-4">
-                        <div className="h-10 w-10 shrink-0 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
-                          <img
-                            src={favicon}
-                            alt="Service Icon"
-                            className="h-6 w-6 object-contain"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-base font-semibold mb-1">{title}</h3>
-                          <p className="text-sm text-muted-foreground line-clamp-3">{desc}</p>
-                        </div>
-                        <ArrowRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+      <div className="container mx-auto px-6 md:px-10">
+        {/* Header */}
+        <div
+          className={`text-center max-w-3xl mx-auto mb-16 ${
+            language === "ar" ? "text-right" : "text-center"
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent mb-4">
+            {title}
+          </h2>
+          <p className="text-muted-foreground text-lg">{subtitle}</p>
+        </div>
+
+        {/* Services showcase */}
+        <div className="relative overflow-hidden">
+          {loading ? (
+            <div className="text-center text-muted-foreground text-lg py-10">
+              {language === "ar" ? "جاري التحميل..." : "Loading..."}
+            </div>
+          ) : services.length > 0 ? (
+            <div
+              className="flex gap-6 w-max"
+              style={{
+                animation: `scroll 40s linear infinite`,
+                animationDirection:
+                  (language === "ar" ? "reverse" : "normal") as
+                    | "normal"
+                    | "reverse",
+              }}
+            >
+              {[...services, ...services].slice(0, 10).map((s) => {
+                const title = language === "ar" ? s.serviceAr : s.service;
+                const desc =
+                  language === "ar" ? s.descriptionAr : s.description;
+                const img =
+                  s.serviceImage?.url ||
+                  "https://via.placeholder.com/600x400?text=Dental+Service";
+
+                return (
+                  <motion.div
+                    key={`${s._id}-${title}`}
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="relative flex-none w-[320px] md:w-[400px] h-[300px] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
+                      <img
+                        src={img}
+                        alt={title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 text-white">
+                        <h3 className="text-xl font-semibold mb-2">
+                          {title}
+                        </h3>
+                        <p className="text-sm opacity-90 line-clamp-2">
+                          {desc}
+                        </p>
                       </div>
                     </Card>
-                  );
-                })}
-              </div>
-            )}
-            <style>{`
-              @keyframes scroll {
-                from { transform: translateX(0); }
-                to { transform: translateX(-50%); }
-              }
-            `}</style>
-          </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center text-muted-foreground py-10">
+              {language === "ar"
+                ? "لا توجد خدمات متاحة حاليًا."
+                : "No services available yet."}
+            </div>
+          )}
+
+          {/* scroll animation */}
+          <style>{`
+            @keyframes scroll {
+              from { transform: translateX(0); }
+              to { transform: translateX(-50%); }
+            }
+          `}</style>
+        </div>
+
+        {/* View All Button */}
+        <div
+          className={`flex justify-center mt-16 ${
+            language === "ar" ? "flex-row-reverse" : ""
+          }`}
+        >
+          <Link to="/services">
+            <Button size="lg" className="text-lg px-8 py-5">
+              {language === "ar" ? "عرض جميع الخدمات" : "View All Services"}
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </motion.section>
