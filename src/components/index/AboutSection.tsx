@@ -1,52 +1,66 @@
-import { useLanguage } from "@/contexts/LanguageContext";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AboutSectionProps {
-  t: (key: string) => string;
   className?: string;
 }
 
-const AboutSection = ({ t, className }: AboutSectionProps) => {
+const AboutSection = ({ className }: AboutSectionProps) => {
+  const { language } = useLanguage();
+
+  // Texts in English and Arabic
+  const title =
+    language === "ar"
+      ? "نقدم رعاية أسنان استثنائية بأحدث التقنيات"
+      : "Offering Exceptional Dental Care with the Latest Technology";
+
+  const description =
+    language === "ar"
+      ? "نحن ملتزمون بتوفير تجربة علاجية متميزة تجمع بين التكنولوجيا الحديثة والخبرة الواسعة، لتقديم رعاية فموية شاملة ومخصصة لكل مريض. فريقنا من الأطباء المتخصصين يسعى دائمًا لتحقيق ابتسامة صحية وجميلة تدوم طويلاً."
+      : "We are committed to providing a premium dental experience that combines modern technology and expert care. Our team of specialists delivers personalized treatments designed to ensure a healthy, confident smile for every patient.";
+
   return (
-    <motion.section
-      className={`py-20 transition-all duration-500 ${className || ''}`}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+    <section
+      className={`py-24 bg-background transition-all duration-500 ${className || ""}`}
     >
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-primary">
-            {t("aboutTitle")}
+      <div className="container mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
+        {/* 🖼️ Image */}
+        <motion.div
+          initial={{ opacity: 0, x: -120 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: false, amount: 0.3 }}
+          className="w-full md:w-1/2 flex justify-center"
+        >
+          <img
+            src="/CLINIC PHOTO.jpeg"
+            alt={language === "ar" ? "عيادة سيليبريتي سمايل" : "Celebrity Smile Clinic"}
+            loading="lazy"
+            className="w-[500px] h-[500px] object-cover rounded-2xl shadow-xl border"
+          />
+        </motion.div>
+
+        {/* ✨ Text */}
+        <motion.div
+          initial={{ opacity: 0, x: 120 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: false, amount: 0.3 }}
+          className={`w-full md:w-1/2 flex flex-col ${
+            language === "ar"
+              ? "items-end text-right"
+              : "items-start text-left"
+          }`}
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent leading-tight">
+            {title}
           </h2>
-          <Card className="border-primary/20 overflow-hidden">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative h-full min-h-[320px]">
-                <img
-                  src="/CLINIC PHOTO.jpeg"
-                  alt="Celebrity Smile Clinic"
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <CardContent className="p-8">
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  {t("aboutDescription")}
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Our state-of-the-art facility is equipped with the latest dental technology, ensuring that every treatment is performed with precision and care. Our team of experienced dentists and specialists are dedicated to providing personalized care tailored to your unique needs.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  From routine check-ups to advanced cosmetic procedures, we offer a comprehensive range of dental services designed to keep your smile healthy and beautiful. Trust Celebrity Smile Clinic for all your dental care needs.
-                </p>
-              </CardContent>
-            </div>
-          </Card>
-        </div>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+            {description}
+          </p>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
