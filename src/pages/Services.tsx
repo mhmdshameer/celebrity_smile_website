@@ -43,10 +43,14 @@ const Services = () => {
       <section className="relative bg-background py-16 text-center">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
-            {language === "ar" ? "التميز في الرعاية الأسنان" : "Excellence in Dental Care"}
+            {language === "ar"
+              ? "التميز في الرعاية الأسنان"
+              : "Excellence in Dental Care"}
           </h1>
           <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
-            {language === "ar" ? "تقديم خدمات رعاية أسنان استثنائية" : "Providing Exceptional Dental Care Services"}
+            {language === "ar"
+              ? "تقديم خدمات رعاية أسنان استثنائية"
+              : "Providing Exceptional Dental Care Services"}
           </h2>
           <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
             {language === "ar"
@@ -60,49 +64,61 @@ const Services = () => {
       <section className="bg-background py-20">
         <div className="container mx-auto px-4 space-y-24">
           {loading && (
-            <p className="text-center text-muted-foreground text-lg">Loading services...</p>
+            <p className="text-center text-muted-foreground text-lg">
+              Loading services...
+            </p>
           )}
 
-          {!loading && services.map((s, index) => {
-            const name = language === "ar" ? s.serviceAr : s.service;
-            const desc = language === "ar" ? s.descriptionAr : s.description;
-            const isReversed = index % 2 !== 0;
+          {!loading &&
+            services.map((s, index) => {
+              const name = language === "ar" ? s.serviceAr : s.service;
+              const desc = language === "ar" ? s.descriptionAr : s.description;
 
-            return (
-              <motion.div
-                key={s._id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className={`flex flex-col md:flex-row items-center gap-10 ${
-                  isReversed ? "md:flex-row-reverse" : ""
-                }`}
-              >
-                {/* Image */}
-                <div className="w-full md:w-1/2 flex justify-center">
-                  <img
-                    src={s.serviceImage?.url}
-                    alt={name}
-                    className="w-[400px] h-[400px] object-cover rounded-2xl shadow-lg border"
-                  />
-                </div>
+              // Flip pattern based on language (RTL/LTR)
+              const isReversed =
+                language === "ar" ? index % 2 === 0 : index % 2 !== 0;
 
-                {/* Text */}
-                <div
-                  className={`w-full md:w-1/2 ${
-                    language === "ar" ? "text-right" : "text-left"
+              return (
+                <motion.div
+                  key={s._id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className={`flex flex-col md:flex-row justify-between items-center gap-10 ${
+                    isReversed ? "md:flex-row-reverse" : ""
                   }`}
                 >
-                  <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
-                    {name}
-                  </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {desc}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+                  {/* Image */}
+                  <div
+                    className={`w-full md:w-1/2 flex ${
+                      isReversed ? "justify-end" : "justify-start"
+                    }`}
+                  >
+                    <img
+                      src={s.serviceImage?.url}
+                      alt={name}
+                      className="w-[400px] h-[400px] object-cover rounded-2xl shadow-lg border"
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div
+                    className={`w-full md:w-1/2 flex flex-col ${
+                      language === "ar"
+                        ? "items-end text-right"
+                        : "items-start text-left"
+                    }`}
+                  >
+                    <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
+                      {name}
+                    </h2>
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-[500px]">
+                      {desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
         </div>
       </section>
 
