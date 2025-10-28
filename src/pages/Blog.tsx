@@ -1,75 +1,43 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getAllBlogs, type BlogPost } from "@/api/blog";
+import { Calendar } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion } from "framer-motion";
+import { toast } from "@/components/ui/use-toast";
 
 const Blog = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
+  const isArabic = language === "ar";
 
-  const blogPosts = [
-    {
-      title: "5 Tips for Maintaining Healthy Teeth",
-      titleAr: "5 نصائح للحفاظ على أسنان صحية",
-      excerpt: "Learn essential daily habits that will keep your teeth healthy and strong for years to come.",
-      excerptAr: "تعرف على العادات اليومية الأساسية التي ستحافظ على صحة وقوة أسنانك لسنوات قادمة.",
-      date: "March 15, 2025",
-      dateAr: "15 مارس 2025",
-      category: "Dental Care",
-      categoryAr: "العناية بالأسنان",
-    },
-    {
-      title: "The Benefits of Regular Dental Checkups",
-      titleAr: "فوائد الفحوصات الدورية للأسنان",
-      excerpt: "Discover why regular visits to your dentist are crucial for maintaining optimal oral health.",
-      excerptAr: "اكتشف لماذا الزيارات المنتظمة لطبيب الأسنان ضرورية للحفاظ على صحة الفم المثالية.",
-      date: "March 10, 2025",
-      dateAr: "10 مارس 2025",
-      category: "Prevention",
-      categoryAr: "الوقاية",
-    },
-    {
-      title: "Understanding Teeth Whitening Options",
-      titleAr: "فهم خيارات تبييض الأسنان",
-      excerpt: "A comprehensive guide to different teeth whitening methods and what works best for you.",
-      excerptAr: "دليل شامل لطرق تبييض الأسنان المختلفة وما هو الأفضل لك.",
-      date: "March 5, 2025",
-      dateAr: "5 مارس 2025",
-      category: "Cosmetic Dentistry",
-      categoryAr: "طب الأسنان التجميلي",
-    },
-    {
-      title: "Dental Implants: Everything You Need to Know",
-      titleAr: "زراعة الأسنان: كل ما تحتاج معرفته",
-      excerpt: "Complete information about dental implants, the procedure, and what to expect.",
-      excerptAr: "معلومات كاملة عن زراعة الأسنان والإجراءات وما يمكن توقعه.",
-      date: "February 28, 2025",
-      dateAr: "28 فبراير 2025",
-      category: "Implants",
-      categoryAr: "الزراعة",
-    },
-    {
-      title: "How to Care for Your Child's Teeth",
-      titleAr: "كيفية العناية بأسنان طفلك",
-      excerpt: "Essential tips for parents to ensure their children develop healthy dental habits.",
-      excerptAr: "نصائح أساسية للآباء لضمان تطوير أطفالهم لعادات صحية للأسنان.",
-      date: "February 20, 2025",
-      dateAr: "20 فبراير 2025",
-      category: "Pediatric",
-      categoryAr: "طب أسنان الأطفال",
-    },
-    {
-      title: "Common Dental Problems and Solutions",
-      titleAr: "مشاكل الأسنان الشائعة والحلول",
-      excerpt: "Learn about common dental issues and how modern dentistry can solve them.",
-      excerptAr: "تعرف على مشاكل الأسنان الشائعة وكيف يمكن لطب الأسنان الحديث حلها.",
-      date: "February 15, 2025",
-      dateAr: "15 فبراير 2025",
-      category: "General",
-      categoryAr: "عام",
-    },
-  ];
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllBlogs();
+        const published = data.filter((post) => post.published);
+        setBlogs(published);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        toast({
+          variant: "destructive",
+          title: isArabic ? "خطأ" : "Error",
+          description: isArabic
+            ? "حدث خطأ أثناء تحميل المقالات"
+            : "Failed to load blog posts",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, [language]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -77,67 +45,124 @@ const Blog = () => {
 
       {/* Hero Section */}
       <section className="relative h-[50vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/blog.jpg"
-            alt="Dental Health Blog"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+        <img
+          src="/blog.jpg"
+          alt="Dental Health Blog"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
+      </section>
+
+      {/* Header Section */}
+      <section className="bg-background py-16 text-center">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
+            {isArabic ? "مدونة صحة الأسنان" : "Dental Health Blog"}
+          </h1>
+          <h2 className="text-xl md:text-2xl font-semibold mb-6 text-primary">
+            {isArabic ? "نصائح ومعلومات قيمة" : "Valuable Tips & Information"}
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground">
+            {isArabic
+              ? "استكشف أحدث المقالات حول صحة الفم والعناية بالأسنان. نقدم لك محتوى موثوقًا يساعدك على الحفاظ على ابتسامة صحية ومشرقة."
+              : "Explore our latest articles on oral health and dental care. We provide trusted content to help you maintain a bright, healthy smile."}
+          </p>
         </div>
       </section>
 
-      {/* Content Section */}
-      <section className="relative bg-background py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
-              {language === "ar" ? "مدونة صحة الأسنان" : "Dental Health Blog"}
-            </h1>
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
-              {language === "ar" ? "نصائح ومعلومات قيمة" : "Valuable Tips & Information"}
-            </h2>
-            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
-              {language === "ar"
-                ? "اكتشف أحدث النصائح والمعلومات حول صحة الأسنان والعناية بالفم. مقالاتنا المفيدة تغطي مجموعة واسعة من المواضيع لمساعدتك في الحفاظ على ابتسامة صحية وجميلة."
-                : "Discover the latest tips and information about dental health and oral care. Our informative articles cover a wide range of topics to help you maintain a healthy and beautiful smile."
-              }
-            </p>
+      {/* Blog Content */}
+      <section className="container mx-auto px-4 max-w-5xl py-20 space-y-16">
+        {loading ? (
+          <div className="space-y-10">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="h-64 w-full rounded-xl" />
+                <Skeleton className="h-8 w-3/4" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
+        ) : blogs.length === 0 ? (
+          <div className="text-center text-muted-foreground text-lg">
+            {isArabic ? "لا توجد مقالات متاحة حالياً" : "No blog posts available yet"}
+          </div>
+        ) : (
+          blogs.map((post, index) => (
+            <motion.article
+              key={post._id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              dir={isArabic ? "rtl" : "ltr"}
+              className="bg-card border border-muted/20 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
+            >
+            
 
-      <div className="flex-1 container mx-auto px-4 pt-16 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {blogPosts.map((post, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow flex flex-col">
-              <CardHeader>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>{language === "ar" ? post.dateAr : post.date}</span>
-                </div>
-                <div className="inline-block mb-2">
-                  <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
-                    {language === "ar" ? post.categoryAr : post.category}
-                  </span>
-                </div>
-                <CardTitle className="text-xl line-clamp-2">
-                  {language === "ar" ? post.titleAr : post.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <CardDescription className="flex-1 line-clamp-3 mb-4">
-                  {language === "ar" ? post.excerptAr : post.excerpt}
-                </CardDescription>
-                <Button variant="ghost" className="w-full justify-between group">
-                  {language === "ar" ? "اقرأ المزيد" : "Read More"}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+              {/* Content */}
+              <div className="p-8">
+                
+
+                <h2 className="text-3xl font-bold mb-4 text-primary leading-snug">
+                  {isArabic && post.titleAr ? post.titleAr : post.title}
+                </h2>
+
+                {/* Blog Content */}
+                <div
+                  className="prose max-w-none text-foreground leading-relaxed"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      isArabic && post.contentAr
+                        ? post.contentAr
+                        : post.content,
+                  }}
+                />
+
+                {/* Author Info */}
+                {typeof post.authorId === "object" && (
+                  <div className="mt-8 flex items-center justify-between border-t pt-4 border-muted/30">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full overflow-hidden bg-muted/50 flex-shrink-0">
+                        {post.authorId.image?.url ? (
+                          <img
+                            src={post.authorId.image.url}
+                            alt={isArabic ? post.authorId.nameAr : post.authorId.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-lg font-bold">
+                            {post.authorId.name.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground text-base">
+                          {isArabic
+                            ? post.authorId.nameAr || post.authorId.name
+                            : post.authorId.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {isArabic ? "كاتب المقال" : "Author"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center gap-2 text-muted-foreground text-sm ${isArabic ? 'mr-auto' : 'ml-auto'}`}>
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        {new Date(post.date).toLocaleDateString(
+                          isArabic ? "ar-EG" : "en-US",
+                          { year: "numeric", month: "long", day: "numeric" }
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.article>
+          ))
+        )}
+      </section>
 
       <Footer />
     </div>
