@@ -47,8 +47,9 @@ ${date ? `📅 Preferred Date: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 Message: ${formData.message}` : ""}
     `.trim();
 
+    const formattedPhoneNumber = phoneNumber.replace(/\s+|\D/g, ''); // Remove all spaces and non-digit characters
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+    window.open(`https://wa.me/${formattedPhoneNumber}?text=${encodedMessage}`, "_blank");
 
     // Reset form and close
     setFormData({
