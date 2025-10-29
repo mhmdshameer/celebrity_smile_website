@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/blog';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/blog`;
 
 export interface Author {
   _id: string;

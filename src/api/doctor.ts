@@ -15,13 +15,13 @@ export interface DoctorResponse {
   image: {
     url: string;
     public_id: string;
-  };
+  }; 
   slug?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 // Add doctor
 export async function addDoctorApi(payload: NewDoctorPayload): Promise<DoctorResponse> {

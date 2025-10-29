@@ -26,9 +26,9 @@ const adminItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard, end: true },
   { title: "Doctors", url: "/admin/doctors", icon: Users, end: false },
   { title: "Services", url: "/admin/services", icon: Briefcase, end: false },
-  { title: "Departments", url: "/admin/departments", icon: Building2, end: false },
+  // { title: "Departments", url: "/admin/departments", icon: Building2, end: false },
   { title: "Offers", url: "/admin/offers", icon: Tag, end: false },
-  { title: "Price List", url: "/admin/price-list", icon: DollarSign, end: false },
+  // { title: "Price List", url: "/admin/price-list", icon: DollarSign, end: false },
   { title: "Blog", url: "/admin/blog", icon: FileText, end: false },
 ];
 

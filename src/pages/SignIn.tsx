@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/auth-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,12 +12,12 @@ const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { login, isLoading } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     // Basic validation
     if (!username || !password) {
@@ -25,31 +26,15 @@ const SignIn = () => {
         description: "Please enter both username and password",
         variant: "destructive",
       });
-      setIsLoading(false);
       return;
     }
 
     try {
-      // TODO: Connect to your backend authentication here
-      // Example: await yourAuthFunction(username, password);
-      
-      console.log("Sign in attempt:", { username });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Ready to connect",
-        description: "Connect this form to your backend authentication",
-      });
+      await login(username, password);
+      // The login function will handle the redirection on success
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
+      // Error handling is done in the auth context
+      console.error('Login error:', error);
     }
   };
 

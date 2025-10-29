@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AdminLayout } from "./components/AdminLayout";
+import { AuthProvider } from "./contexts/auth-context";
+import ProtectedRoute from "./components/protected-route";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import Services from "./pages/Services";
@@ -34,8 +36,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
+          <AuthProvider>
+            <ScrollToTop />
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/services" element={<Services />} />
@@ -47,20 +50,23 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/signin" element={<SignIn />} />
             
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="doctors" element={<AdminDoctors />} />
-              <Route path="services" element={<AdminServices />} />
-              <Route path="departments" element={<AdminDepartments />} />
-              <Route path="offers" element={<AdminOffers />} />
-              <Route path="price-list" element={<AdminPriceList />} />
-              <Route path="blog" element={<AdminBlog />} />
+            {/* Admin Routes - Protected */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="doctors" element={<AdminDoctors />} />
+                <Route path="services" element={<AdminServices />} />
+                <Route path="departments" element={<AdminDepartments />} />
+                <Route path="offers" element={<AdminOffers />} />
+                <Route path="price-list" element={<AdminPriceList />} />
+                <Route path="blog" element={<AdminBlog />} />
+              </Route>
             </Route>
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </AuthProvider>
         </BrowserRouter>
       </TooltipProvider>
     </LanguageProvider>
