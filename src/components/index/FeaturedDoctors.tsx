@@ -59,14 +59,15 @@ const FeaturedDoctors = () => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: true,
-          centerPadding: '20px',
+          centerPadding: '40px',
+          arrows: false,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 480,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
