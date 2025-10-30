@@ -31,18 +31,50 @@ const FeaturedDoctors = () => {
     };
   }, []);
 
-  // Slider settings
+  // Slider settings with improved responsive breakpoints
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
-    speed: 1000,
+    speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3500,
+    autoplaySpeed: 4000,
+    arrows: true,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: '20px',
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true,
+          centerPadding: '20px',
+          arrows: false,
+        },
+      },
     ],
   };
 
@@ -58,7 +90,7 @@ const FeaturedDoctors = () => {
 
   return (
     <motion.section
-      className="py-16 bg-background"
+      className="py-10 md:py-16 bg-background overflow-hidden"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -67,14 +99,14 @@ const FeaturedDoctors = () => {
       <div className="container mx-auto px-6 md:px-10">
         {/* Header */}
         <div
-          className={`text-center max-w-3xl mx-auto mb-16 ${
+          className={`max-w-3xl mx-auto mb-10 md:mb-16 px-4 ${
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-3 md:mb-4">
             {title}
           </h2>
-          <p className="text-muted-foreground font-semibold text-lg">{subtitle}</p>
+          <p className="text-muted-foreground font-medium text-base sm:text-lg">{subtitle}</p>
         </div>
 
         {/* Slider */}
@@ -87,27 +119,28 @@ const FeaturedDoctors = () => {
             {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
           </p>
         ) : (
-          <Slider {...settings}>
-            {doctors.map((d) => {
-              const name = language === "ar" ? d.nameAr : d.name;
-              const specs = language === "ar" ? d.specialtiesAr : d.specialties;
-              const specialization = specs?.[0] ?? "";
-              const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+          <div className="px-2 md:px-4">
+            <Slider {...settings} className="py-2">
+              {doctors.map((d) => {
+                const name = language === "ar" ? d.nameAr : d.name;
+                const specs = language === "ar" ? d.specialtiesAr : d.specialties;
+                const specialization = specs?.[0] ?? "";
+                const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
 
               return (
                 <motion.div
                   key={d._id}
-                  className="px-4"
+                  className="px-2 sm:px-3 py-2 h-full"
                   initial={{ opacity: 0, x: language === "ar" ? 100 : -100 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  <div className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 text-center border border-gray-100">
-                    <div className="overflow-hidden">
+                  <div className="bg-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-border/50">
+                    <div className="relative aspect-square overflow-hidden">
                       <img
                         src={img}
                         alt={name}
-                        className="w-full h-[380px] object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         loading="lazy"
                       />
                     </div>
@@ -122,7 +155,8 @@ const FeaturedDoctors = () => {
               );
             })}
           </Slider>
-        )}
+        </div>
+      )}
 
         {/* Button */}
         <div
