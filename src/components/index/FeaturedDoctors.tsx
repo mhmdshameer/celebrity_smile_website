@@ -130,35 +130,32 @@ const FeaturedDoctors = () => {
                 const specialization = specs?.[0] ?? "";
                 const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
 
-              return (
+                return (
                 <motion.div
                   key={d._id}
-                  className="px-2 sm:px-3 py-2 h-full"
-                  initial={{ opacity: 0, x: language === "ar" ? 100 : -100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="px-3 sm:px-4 py-4 h-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                  <div className="h-full flex flex-col items-center">
-                    {/* Doctor image with circular background */}
-                    <div className="relative w-48 h-48 mb-4">
-                      {/* Pink circle background */}
-                      <div className="absolute inset-0 rounded-full bg-pink-100 dark:bg-pink-900/20 flex items-end justify-center overflow-visible">
-                        {/* Doctor image - positioned to stick out from top */}
-                        <img
-                          src={img}
-                          alt={name}
-                          className="h-[120%] w-auto object-contain object-bottom transition-transform duration-300 hover:scale-105"
-                          style={{ marginBottom: '-10%' }}
-                          loading="lazy"
-                        />
-                      </div>
+                  <div className="h-full flex flex-col items-center group">
+                    {/* Doctor image */}
+                    <div className="relative w-full max-w-[280px] h-[320px] mb-6 overflow-hidden">
+                      <img
+                        src={img}
+                        alt={name}
+                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
                     </div>
                     
                     {/* Doctor info */}
-                    <div className="text-center px-2">
-                      <h3 className="text-lg font-bold text-foreground mb-1">{name}</h3>
+                    <div className="text-center space-y-2">
+                      <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                        {name}
+                      </h3>
                       {specialization && (
-                        <p className="text-sm text-muted-foreground">{specialization}</p>
+                        <p className="text-base text-muted-foreground font-medium">{specialization}</p>
                       )}
                     </div>
                   </div>
