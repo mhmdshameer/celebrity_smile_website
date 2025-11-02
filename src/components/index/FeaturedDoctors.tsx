@@ -36,11 +36,13 @@ const FeaturedDoctors = () => {
     dots: true,
     infinite: true,
     speed: 600,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
     arrows: true,
+    centerMode: true,
+    centerPadding: '0',
     responsive: [
       {
         breakpoint: 1280,
@@ -91,23 +93,23 @@ const FeaturedDoctors = () => {
 
   return (
     <motion.section
-      className="py-10 md:py-16 bg-background overflow-hidden"
+      className="py-16 md:py-24 bg-background overflow-hidden"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: false, amount: 0.2 }}
     >
-      <div className="container mx-auto px-6 md:px-10">
+      <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
         <div
           className={`max-w-3xl mx-auto mb-10 md:mb-16 px-4 ${
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-3 md:mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent mb-3 md:mb-4">
             {title}
           </h2>
-          <p className="text-muted-foreground font-medium text-base sm:text-lg">{subtitle}</p>
+          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
         {/* Slider */}
@@ -120,8 +122,8 @@ const FeaturedDoctors = () => {
             {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
           </p>
         ) : (
-          <div className="px-2 md:px-4">
-            <Slider {...settings} className="py-2">
+          <div className="px-0 md:px-2 mt-8">
+            <Slider {...settings} className="doctor-slider">
               {doctors.map((d) => {
                 const name = language === "ar" ? d.nameAr : d.name;
                 const specs = language === "ar" ? d.specialtiesAr : d.specialties;
@@ -136,19 +138,27 @@ const FeaturedDoctors = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                  <div className="bg-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-border/50">
-                    <div className="relative aspect-square overflow-hidden">
-                      <img
-                        src={img}
-                        alt={name}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        loading="lazy"
-                      />
+                  <div className="h-full flex flex-col items-center">
+                    {/* Doctor image with circular background */}
+                    <div className="relative w-48 h-48 mb-4">
+                      {/* Pink circle background */}
+                      <div className="absolute inset-0 rounded-full bg-pink-100 dark:bg-pink-900/20 flex items-end justify-center overflow-visible">
+                        {/* Doctor image - positioned to stick out from top */}
+                        <img
+                          src={img}
+                          alt={name}
+                          className="h-[120%] w-auto object-contain object-bottom transition-transform duration-300 hover:scale-105"
+                          style={{ marginBottom: '-10%' }}
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2 text-pink-500">{name}</h3>
+                    
+                    {/* Doctor info */}
+                    <div className="text-center px-2">
+                      <h3 className="text-lg font-bold text-foreground mb-1">{name}</h3>
                       {specialization && (
-                        <p className="text-muted-foreground font-semibold text-pink-500">{specialization}</p>
+                        <p className="text-sm text-muted-foreground">{specialization}</p>
                       )}
                     </div>
                   </div>
