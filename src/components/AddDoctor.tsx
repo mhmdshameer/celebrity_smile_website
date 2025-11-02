@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, Upload, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { addDoctorApi } from "@/api/doctor";
-import { getDoctorApi } from "@/api/doctor";
+import { getDoctorApi, updateDoctorApi } from "@/api/doctor";
 // Optional shadcn components for combobox. If not present in your setup, we can replace with a custom list.
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
@@ -139,29 +139,24 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
         onAddDoctor(created);
         toast({ title: "Doctor added successfully", variant: "success" });
       } else if (editingDoctor && onUpdateDoctor) {
+        if (!editingDoctor) return;
+        
         let imageData = formData.image;
         if (selectedFile) {
           setIsUploading(true);
           imageData = await uploadImage(selectedFile);
         }
-        const payload = {
+        
+        // Use the updateDoctorApi function
+        await updateDoctorApi(editingDoctor.id, {
           name: formData.name,
           nameAr: formData.nameAr,
           specialties: formData.specialties.filter(s => s.trim() !== ""),
           specialtiesAr: (formData.specialtiesAr ?? []).filter(s => s.trim() !== ""),
-          image: imageData,
-        };
-        const res = await fetch(`http://localhost:5000/doctor/${editingDoctor.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          file: selectedFile || new File([], '') // Pass the selected file or an empty file if none selected
         });
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`Failed to update doctor: ${res.status} ${text}`);
-        }
-        await res.json();
-        // Refetch to ensure we have the latest server state
+        
+        // The API call will throw an error if it fails
         const fresh = await getDoctorApi(editingDoctor.id);
         const updated = {
           id: fresh._id,
