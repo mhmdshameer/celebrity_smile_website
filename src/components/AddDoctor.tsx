@@ -89,7 +89,7 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
     formDataUpload.append('image', file);
 
     try {
-      const response = await fetch('http://localhost:5000/upload', {
+      const response = await fetch(process.env.VITE_API_BASE_URL + '/upload', {
         method: 'POST',
         body: formDataUpload,
       });
@@ -141,33 +141,50 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
       } else if (editingDoctor && onUpdateDoctor) {
         if (!editingDoctor) return;
         
-        let imageData = formData.image;
-        if (selectedFile) {
-          setIsUploading(true);
-          imageData = await uploadImage(selectedFile);
+        setIsUploading(true);
+        
+        try {
+          let uploadedImage = null;
+          
+          // If there's a new image, upload it first
+          if (selectedFile) {
+            uploadedImage = await uploadImage(selectedFile);
+            // Update the form data with the new image URL
+            formData.image = uploadedImage;
+          }
+          
+          // Use the updateDoctorApi function with the selected file and current image data
+          await updateDoctorApi(editingDoctor.id, {
+            name: formData.name,
+            nameAr: formData.nameAr,
+            specialties: formData.specialties.filter(s => s.trim() !== ""),
+            specialtiesAr: (formData.specialtiesAr ?? []).filter(s => s.trim() !== ""),
+            file: selectedFile, // Pass the file if it exists
+            image: formData.image // Pass the current image data (either existing or newly uploaded)
+          });
+          
+          // Fetch the updated doctor data
+          const fresh = await getDoctorApi(editingDoctor.id);
+          const updated = {
+            id: fresh._id,
+            name: fresh.name,
+            nameAr: fresh.nameAr,
+            specialties: fresh.specialties ?? [],
+            specialtiesAr: fresh.specialtiesAr ?? [],
+            image: fresh.image,
+          };
+          onUpdateDoctor(updated);
+          toast({ title: "Doctor updated successfully", variant: "success" });
+        } catch (error) {
+          console.error("Error updating doctor:", error);
+          toast({
+            title: "Error",
+            description: "Failed to update doctor. Please try again.",
+            variant: "destructive"
+          });
+        } finally {
+          setIsUploading(false);
         }
-        
-        // Use the updateDoctorApi function
-        await updateDoctorApi(editingDoctor.id, {
-          name: formData.name,
-          nameAr: formData.nameAr,
-          specialties: formData.specialties.filter(s => s.trim() !== ""),
-          specialtiesAr: (formData.specialtiesAr ?? []).filter(s => s.trim() !== ""),
-          file: selectedFile || new File([], '') // Pass the selected file or an empty file if none selected
-        });
-        
-        // The API call will throw an error if it fails
-        const fresh = await getDoctorApi(editingDoctor.id);
-        const updated = {
-          id: fresh._id,
-          name: fresh.name,
-          nameAr: fresh.nameAr,
-          specialties: fresh.specialties ?? [],
-          specialtiesAr: fresh.specialtiesAr ?? [],
-          image: fresh.image,
-        };
-        onUpdateDoctor(updated);
-        toast({ title: "Doctor updated successfully", variant: "success" });
       }
 
       // Reset form

@@ -93,7 +93,7 @@ const FeaturedDoctors = () => {
 
   return (
     <motion.section
-      className="py-16 md:py-24 bg-background overflow-hidden"
+      className="py-16 md:py-24 bg-gradient-to-b from-background to-background/80 overflow-hidden"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -102,7 +102,7 @@ const FeaturedDoctors = () => {
       <div className="container mx-auto px-4 md:px-6">
         {/* Header */}
         <div
-          className={`max-w-3xl mx-auto mb-10 md:mb-16 px-4 ${
+          className={`max-w-3xl mx-auto mb-10 md:mb-8 px-4 ${
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
@@ -133,29 +133,38 @@ const FeaturedDoctors = () => {
                 return (
                 <motion.div
                   key={d._id}
-                  className="px-3 sm:px-4 py-4 h-full"
+                  className="px-3 sm:px-4 h-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
                   <div className="h-full flex flex-col items-center group">
-                    {/* Doctor image */}
-                    <div className="relative w-full max-w-[280px] h-[320px] mb-6 overflow-hidden">
-                      <img
-                        src={img}
-                        alt={name}
-                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
+                    {/* Doctor image with background */}
+                    <div className="relative w-full max-w-[280px] h-[320px] mb-6 flex items-center justify-center">
+                      {/* Background image container */}
+                      <div className="absolute inset-0 top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
+                           style={{ backgroundImage: 'url(/doctor_bg.png)' }}>
+                      </div>
+                      
+                      {/* Doctor image */}
+                      <div className="relative w-full h-full flex items-end justify-center border-b-4">
+                        <img
+                          src={img}
+                          alt={name}
+                          className="h-[90%] w-auto object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                          style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))' }}
+                          loading="lazy"
+                        />
+                      </div>
                     </div>
                     
                     {/* Doctor info */}
-                    <div className="text-center space-y-2">
-                      <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-primary">
+                    <div className="text-center space-y-1 px-2">
+                      <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-pink-600">
                         {name}
                       </h3>
                       {specialization && (
-                        <p className="text-base text-muted-foreground font-medium">{specialization}</p>
+                        <p className="text-sm text-muted-foreground font-medium">{specialization}</p>
                       )}
                     </div>
                   </div>
