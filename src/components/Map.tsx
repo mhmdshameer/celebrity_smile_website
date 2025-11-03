@@ -1,39 +1,18 @@
 import React from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const Map = () => {
-  const { language } = useLanguage();
-
-  const center = {
-    lat: 21.5917608,
-    lng: 39.233263
-  };
-
-  const mapStyles = {
-    height: "400px",
-    width: "100%"
-  };
-
-  // Get Google Maps API key from environment variables
-  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "YOUR_GOOGLE_MAPS_API_KEY_HERE";
-
   return (
-    <div className="relative w-full h-[400px] rounded-lg overflow-hidden border shadow-lg">
-      <LoadScript googleMapsApiKey={googleMapsApiKey}>
-        <GoogleMap
-          mapContainerStyle={mapStyles}
-          zoom={15}
-          center={center}
-        >
-          <Marker
-            position={center}
-            title={language === 'ar'
-              ? 'عيادة ابتسامة المشاهير للأسنان'
-              : 'Celebrity Smile Dental Clinic'}
-          />
-        </GoogleMap>
-      </LoadScript>
+    <div className="w-full rounded-lg overflow-hidden border shadow-lg">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14838.933518312344!2d39.22715795!3d21.596328000000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d1edc58292d3%3A0xbdd2ea90d09d7e7f!2sCelebrity%20Smile%20Dental%20Clinic!5e0!3m2!1sen!2ssa!4v1762187665942!5m2!1sen!2ssa" 
+        width="100%" 
+        height="450" 
+        style={{ border: 0 }} 
+        allowFullScreen 
+        loading="lazy" 
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Celebrity Smile Dental Clinic Location"
+      />
     </div>
   );
 };

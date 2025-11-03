@@ -82,28 +82,35 @@ const Contact = () => {
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <Label htmlFor="name">
-                      {language === "ar" ? "الاسم" : "Name"}
-                    </Label>
-                    <Input id="name" required />
+                    <Input 
+                      id="name" 
+                      placeholder={language === "ar" ? "الاسم" : "Name"} 
+                      required 
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="email">
-                      {language === "ar" ? "البريد الإلكتروني" : "Email"}
-                    </Label>
-                    <Input id="email" type="email" required />
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder={language === "ar" ? "البريد الإلكتروني" : "Email"} 
+                      required 
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="phone">
-                      {language === "ar" ? "رقم الهاتف" : "Phone"}
-                    </Label>
-                    <Input id="phone" type="tel" required />
+                    <Input 
+                      id="phone" 
+                      type="tel" 
+                      placeholder={language === "ar" ? "رقم الهاتف" : "Phone"} 
+                      required 
+                    />
                   </div>
                   <div>
-                    <Label htmlFor="message">
-                      {language === "ar" ? "الرسالة" : "Message"}
-                    </Label>
-                    <Textarea id="message" rows={4} required />
+                    <Textarea 
+                      id="message" 
+                      placeholder={language === "ar" ? "الرسالة" : "Message"} 
+                      rows={4} 
+                      required 
+                    />
                   </div>
                   <Button type="submit" className="w-full">
                     {language === "ar" ? "إرسال" : "Send Message"}
