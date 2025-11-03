@@ -53,7 +53,7 @@ const StatisticsSection = ({ t, className }: StatisticsSectionProps) => {
               <p className="text-muted-foreground text-lg">{t("dentalImplants")}</p>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">1000+</div>
+              <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">500+</div>
               <p className="text-muted-foreground text-lg">{t("clearAlignerCases")}</p>
             </div>
           </div>
@@ -65,14 +65,14 @@ const StatisticsSection = ({ t, className }: StatisticsSectionProps) => {
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Clock className="h-8 w-8 text-primary" />
             </div>
-            <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">15+</div>
+            <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">10+</div>
             <p className="text-muted-foreground">{t("yearsExcellence")}</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Shield className="h-8 w-8 text-primary" />
             </div>
-            <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">25+</div>
+            <div className="text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">10+</div>
             <p className="text-muted-foreground">{t("certifiedDoctors")}</p>
           </div>
           <div className="text-center">
