@@ -61,12 +61,21 @@ const PrivilegeCard = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
+      {/* Banner Section */}
+      <div className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/privilegeBanner.png"
+            alt={language === "ar" ? "بطاقة الامتياز" : "Privilege Card"}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+      </div>
+
+      <div className="flex-1 container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4">
-            <CreditCard className="w-10 h-10 text-primary" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
             {t("privilegeCard")}
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">

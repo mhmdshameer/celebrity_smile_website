@@ -44,9 +44,21 @@ const Offers = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
-      <div className="flex-1 container mx-auto px-4 pt-20 pb-16">
+      {/* Banner Section */}
+      <div className="relative h-[50vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/offerbanner.png"
+            alt={language === "ar" ? "عروض حصرية" : "Exclusive Offers"}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+      </div>
+
+      <div className="flex-1 container mx-auto px-4 py-12">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
-          {t("offers")}
+          {language === "ar" ? "عروض حصرية" : "Exclusive Offers"}
         </h1>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
           {language === "ar"
