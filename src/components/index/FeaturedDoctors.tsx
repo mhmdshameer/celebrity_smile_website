@@ -36,12 +36,12 @@ const FeaturedDoctors = () => {
     dots: true,
     infinite: true,
     speed: 600,
-    slidesToShow: 4,
+    slidesToShow: 3,  // Show 3 doctors at a time
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000,  // Auto-slide every 3 seconds
     arrows: true,
-    centerMode: true,
+    centerMode: false,  // Disable center mode for better 3-item layout
     centerPadding: '0',
     responsive: [
       {
