@@ -57,8 +57,8 @@ const translations = {
     successRate: "Success Rate",
 
     // New Statistics Section
-    doctorsExperienceTitle: "Experience of our doctors",
-    doctorsExperienceDesc: "At Celebrity Smile Clinic, we redefine the dental care experience with solutions rooted in quality and innovation. Our professional team delivers exceptional care that elevates the standards of dentistry. We are committed to using the latest technologies and advancements to provide outstanding medical solutions, making us the top choice in the region.",
+    doctorsExperienceTitle: "Our Commitment to Excellence",
+    doctorsExperienceDesc: "At Celebrity Smile Clinic, we set a new standard for dental care. Our commitment is simple, to provide exceptional results using the most advanced technology available. Our professional team delivers personalized treatments, ensuring every patient receives innovative, high quality care that not only meets but exceeds expectations, solidifying our reputation as the leading choice in the region.",
 
     // Service Statistics
     smileMakeoverCases: "Smile makeover case",
