@@ -43,7 +43,7 @@ const Offers = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
+
       {/* Banner Section */}
       <div className="relative h-[50vh] overflow-hidden">
         <div className="absolute inset-0">
@@ -52,7 +52,7 @@ const Offers = () => {
             alt={language === "ar" ? "عروض حصرية" : "Exclusive Offers"}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-primary/30" />
         </div>
       </div>
 
