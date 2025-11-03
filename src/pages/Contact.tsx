@@ -27,9 +27,10 @@ const Contact = () => {
     e.preventDefault();
     toast({
       title: language === "ar" ? "تم إرسال الرسالة" : "Message Sent",
-      description: language === "ar" 
-        ? "شكراً لتواصلك معنا. سنرد عليك قريباً"
-        : "Thank you for contacting us. We'll get back to you soon.",
+      description:
+        language === "ar"
+          ? "شكراً لتواصلك معنا. سنرد عليك قريباً"
+          : "Thank you for contacting us. We'll get back to you soon.",
     });
   };
 
@@ -62,8 +63,7 @@ const Contact = () => {
             <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
               {language === "ar"
                 ? "تواصل معنا للحصول على استشارة أو حجز موعد. فريقنا المتخصص جاهز للإجابة على جميع أسئلتك وتقديم أفضل الخدمات الطبية الأسنان."
-                : "Get in touch with us for a consultation or to book an appointment. Our specialized team is ready to answer all your questions and provide the best dental healthcare services."
-              }
+                : "Get in touch with us for a consultation or to book an appointment. Our specialized team is ready to answer all your questions and provide the best dental healthcare services."}
             </p>
           </div>
         </div>
@@ -82,34 +82,36 @@ const Contact = () => {
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <Input 
-                      id="name" 
-                      placeholder={language === "ar" ? "الاسم" : "Name"} 
-                      required 
+                    <Input
+                      id="name"
+                      placeholder={language === "ar" ? "الاسم" : "Name"}
+                      required
                     />
                   </div>
                   <div>
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder={language === "ar" ? "البريد الإلكتروني" : "Email"} 
-                      required 
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder={
+                        language === "ar" ? "البريد الإلكتروني" : "Email"
+                      }
+                      required
                     />
                   </div>
                   <div>
-                    <Input 
-                      id="phone" 
-                      type="tel" 
-                      placeholder={language === "ar" ? "رقم الهاتف" : "Phone"} 
-                      required 
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder={language === "ar" ? "رقم الهاتف" : "Phone"}
+                      required
                     />
                   </div>
                   <div>
-                    <Textarea 
-                      id="message" 
-                      placeholder={language === "ar" ? "الرسالة" : "Message"} 
-                      rows={4} 
-                      required 
+                    <Textarea
+                      id="message"
+                      placeholder={language === "ar" ? "الرسالة" : "Message"}
+                      rows={4}
+                      required
                     />
                   </div>
                   <Button type="submit" className="w-full">
@@ -124,7 +126,9 @@ const Contact = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {language === "ar" ? "معلومات التواصل" : "Contact Information"}
+                    {language === "ar"
+                      ? "معلومات التواصل"
+                      : "Contact Information"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -148,7 +152,9 @@ const Contact = () => {
                       <p className="font-semibold">
                         {language === "ar" ? "الهاتف" : "Phone"}
                       </p>
-                      <p className="text-muted-foreground" dir="ltr">+966 55 600 5567</p>
+                      <p className="text-muted-foreground" dir="ltr">
+                        +966 55 600 5567
+                      </p>
                     </div>
                   </div>
 
@@ -158,7 +164,9 @@ const Contact = () => {
                       <p className="font-semibold">
                         {language === "ar" ? "البريد الإلكتروني" : "Email"}
                       </p>
-                      <p className="text-muted-foreground">ce.sm.dental.1@gmail.com</p>
+                      <p className="text-muted-foreground">
+                        ce.sm.dental.1@gmail.com
+                      </p>
                     </div>
                   </div>
 
@@ -169,24 +177,27 @@ const Contact = () => {
                         {language === "ar" ? "ساعات العمل" : "Working Hours"}
                       </p>
                       <p className="text-muted-foreground">
-                        {language === "ar" 
+                        {language === "ar"
                           ? "السبت - الخميس: 9 صباحاً - 9 مساءً"
                           : "Sat - Thu: 9 AM - 9 PM"}
                       </p>
                       <p className="text-muted-foreground">
-                        {language === "ar" 
-                          ? "الجمعة: مغلق"
-                          : "Friday: Closed"}
+                        {language === "ar" ? "الجمعة: مغلق" : "Friday: Closed"}
                       </p>
                     </div>
                   </div>
+                  <Button
+                    onClick={handleWhatsAppContact}
+                    className="w-full"
+                    size="lg"
+                  >
+                    <Phone className="h-5 w-5 mr-2" />
+                    {language === "ar"
+                      ? "تواصل عبر واتساب"
+                      : "Contact via WhatsApp"}
+                  </Button>
                 </CardContent>
               </Card>
-
-              <Button onClick={handleWhatsAppContact} className="w-full" size="lg">
-                <Phone className="h-5 w-5 mr-2" />
-                {language === "ar" ? "تواصل عبر واتساب" : "Contact via WhatsApp"}
-              </Button>
             </div>
           </div>
 
