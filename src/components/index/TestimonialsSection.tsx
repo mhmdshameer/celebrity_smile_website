@@ -11,34 +11,35 @@ const TestimonialsSection = ({ t }: TestimonialsSectionProps) => {
   const { language } = useLanguage();
 
   const testimonials = [
-    {
-      name: "Sarah Mitchell",
-      nameAr: "سارة ميتشل",
-      role: "Verified Patient",
-      roleAr: "مريضة موثقة",
-      text: "Exceptional service! The team at Celebrity Smile Clinic made me feel comfortable throughout my treatment. My smile has never looked better!",
-      textAr: "خدمة استثنائية! جعلني فريق عيادة ابتسامة المشاهير أشعر بالراحة طوال علاجي. ابتسامتي لم تبدو أفضل من ذلك!",
-      initials: "SM"
-    },
-    {
-      name: "James Anderson",
-      nameAr: "جيمس أندرسون",
-      role: "Verified Patient",
-      roleAr: "مريض موثق",
-      text: "Professional, caring, and skilled. I had dental implants done and the results exceeded my expectations. Highly recommend!",
-      textAr: "محترفون، رحيمون، وماهرون. قمت بزراعة الأسنان والنتائج تجاوزت توقعاتي. أنصح بشدة!",
-      initials: "JA"
-    },
-    {
-      name: "Lisa Wang",
-      nameAr: "ليزا وانغ",
-      role: "Verified Patient",
-      roleAr: "مريضة موثقة",
-      text: "Best dental experience I've ever had. The modern facilities and friendly staff make every visit pleasant. Thank you!",
-      textAr: "أفضل تجربة أسنان مررت بها على الإطلاق. المرافق الحديثة والموظفون الودودون يجعلون كل زيارة ممتعة. شكراً لكم!",
-      initials: "LW"
-    }
-  ];
+  {
+    name: "Khalid Alzahrani",
+    nameAr: "خالد الزهراني",
+    role: "Verified Patient",
+    roleAr: "مريض موثَّق",
+    text: "Dr. BHAVITHA is one of the best doctors I’ve visited. She has an angel’s hands. She did teeth cleaning for me and gives me a clean and beautiful smile. She did deal professionally with my teeth sensitivity, also she’s a very nice person. I highly recommend her.",
+    textAr: "الدكتورة بهافيثا من أفضل الأطباء الذين زرتهم، يديها خفيفة جدًا وتعاملها راقٍ ومهني. قامت بتنظيف أسناني ومنحتني ابتسامة نظيفة وجميلة. تعاملت باحترافية مع حساسية أسناني، وهي أيضًا شخص لطيف جدًا. أنصح بها بشدة.",
+    initials: "KA",
+  },
+  {
+    name: "Muhammad Afzal",
+    nameAr: "محمد أفضل",
+    role: "Verified Patient",
+    roleAr: "مريض موثَّق",
+    text: "MashaAllah the doctor has great ethics and treats well. We are happy to come here. May Allah increase the sustenance of the owner and staff of this clinic.",
+    textAr: "ما شاء الله، الطبيبة تمتاز بالأخلاق العالية والتعامل الرائع. نحن سعداء جدًا بزيارتنا لهذه العيادة. نسأل الله أن يبارك في رزق مالك العيادة وطاقمها.",
+    initials: "MA",
+  },
+  {
+    name: "Najwa Yousuf",
+    nameAr: "نجوى يوسف",
+    role: "Verified Patient",
+    roleAr: "مريضة موثَّقة",
+    text: "I went to Dr. Bhavitha Arun Kumar for root canal treatment. She was so careful and very kind. She answered all my questions and gave me a lot of information regarding my dental treatment. She was the best choice, I even took my brother to her for cleaning and filling. She helped us plan my brother’s dental treatments regarding braces and surgery if required. Very satisfied by her service!",
+    textAr: "ذهبت إلى الدكتورة بهافيثا أرون كومار لعلاج العصب، وكانت دقيقة جدًا ولطيفة في تعاملها. أجابت على جميع أسئلتي وقدّمت لي معلومات مفيدة عن حالتي. كانت أفضل خيار، حتى أنني أخذت أخي إليها للتنظيف والحشوات. ساعدتنا في وضع خطة لعلاج أسنانه بالتقويم والجراحة عند الحاجة. راضية جدًا عن خدمتها!",
+    initials: "NY",
+  },
+];
+
 
   return (
     <motion.section
