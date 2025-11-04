@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -15,7 +19,10 @@ interface AppointmentFormProps {
   phoneNumber?: string;
 }
 
-export default function AppointmentForm({ onClose, phoneNumber = "+966 55 600 5567" }: AppointmentFormProps) {
+export default function AppointmentForm({
+  onClose,
+  phoneNumber = "966556005567", // ✅ Clinic WhatsApp number
+}: AppointmentFormProps) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
@@ -28,15 +35,21 @@ export default function AppointmentForm({ onClose, phoneNumber = "+966 55 600 55
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate required fields
     if (!formData.name.trim() || !formData.phone.trim()) {
-      alert(language === "ar" ? "يرجى ملء الحقول المطلوبة" : "Please fill in required fields");
+      alert(
+        language === "ar"
+          ? "يرجى ملء الحقول المطلوبة"
+          : "Please fill in required fields"
+      );
       return;
     }
 
-    // Format the message for WhatsApp
-    const whatsappMessage = `
+    const formattedPhoneNumber = phoneNumber.replace(/\D/g, "");
+
+    // 🧠 Message Templates
+    const whatsappMessageEn = `
 *Appointment Request*
 
 👤 Name: ${formData.name}
@@ -45,11 +58,29 @@ ${formData.email ? `📧 Email: ${formData.email}` : ""}
 ${formData.service ? `🦷 Service: ${formData.service}` : ""}
 ${date ? `📅 Preferred Date: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 Message: ${formData.message}` : ""}
-    `.trim();
+`.trim();
 
-    const formattedPhoneNumber = phoneNumber.replace(/\s+|\D/g, ''); // Remove all spaces and non-digit characters
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    window.open(`https://wa.me/${formattedPhoneNumber}?text=${encodedMessage}`, "_blank");
+    const whatsappMessageAr = `
+*طلب موعد*
+
+👤 الاسم: ${formData.name}
+📞 رقم الهاتف: ${formData.phone}
+${formData.email ? `📧 البريد الإلكتروني: ${formData.email}` : ""}
+${formData.service ? `🦷 نوع الخدمة: ${formData.service}` : ""}
+${date ? `📅 التاريخ المفضل: ${format(date, "PPP")}` : ""}
+${formData.message ? `📝 رسالة إضافية: ${formData.message}` : ""}
+`.trim();
+
+    // ✅ Choose message based on language
+    const finalMessage =
+      language === "ar" ? whatsappMessageAr : whatsappMessageEn;
+
+    const encodedMessage = encodeURIComponent(finalMessage);
+
+    // ✅ Use modern WhatsApp link format
+    const whatsappURL = `https://wa.me/966556005567?text=${encodedMessage}`;
+
+    window.open(whatsappURL, "_blank");
 
     // Reset form and close
     setFormData({
@@ -100,7 +131,9 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
             id="phone"
             type="tel"
             value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, phone: e.target.value })
+            }
             placeholder={language === "ar" ? "رقم الهاتف *" : "Phone *"}
             required
             className="h-10"
@@ -109,7 +142,9 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             placeholder={language === "ar" ? "البريد الإلكتروني" : "Email"}
             className="h-10"
           />
@@ -118,7 +153,9 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
         <Input
           id="service"
           value={formData.service}
-          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, service: e.target.value })
+          }
           placeholder={language === "ar" ? "نوع الخدمة" : "Service type"}
           className="h-10"
         />
@@ -133,7 +170,13 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, "PPP") : <span>{language === "ar" ? "اختر تاريخاً" : "Pick a date"}</span>}
+              {date ? (
+                format(date, "PPP")
+              ) : (
+                <span>
+                  {language === "ar" ? "اختر تاريخاً" : "Pick a date"}
+                </span>
+              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -150,18 +193,29 @@ ${formData.message ? `📝 Message: ${formData.message}` : ""}
         <Textarea
           id="message"
           value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          placeholder={language === "ar" ? "رسالة إضافية..." : "Additional message..."}
+          onChange={(e) =>
+            setFormData({ ...formData, message: e.target.value })
+          }
+          placeholder={
+            language === "ar" ? "رسالة إضافية..." : "Additional message..."
+          }
           rows={2}
           className="resize-none"
         />
 
         <div className="flex gap-3 pt-2">
-          <Button type="button" variant="outline" onClick={onClose} className="flex-1 h-10">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onClose}
+            className="flex-1 h-10"
+          >
             {language === "ar" ? "إلغاء" : "Cancel"}
           </Button>
           <Button type="submit" className="flex-1 h-10">
-            {language === "ar" ? "إرسال عبر واتساب" : "Send via WhatsApp"}
+            {language === "ar"
+              ? "إرسال عبر واتساب"
+              : "Send via WhatsApp"}
           </Button>
         </div>
       </form>
