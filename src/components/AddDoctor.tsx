@@ -232,15 +232,15 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
   // Paired specialties for dropdown selection
   const DENTAL_SPECIALTIES: { en: string; ar: string }[] = [
     { en: "ORTHODONTICS", ar: "تقويم الأسنان" },
-    { en: "DENTOFACIAL ORTHOPEDICS", ar: "تقويم الفكين والوجه" },
+    { en: "DENTOFACIAL ORTHOPEDICS    ORTHODONTIC SPECIALIST", ar: "تقويم الفكين والوجه" },
     { en: "GENERAL DENTIST", ar: "طبيب أسنان عام" },
-    { en: "PROSTHODONTIC SPECIALIST (CROWN)", ar: "أخصائي تركيبات (تيجان)" },
-    { en: "ENDODONTIC SPECIALIST (RCT)", ar: "أخصائي علاج جذور الأسنان (حشو العصب)" },
-    { en: "MAXILLOFACIAL SURGEON (IMPLANT)", ar: "جراح وجه وفكين (زراعة الأسنان)" },
-    { en: "PEDODONTIST (CHILDREN)", ar: "أخصائي أسنان الأطفال" },
-  ];
+    { en: "PROSTHODONTIC SPECIALIST  CROWN & BRIDGES", ar: "أخصائي تركيبات " },
+    { en: "ENDODONTIC CONSULTANT    ROOT CANAL TREATMENTS", ar: "استشاري علاج عصب وجذور الأسنان " },
+    { en: "MAXILLOFACIAL SURGEON IMPLANTOLOGIST", ar: "جراح وجه وفكين وزراعة الأسنان" },
+    { en: "PEDODIATRIC DENTIST", ar: "طبيب أخصائي أسنان الأطفال" },
+   ];
 
-  const addSpecialtyPair = (pair: { en: string; ar: string }) => {
+   const addSpecialtyPair = (pair: { en: string; ar: string }) => {
     setFormData(prev => {
       const existsEn = prev.specialties.includes(pair.en);
       const existsAr = prev.specialtiesAr.includes(pair.ar);
