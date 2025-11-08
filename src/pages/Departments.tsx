@@ -8,7 +8,7 @@ const departments = [
   {
     name: "Department of Endodontics",
     nameAr: "قسم معالجة الجذور",
-    image: "/endodontics.png",
+    image: "/asset/departmets/endodontics.png",
     description: "Our Endodontics Department specializes in preserving your natural teeth through advanced root canal treatments. Our team of endodontists uses state-of-the-art microscopic technology to treat even the most complex cases with precision and care.",
     descriptionAr: "يتخصص قسم معالجة الجذور لدينا في الحفاظ على أسنانك الطبيعية من خلال علاجات قناة الجذر المتقدمة. يستخدم فريق أطباء قناة الجذر لدينا أحدث تقنيات المجهر لعلاج حتى أكثر الحالات تعقيدًا بدقة وعناية فائقة.",
     color: "bg-blue-50 dark:bg-blue-900/30",
@@ -23,7 +23,7 @@ const departments = [
   {
     name: "Department of General Dentistry",
     nameAr: "قسم طب الأسنان العام",
-    image: "/general-dentistry.png",
+    image: "/asset/departmets/general.png",
     description: "Our General Dentistry department provides comprehensive oral health care for patients of all ages. From routine check-ups to complex procedures, our experienced dentists use the latest techniques to ensure your smile stays healthy and beautiful.",
     descriptionAr: "يوفر قسم طب الأسنان العام رعاية شاملة لصحة الفم لمرضى جميع الأعمار. من الفحوصات الروتينية إلى الإجراءات المعقدة، يستخدم أطباء الأسنان ذوو الخبرة لدينا أحدث التقنيات لضمان بقاء ابتسامتك صحية وجميلة.",
     color: "bg-green-50 dark:bg-green-900/30",
@@ -38,7 +38,7 @@ const departments = [
   {
     name: "Department of Maxillofacial Surgery",
     nameAr: "قسم جراحة الفم والوجه والفكين",
-    image: "/maxillofacial.png",
+    image: "/asset/departmets/maxillofacial.png",
     description: "Our Maxillofacial Surgery department specializes in surgical treatments for diseases, injuries, and defects in the head, neck, face, jaws, and hard and soft tissues of the mouth. Our board-certified surgeons are trained in the most advanced surgical techniques.",
     descriptionAr: "يتخصص قسم جراحة الوجه والفكين في العلاجات الجراحية لأمراض وإصابات وتشوهات الرأس والرقبة والوجه والفكين والأنسجة الصلبة واللينة للفم. يتمتع الجراحون المعتمدون لدينا بتدريب على أحدث التقنيات الجراحية.",
     color: "bg-purple-50 dark:bg-purple-900/30",
@@ -53,7 +53,7 @@ const departments = [
   {
     name: "Department of Orthodontics",
     nameAr: "قسم تقويم الأسنان",
-    image: "/orthodontics.png",
+    image: "/asset/departmets/orthodontics.png",
     description: "Our Orthodontics Department is dedicated to creating beautiful, healthy smiles through customized treatment plans. Whether you're considering traditional braces or clear aligners, our orthodontists will help you achieve optimal dental alignment and bite function.",
     descriptionAr: "يهتم قسم تقويم الأسنان لدينا بإنشاء ابتسامات جميلة وصحية من خلال خطط علاجية مخصصة. سواء كنت تفكر في تقويم الأسنان التقليدي أو التقويم الشفاف، سيساعدك أخصائيو تقويم الأسنان لدينا على تحقيق المحاذاة المثلى للأسنان ووظيفة العض.",
     color: "bg-yellow-50 dark:bg-yellow-900/30",
@@ -68,7 +68,7 @@ const departments = [
   {
     name: "Department of Pediatric Dentistry",
     nameAr: "قسم طب أسنان الأطفال",
-    image: "/pediatric-dentistry.png",
+    image: "/asset/departmets/pediatric.png",
     description: "Our Pediatric Dentistry department provides specialized oral health care for infants, children, and adolescents. We create a fun, friendly environment to help children develop positive attitudes toward dental care that will last a lifetime.",
     descriptionAr: "يوفر قسم طب أسنان الأطفال رعاية صحية فموية متخصصة للرضع والأطفال والمراهقين. نخلق بيئة ممتعة وودية لمساعدة الأطفال على تطوير مواقف إيجابية تجاه العناية بالأسنان تستمر مدى الحياة.",
     color: "bg-pink-50 dark:bg-pink-900/30",
@@ -83,7 +83,7 @@ const departments = [
   {
     name: "Department of Prosthodontics",
     nameAr: "قسم التركيبات السنية",
-    image: "/prosthodontics.png",
+    image: "/asset/departmets/prosthodontics.png",
     description: "Our Prosthodontics Department specializes in the aesthetic restoration and replacement of teeth. Using the latest materials and technology, we create natural-looking dental prostheses that restore both function and appearance to your smile.",
     descriptionAr: "يتخصص قسم التركيبات السنية لدينا في الترميم الجمالي واستبدال الأسنان. باستخدام أحدث المواد والتقنيات، نقوم بإنشاء أطقم أسنان تبدو طبيعية لاستعادة كل من الوظيفة والمظهر لابتسامتك.",
     color: "bg-teal-50 dark:bg-teal-900/30",
