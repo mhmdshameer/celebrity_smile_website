@@ -70,11 +70,8 @@ const ServicesPreview = () => {
             <div
               className="flex gap-6 w-max"
               style={{
-                animation: `scroll 40s linear infinite`,
-                animationDirection:
-                  (language === "ar" ? "reverse" : "normal") as
-                    | "normal"
-                    | "reverse",
+                animation: `scroll-${language === 'ar' ? 'rtl' : 'ltr'} 80s linear infinite`,
+                direction: language === 'ar' ? 'rtl' : 'ltr'
               }}
             >
               {[...services, ...services].slice(0, 10).map((s) => {
@@ -99,11 +96,11 @@ const ServicesPreview = () => {
                         loading="lazy"
                       />
                       {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 text-white">
-                        <h3 className="text-xl font-semibold mb-2">
+                      <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 text-white ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+                        <h3 className={`text-xl font-semibold mb-2 ${language === 'ar' ? 'font-arabic' : ''}`}>
                           {title}
                         </h3>
-                        <p className="text-sm opacity-90 line-clamp-2">
+                        <p className={`text-sm opacity-90 line-clamp-2 ${language === 'ar' ? 'font-arabic' : ''}`}>
                           {desc}
                         </p>
                       </div>
@@ -122,9 +119,13 @@ const ServicesPreview = () => {
 
           {/* scroll animation */}
           <style>{`
-            @keyframes scroll {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
+            @keyframes scroll-ltr {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            @keyframes scroll-rtl {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(50%); }
             }
           `}</style>
         </div>
