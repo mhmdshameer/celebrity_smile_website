@@ -3,24 +3,25 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Stethoscope } from "lucide-react";
 
 const features = [
   {
-    icon: "🦷",
+    icon: "stethoscope",
     titleEn: "Expert Care",
     titleAr: "رعاية متخصصة",
     descEn: "Highly qualified dentists with years of experience in all aspects of dental care.",
     descAr: "أطباء أسنان مؤهلون بخبرة واسعة في جميع مجالات العناية بالأسنان.",
   },
   {
-    icon: "✨",
+    icon: "/moderntech.png",
     titleEn: "Modern Technology",
     titleAr: "تقنيات حديثة",
     descEn: "State-of-the-art equipment and advanced techniques for optimal results.",
     descAr: "أحدث المعدات والتقنيات المتقدمة لتحقيق أفضل النتائج.",
   },
   {
-    icon: "❤️",
+    icon: "/patientcomf.png",
     titleEn: "Patient Comfort",
     titleAr: "راحة المريض",
     descEn: "A welcoming environment where your comfort and satisfaction are our top priorities.",
@@ -80,9 +81,27 @@ const WhyChooseUs = () => {
             >
               <Card className="h-full border border-muted/40 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-2xl bg-card/60 backdrop-blur-sm">
                 <CardContent className="p-8 text-center flex flex-col items-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                    <span className="text-4xl">{feature.icon}</span>
-                  </div>
+                  <motion.div 
+                    className="w-20 h-20 mb-5 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center"
+                    whileHover={{
+                      y: -5,
+                      transition: { 
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 10 
+                      }
+                    }}
+                  >
+                    {feature.icon === 'stethoscope' ? (
+                      <Stethoscope className="w-8 h-8 text-primary" />
+                    ) : (
+                      <img 
+                        src={feature.icon}
+                        alt={isArabic ? feature.titleAr : feature.titleEn}
+                        className="w-12 h-12 object-contain"
+                      />
+                    )}
+                  </motion.div>
                   <h3 className="text-2xl font-semibold mb-3 text-primary">
                     {isArabic ? feature.titleAr : feature.titleEn}
                   </h3>
