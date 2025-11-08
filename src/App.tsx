@@ -1,3 +1,4 @@
+import "@/styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +10,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { AdminLayout } from "./components/AdminLayout";
 import { AuthProvider } from "./contexts/auth-context";
 import ProtectedRoute from "./components/protected-route";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import Services from "./pages/Services";
@@ -39,6 +41,7 @@ const App = () => (
         <BrowserRouter>
           <AuthProvider>
             <ScrollToTop />
+            <FloatingWhatsApp />
             <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/doctors" element={<Doctors />} />
