@@ -3,11 +3,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Stethoscope } from "lucide-react";
 
 const features = [
   {
-    icon: "stethoscope",
+    icon: "/expertcare.png",
     titleEn: "Expert Care",
     titleAr: "رعاية متخصصة",
     descEn: "Highly qualified dentists with years of experience in all aspects of dental care.",
@@ -92,15 +91,12 @@ const WhyChooseUs = () => {
                       }
                     }}
                   >
-                    {feature.icon === 'stethoscope' ? (
-                      <Stethoscope className="w-8 h-8 text-primary" />
-                    ) : (
+                    
                       <img 
                         src={feature.icon}
                         alt={isArabic ? feature.titleAr : feature.titleEn}
                         className="w-12 h-12 object-contain"
                       />
-                    )}
                   </motion.div>
                   <h3 className="text-2xl font-semibold mb-3 text-primary">
                     {isArabic ? feature.titleAr : feature.titleEn}
