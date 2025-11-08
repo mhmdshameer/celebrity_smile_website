@@ -99,7 +99,7 @@ const SpecialOffers = () => {
 
         {/* Image Section */}
         <div
-          className={`relative w-full h-[380px] md:h-[460px] rounded-2xl overflow-hidden shadow-lg border border-border/30 bg-muted/20 ${
+          className={`relative w-fit mx-auto rounded-2xl overflow-hidden shadow-lg border border-border/30 bg-muted/20 ${
             isArabic ? "order-1" : "order-2"
           }`}
         >
@@ -113,7 +113,7 @@ const SpecialOffers = () => {
                 key={currentOffer?._id}
                 src={currentOffer?.offerPoster?.url || "https://via.placeholder.com/800x600"}
                 alt={isArabic ? "عرض خاص" : "Special Offer"}
-                className="absolute inset-0 w-full h-full object-contain bg-white"
+                className="w-full h-auto max-h-[500px] object-contain bg-white"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

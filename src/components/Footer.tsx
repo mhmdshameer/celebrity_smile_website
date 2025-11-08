@@ -30,7 +30,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t("footerServices")}</h3>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/services" className="text-muted-foreground hover:text-primary transition-colors">
@@ -69,7 +69,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">ce.sm.dental.1@gmail.com</span>
+                <span className="text-muted-foreground">ce.sm.dental@gmail.com</span>
               </li>
             </ul>
           </div>
