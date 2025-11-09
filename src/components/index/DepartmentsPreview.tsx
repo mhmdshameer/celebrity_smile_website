@@ -3,22 +3,37 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const DepartmentsPreview = () => {
+  const { t, language } = useLanguage();
+  
   const departments = [
     {
-      name: "Restorative Department",
-      description: "Advanced cosmetic and restorative treatments to bring back your smile"
+      name: language === 'ar' ? 'قسم الترميم' : 'Restorative Department',
+      description: language === 'ar' 
+        ? 'علاجات تجميلية وترميمية متقدمة لاستعادة ابتسامتك' 
+        : 'Advanced cosmetic and restorative treatments to bring back your smile'
     },
     {
-      name: "Surgical Department",
-      description: "Advanced surgical procedures with a team of experts"
+      name: language === 'ar' ? 'قسم الجراحة' : 'Surgical Department',
+      description: language === 'ar'
+        ? 'إجراءات جراحية متقدمة مع فريق من الخبراء'
+        : 'Advanced surgical procedures with a team of experts'
     },
     {
-      name: "Orthodontic Department",
-      description: "Modern orthodontic solutions for proper alignment"
+      name: language === 'ar' ? 'قسم تقويم الأسنان' : 'Orthodontic Department',
+      description: language === 'ar'
+        ? 'حلول تقويم أسنان حديثة للمحاذاة الصحيحة'
+        : 'Modern orthodontic solutions for proper alignment'
     }
   ];
+  
+  const sectionTitle = language === 'ar' ? 'أقسامنا' : 'Our Departments';
+  const sectionDescription = language === 'ar'
+    ? 'اكتشف أقسامنا المتخصصة لرعاية أسنانك'
+    : 'Discover our specialized departments for your dental care';
+  const viewAllText = language === 'ar' ? 'عرض جميع الأقسام' : 'View All Departments';
 
   return (
     <motion.section
@@ -31,11 +46,11 @@ const DepartmentsPreview = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4">
-            Our Departments
+          <h2 className={`text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4 ${language === 'ar' ? 'rtl' : ''}`}>
+            {sectionTitle}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Discover our specialized departments for your dental care
+            {sectionDescription}
           </p>
         </div>
 
@@ -83,9 +98,9 @@ const DepartmentsPreview = () => {
         {/* View All Button */}
         <div className="text-center">
           <Link to="/departments">
-            <Button size="lg" className="text-lg px-8 py-5 group">
-              View All Departments
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <Button size="lg" className={`text-lg px-8 py-5 group ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+              {viewAllText}
+              <ArrowRight className={`${language === 'ar' ? 'mr-2 rotate-180' : 'ml-2'} h-5 w-5 transition-transform group-hover:translate-x-1`} />
             </Button>
           </Link>
         </div>
