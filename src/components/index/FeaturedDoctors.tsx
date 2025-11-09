@@ -34,58 +34,47 @@ const FeaturedDoctors = () => {
   // Enhanced slider settings with better responsive breakpoints
   const settings = {
     dots: true,
-    infinite: doctors.length > 3, // Enable infinite if we have more than 3 doctors
     speed: 600,
-    slidesToShow: Math.min(3, doctors.length), // Default to 3 slides on desktop
+    slidesToShow: 1, // Default to 1 slide (mobile first)
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    arrows: true,
+    arrows: false,
     centerMode: false,
-    centerPadding: '0',
+    centerPadding: '20px',
     swipeToSlide: true,
     draggable: true,
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1280, // Desktop
+        breakpoint: 1024, // Desktop
         settings: {
           slidesToShow: Math.min(3, doctors.length),
           slidesToScroll: 1,
           arrows: true,
           centerMode: false,
-          infinite: doctors.length > 3
-        }
-      },
-      {
-        breakpoint: 1024, // Small desktop/tablet landscape
-        settings: {
-          slidesToShow: Math.min(2, doctors.length),
-          slidesToScroll: 1,
-          arrows: true,
-          centerMode: false,
-          infinite: doctors.length > 2
+          infinite: doctors.length > 3,
+          dots: true
         }
       },
       {
         breakpoint: 768, // Tablet
         settings: {
-          slidesToShow: 1,
+          slidesToShow: Math.min(2, doctors.length),
           slidesToScroll: 1,
+          arrows: true,
           centerMode: false,
-          centerPadding: '0',
-          arrows: false,
-          dots: doctors.length > 1,
-          infinite: doctors.length > 1
+          infinite: doctors.length > 2,
+          dots: true
         }
       },
       {
-        breakpoint: 640, // Mobile
+        breakpoint: 480, // Mobile
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerMode: false,
-          centerPadding: '0',
+          centerMode: true,
+          centerPadding: '20px',
           arrows: false,
           dots: doctors.length > 1,
           infinite: doctors.length > 1
