@@ -23,9 +23,18 @@ import AppointmentForm from "@/components/AppointmentForm";
 const Index = () => {
   const { t, language } = useLanguage();
   const [appointmentFormOpen, setAppointmentFormOpen] = useState(false);
+  const [appointmentFormBtmOpen, setAppointmentFormBtmOpen] = useState(false);
 
   const handleWhatsAppBooking = () => {
-    setAppointmentFormOpen(true);
+    
+    // Open the appointment form after a short delay to ensure smooth scrolling
+    setTimeout(() => {
+      setAppointmentFormOpen(true);
+    }, 300);
+  };
+
+  const handleWhatsAppBookingBtm = () => {
+    setAppointmentFormBtmOpen(true);
   };
 
   return (
@@ -114,7 +123,15 @@ const Index = () => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
                   <Button size="lg" onClick={handleWhatsAppBooking} className="text-lg px-8 py-3">
-                    <Phone className="mr-2 h-5 w-5" />
+                     <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M20.52 3.48A11.87 11.87 0 0 0 12 0C5.37 0 0 5.37 0 12a11.86 11.86 0 0 0 1.62 5.96L0 24l6.24-1.63A11.87 11.87 0 0 0 12 24c6.63 0 12-5.37 12-12a11.87 11.87 0 0 0-3.48-8.52ZM12 22a9.87 9.87 0 0 1-5.08-1.39l-.36-.21-3.7.97.99-3.61-.23-.37A9.88 9.88 0 0 1 2 12C2 6.49 6.49 2 12 2a9.9 9.9 0 0 1 7.06 2.94A9.9 9.9 0 0 1 22 12c0 5.51-4.49 10-10 10Zm5.05-7.36c-.27-.14-1.61-.79-1.86-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.33-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.62-1.49-.85-2.05-.22-.53-.44-.46-.62-.47h-.53c-.18 0-.48.07-.73.34s-.96.94-.96 2.28.99 2.64 1.13 2.82c.14.18 1.94 2.96 4.7 4.05 2.77 1.09 2.77.73 3.27.69.5-.04 1.61-.65 1.84-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32Z" />
+                </svg>
                     {t("bookAppointment")}
                   </Button>
                 </motion.div>
@@ -128,7 +145,7 @@ const Index = () => {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 w-full px-4">
             <AppointmentForm 
               onClose={() => setAppointmentFormOpen(false)}
-              phoneNumber="1234567890"
+              phoneNumber="966556005567"
             />
           </div>
         )}
@@ -168,45 +185,66 @@ const Index = () => {
       {/* Technology Section */}
       <TechnologySection t={t} />
 
-      {/* Final CTA */}
-      <motion.section 
-        className="relative py-24 overflow-hidden -mb-20"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 -z-10">
-          <img 
-            src="/bg.jpg" 
-            alt="" 
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-bold text-primary mb-4">{t("readyToSmile")}</h2>
-            <p className="text-lg text-primary mb-8">{t("ctaDescription")}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={handleWhatsAppBooking}>
-                <Phone className="mr-2 h-5 w-5" />
-                {t("bookAppointment")}
-              </Button>
-              <Link to="/contact">
-                <Button size="lg" variant="outline">
-                  {t("contactUs")}
+      {/* Bottom CTA Section */}
+      <div className="relative -mb-20">
+        <motion.section 
+          className="relative py-24"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0 -z-10">
+            <img 
+              src="/bg.jpg" 
+              alt="" 
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/60" />
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-3xl mx-auto text-center">
+              <h2 className="text-4xl font-bold text-primary mb-4">{t("readyToSmile")}</h2>
+              <p className="text-lg text-primary mb-8">{t("ctaDescription")}</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" onClick={handleWhatsAppBookingBtm}>
+                   <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M20.52 3.48A11.87 11.87 0 0 0 12 0C5.37 0 0 5.37 0 12a11.86 11.86 0 0 0 1.62 5.96L0 24l6.24-1.63A11.87 11.87 0 0 0 12 24c6.63 0 12-5.37 12-12a11.87 11.87 0 0 0-3.48-8.52ZM12 22a9.87 9.87 0 0 1-5.08-1.39l-.36-.21-3.7.97.99-3.61-.23-.37A9.88 9.88 0 0 1 2 12C2 6.49 6.49 2 12 2a9.9 9.9 0 0 1 7.06 2.94A9.9 9.9 0 0 1 22 12c0 5.51-4.49 10-10 10Zm5.05-7.36c-.27-.14-1.61-.79-1.86-.88-.25-.09-.43-.14-.62.14-.18.27-.71.88-.87 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.33-.8-.71-1.34-1.58-1.5-1.85-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.62-1.49-.85-2.05-.22-.53-.44-.46-.62-.47h-.53c-.18 0-.48.07-.73.34s-.96.94-.96 2.28.99 2.64 1.13 2.82c.14.18 1.94 2.96 4.7 4.05 2.77 1.09 2.77.73 3.27.69.5-.04 1.61-.65 1.84-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32Z" />
+                </svg>
+                  {t("bookAppointment")}
                 </Button>
-              </Link>
+                <Link to="/contact">
+                  <Button size="lg" variant="outline">
+                    {t("contactUs")}
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
 
-<Footer />
+        {/* Bottom Appointment Form - Overlapping */}
+        {appointmentFormBtmOpen && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 w-full px-4">
+            <AppointmentForm 
+              onClose={() => setAppointmentFormBtmOpen(false)}
+              phoneNumber="966556005567"
+            />
+          </div>
+        )}
+      </div>
+
+      <Footer />
     </div>
   );
 };
