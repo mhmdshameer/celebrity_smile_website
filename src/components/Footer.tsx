@@ -112,19 +112,13 @@ const Footer = () => {
                 className="text-muted-foreground hover:text-yellow-400 transition-colors"
                 aria-label="Snapchat"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2c2.7 0 5 2.3 5 5v1.2c.2.1.4.2.6.3 2.5 1.5 3.5 4.5 2.9 7.4-.3 1.4-1.1 2.6-2.2 3.6-.7.6-1.5 1.1-2.3 1.5-.3.1-.6.3-.9.4-.3.1-.5.3-.7.5-.3.3-.4.7-.3 1.2.1.4.2.8.4 1.1.1.3.3.6.4.8.1.2.1.4 0 .6a.5.5 0 0 1-.4.3H7.3a.5.5 0 0 1-.4-.3.5.5 0 0 1 0-.6c.2-.3.3-.5.4-.8.2-.3.3-.7.4-1.1.1-.4 0-.9-.3-1.2-.2-.2-.4-.4-.7-.5-.3-.1-.6-.3-.9-.4-.8-.4-1.6-.9-2.3-1.5-1.1-1-1.9-2.2-2.2-3.6-.6-2.9.4-5.9 2.9-7.4.2-.1.4-.2.6-.3V7c0-2.7 2.3-5 5-5Z" />
-                </svg>
+                <div className="h-5 w-5 flex items-center justify-center">
+                  <img 
+                    src="/snapchat.svg" 
+                    alt="Snapchat" 
+                    className="h-5 w-5 dark:invert dark:brightness-0 dark:opacity-80 opacity-60 hover:opacity-100 transition-opacity" 
+                  />
+                </div>
               </a>
               <a
                 href="https://www.linkedin.com/company/celebrity-smile-dental-clinic"
