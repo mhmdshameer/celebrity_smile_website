@@ -35,11 +35,11 @@ const FeaturedDoctors = () => {
   const settings = {
     dots: true,
     speed: 600,
-    slidesToShow: 1, // Default to 1 slide (mobile first)
+    slidesToShow: Math.min(3, doctors.length), // Default to 3 slides
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    arrows: false,
+    arrows: true,
     centerMode: false,
     centerPadding: '20px',
     swipeToSlide: true,
@@ -47,7 +47,7 @@ const FeaturedDoctors = () => {
     pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1024, // Desktop
+        breakpoint: 1024, // Large screens
         settings: {
           slidesToShow: Math.min(3, doctors.length),
           slidesToScroll: 1,
@@ -58,18 +58,18 @@ const FeaturedDoctors = () => {
         }
       },
       {
-        breakpoint: 768, // Tablet
+        breakpoint: 768, // Tablets
         settings: {
-          slidesToShow: Math.min(2, doctors.length),
+          slidesToShow: Math.min(3, doctors.length), // Show 3 on tablets too
           slidesToScroll: 1,
           arrows: true,
           centerMode: false,
-          infinite: doctors.length > 2,
+          infinite: doctors.length > 3,
           dots: true
         }
       },
       {
-        breakpoint: 480, // Mobile
+        breakpoint: 640, // Mobile (sm breakpoint)
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
