@@ -33,23 +33,17 @@ export default function AppointmentForm({
   });
   const [date, setDate] = useState<Date>();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
 
-    // Validate required fields
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      alert(
-        language === "ar"
-          ? "يرجى ملء الحقول المطلوبة"
-          : "Please fill in required fields"
-      );
-      return;
-    }
+  if (!formData.name.trim() || !formData.phone.trim()) {
+    alert(language === "ar" ? "يرجى ملء الحقول المطلوبة" : "Please fill in required fields");
+    return;
+  }
 
-    const formattedPhoneNumber = phoneNumber.replace(/\D/g, "");
+  const formattedPhoneNumber = "966556005567"; // no "+" or spaces
 
-    // 🧠 Message Templates
-    const whatsappMessageEn = `
+  const whatsappMessageEn = `
 *Appointment Request*
 
 👤 Name: ${formData.name}
@@ -60,7 +54,7 @@ ${date ? `📅 Preferred Date: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 Message: ${formData.message}` : ""}
 `.trim();
 
-    const whatsappMessageAr = `
+  const whatsappMessageAr = `
 *طلب موعد*
 
 👤 الاسم: ${formData.name}
@@ -71,28 +65,38 @@ ${date ? `📅 التاريخ المفضل: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 رسالة إضافية: ${formData.message}` : ""}
 `.trim();
 
-    // ✅ Choose message based on language
-    const finalMessage =
-      language === "ar" ? whatsappMessageAr : whatsappMessageEn;
+  const finalMessage = language === "ar" ? whatsappMessageAr : whatsappMessageEn;
 
-    const encodedMessage = encodeURIComponent(finalMessage);
+  // 🧠 Important — encode safely for both platforms
+  const encodedMessage = encodeURIComponent(finalMessage).replace(/%0A/g, "%0D%0A");
 
-    // ✅ Use modern WhatsApp link format
-    const whatsappURL = `https://wa.me/966556005567?text=${encodedMessage}`;
+  // ✅ Multi-platform fallback logic
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    window.open(whatsappURL, "_blank");
+  let whatsappURL = "";
 
-    // Reset form and close
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      service: "",
-      message: "",
-    });
-    setDate(undefined);
-    onClose();
-  };
+  if (isMobile) {
+    // 📱 Mobile app link
+    whatsappURL = `whatsapp://send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
+  } else {
+    // 💻 Desktop browsers — fallback to official API
+    whatsappURL = `https://api.whatsapp.com/send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
+  }
+
+  // 🔥 Open in same tab (works better on desktop than _blank)
+  window.location.href = whatsappURL;
+
+  // Reset
+  setFormData({
+    name: "",
+    phone: "",
+    email: "",
+    service: "",
+    message: "",
+  });
+  setDate(undefined);
+  onClose();
+};
 
   return (
     <motion.div
