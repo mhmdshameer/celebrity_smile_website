@@ -31,54 +31,67 @@ const FeaturedDoctors = () => {
     };
   }, []);
 
-  // Slider settings with improved responsive breakpoints
+  // Enhanced slider settings with better responsive breakpoints
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: doctors.length > 3, // Enable infinite if we have more than 3 doctors
     speed: 600,
-    slidesToShow: 3,  // Show 3 doctors at a time
+    slidesToShow: Math.min(3, doctors.length), // Default to 3 slides on desktop
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,  // Auto-slide every 3 seconds
+    autoplaySpeed: 4000,
     arrows: true,
-    centerMode: false,  // Disable center mode for better 3-item layout
+    centerMode: false,
     centerPadding: '0',
+    swipeToSlide: true,
+    draggable: true,
+    pauseOnHover: true,
     responsive: [
       {
-        breakpoint: 1280,
+        breakpoint: 1280, // Desktop
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(3, doctors.length),
           slidesToScroll: 1,
-        },
+          arrows: true,
+          centerMode: false,
+          infinite: doctors.length > 3
+        }
       },
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // Small desktop/tablet landscape
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(2, doctors.length),
           slidesToScroll: 1,
-        },
+          arrows: true,
+          centerMode: false,
+          infinite: doctors.length > 2
+        }
       },
       {
-        breakpoint: 768,
+        breakpoint: 768, // Tablet
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: '40px',
+          centerMode: false,
+          centerPadding: '0',
           arrows: false,
-        },
+          dots: doctors.length > 1,
+          infinite: doctors.length > 1
+        }
       },
       {
-        breakpoint: 480,
+        breakpoint: 640, // Mobile
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: '20px',
+          centerMode: false,
+          centerPadding: '0',
           arrows: false,
-        },
-      },
-    ],
+          dots: doctors.length > 1,
+          infinite: doctors.length > 1
+        }
+      }
+    ]
   };
 
   const title =
@@ -93,23 +106,25 @@ const FeaturedDoctors = () => {
 
   return (
     <motion.section
-      className="py-16 md:py-24 bg-gradient-to-b from-background to-background/80 overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-background to-background/80 overflow-hidden px-2 sm:px-4"
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ once: false, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 max-w-7xl">
         {/* Header */}
         <div
-          className={`max-w-3xl mx-auto mb-10 md:mb-8 px-4 ${
+          className={`max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 px-2 sm:px-4 ${
             language === "ar" ? "text-right" : "text-center"
           }`}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent mb-3 md:mb-4">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent mb-2 sm:mb-3 md:mb-4">
             {title}
           </h2>
-          <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">{subtitle}</p>
+          <p className="text-muted-foreground text-xs xs:text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            {subtitle}
+          </p>
         </div>
 
         {/* Slider */}
@@ -122,7 +137,7 @@ const FeaturedDoctors = () => {
             {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
           </p>
         ) : (
-          <div className="px-0 md:px-2 mt-8">
+          <div className="px-0 sm:px-1 md:px-2 mt-6 sm:mt-8">
             <Slider {...settings} className="doctor-slider">
               {doctors.map((d) => {
                 const name = language === "ar" ? d.nameAr : d.name;
@@ -133,38 +148,47 @@ const FeaturedDoctors = () => {
                 return (
                 <motion.div
                   key={d._id}
-                  className="px-3 sm:px-4 h-full"
+                  className="px-2 sm:px-3 h-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  <div className="h-full flex flex-col items-center group">
+                  <div className="h-full flex flex-col items-center group pb-2">
                     {/* Doctor image with background */}
-                    <div className="relative w-full max-w-[280px] h-[320px] mb-6 flex items-center justify-center">
+                    <div className="relative w-full max-w-[240px] xs:max-w-[280px] h-[280px] xs:h-[320px] mb-4 sm:mb-6 flex items-center justify-center mx-auto">
                       {/* Background image container */}
-                      <div className="absolute inset-0 top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
+                      <div className="absolute inset-0 top-6 sm:top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
                            style={{ backgroundImage: 'url(/doctor_bg.png)' }}>
                       </div>
                       
                       {/* Doctor image */}
-                      <div className="relative w-full h-full flex items-end justify-center border-b-4">
+                      <div className="relative w-full h-full flex items-end justify-center border-b-4 border-pink-100 dark:border-pink-900/50">
                         <img
                           src={img}
                           alt={name}
-                          className="h-[90%] w-auto object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
-                          style={{ filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))' }}
+                          className="h-[88%] sm:h-[90%] w-auto object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                          style={{ 
+                            filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))',
+                            maxWidth: '100%',
+                            height: 'auto'
+                          }}
                           loading="lazy"
+                          width="280"
+                          height="320"
                         />
                       </div>
                     </div>
                     
                     {/* Doctor info */}
-                    <div className="text-center space-y-1 px-2">
-                      <h3 className="text-xl font-bold text-foreground transition-colors group-hover:text-pink-600">
+                    <div className="text-center space-y-1 px-2 w-full">
+                      <h3 className="text-lg sm:text-xl font-bold text-foreground transition-colors group-hover:text-pink-600 line-clamp-2" style={{ minHeight: '3rem' }}>
                         {name}
                       </h3>
                       {specialization && (
-                        <p className="text-sm text-muted-foreground font-medium">{specialization}</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground font-medium line-clamp-2" style={{ minHeight: '1.5rem' }}>
+                          {specialization}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -176,13 +200,9 @@ const FeaturedDoctors = () => {
       )}
 
         {/* Button */}
-        <div
-          className={`flex justify-center mt-12 ${
-            language === "ar" ? "flex-row-reverse" : ""
-          }`}
-        >
-          <Link to="/doctors">
-            <Button className="text-lg px-6 py-5">
+        <div className={`flex justify-center mt-6 sm:mt-8 ${language === "ar" ? "flex-row-reverse" : ""}`}>
+          <Link to="/doctors" className="inline-block">
+            <Button size="lg" className="text-lg px-8 py-5">
               {language === "ar" ? "عرض جميع الأطباء" : "View All Doctors"}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
