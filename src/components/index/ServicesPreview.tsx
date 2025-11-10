@@ -41,23 +41,25 @@ const ServicesPreview = () => {
 
   return (
     <motion.section
-      className="py-24 bg-background"
+      className={`py-20 md:py-24 bg-background ${language === "ar" ? 'rtl' : ''}`}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
+      dir={language === "ar" ? 'rtl' : 'ltr'}
     >
-      <div className="container mx-auto px-6 md:px-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-10">
         {/* Header */}
-        <div
-          className={`text-center max-w-3xl mx-auto mb-16 ${
-            language === "ar" ? "text-right" : "text-center"
-          }`}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4">
+        <div className="max-w-3xl mx-auto mb-12 md:mb-16 text-center">
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4 leading-[1.2] py-2
+            ${language === "ar" ? 'font-cairo text-center' : ''}`}>
             {title}
           </h2>
-          <p className="text-muted-foreground text-lg">{subtitle}</p>
+          <p className={`text-muted-foreground text-base sm:text-lg leading-normal mt-2 ${
+            language === "ar" ? 'text-center' : ''
+          }`}>
+            {subtitle}
+          </p>
         </div>
 
         {/* Services showcase */}

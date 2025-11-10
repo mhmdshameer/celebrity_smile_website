@@ -46,7 +46,7 @@ const DepartmentsPreview = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4 ${language === 'ar' ? 'rtl' : ''}`}>
+          <h2 className={`text-4xl py-2 md:text-5xl font-bold bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent mb-4 ${language === 'ar' ? 'rtl' : ''}`}>
             {sectionTitle}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

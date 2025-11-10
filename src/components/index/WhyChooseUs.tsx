@@ -43,7 +43,7 @@ const WhyChooseUs = () => {
     >
       <div className="container mx-auto px-4 text-center max-w-6xl">
         <motion.h2
-          className={`text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent ${
+          className={`text-4xl md:text-5xl py-2 font-bold mb-6 bg-gradient-to-r from-pink-500 via-pink-600 to-pink-700 bg-clip-text text-transparent ${
             isArabic ? "font-arabic" : ""
           }`}
           initial={{ opacity: 0, y: 20 }}

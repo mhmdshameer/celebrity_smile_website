@@ -103,15 +103,15 @@ const FeaturedDoctors = () => {
     >
       <div className="container mx-auto px-3 sm:px-4 md:px-6 max-w-7xl">
         {/* Header */}
-        <div
-          className={`max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 px-2 sm:px-4 ${
-            language === "ar" ? "text-right" : "text-center"
-          }`}
-        >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent mb-2 sm:mb-3 md:mb-4">
+        <div className="max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 px-2 sm:px-4 text-center">
+          <h2 className={`text-2xl py-2 xs:text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent mb-2 sm:mb-3 md:mb-4 leading-[1.2] ${
+            language === "ar" ? 'font-cairo' : ''
+          }`}>
             {title}
           </h2>
-          <p className="text-muted-foreground text-xs xs:text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className={`text-muted-foreground text-xs xs:text-sm sm:text-base max-w-2xl mx-auto leading-normal ${
+            language === "ar" ? 'font-cairo' : ''
+          }`}>
             {subtitle}
           </p>
         </div>
