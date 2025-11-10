@@ -31,53 +31,61 @@ const FeaturedDoctors = () => {
     };
   }, []);
 
-  // Enhanced slider settings with better responsive breakpoints
+  // Enhanced slider settings for better mobile experience
   const settings = {
     dots: true,
-    speed: 600,
-    slidesToShow: Math.min(3, doctors.length), // Default to 3 slides
+    speed: 500,
+    slidesToShow: Math.min(3, doctors.length),
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
-    arrows: true,
-    centerMode: false,
-    centerPadding: '20px',
+    autoplaySpeed: 3000,
+    arrows: false,
+    centerMode: true,
+    centerPadding: '0',
     swipeToSlide: true,
     draggable: true,
     pauseOnHover: true,
+    infinite: true,
+    cssEase: 'ease-in-out',
     responsive: [
       {
-        breakpoint: 1024, // Large screens
+        breakpoint: 1024, // lg screens and up
         settings: {
           slidesToShow: Math.min(3, doctors.length),
           slidesToScroll: 1,
-          arrows: true,
           centerMode: false,
-          infinite: doctors.length > 3,
-          dots: true
+          infinite: true,
+          dots: true,
+          arrows: true
         }
       },
       {
-        breakpoint: 768, // Tablets
+        breakpoint: 768, // md screens
         settings: {
-          slidesToShow: Math.min(3, doctors.length), // Show 3 on tablets too
+          slidesToShow: 2,
           slidesToScroll: 1,
-          arrows: true,
           centerMode: false,
-          infinite: doctors.length > 3,
-          dots: true
+          infinite: true,
+          dots: true,
+          arrows: true
         }
       },
       {
-        breakpoint: 640, // Mobile (sm breakpoint)
+        breakpoint: 640, // sm screens
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: true,
-          centerPadding: '20px',
+          centerPadding: '40px',
           arrows: false,
-          dots: doctors.length > 1,
-          infinite: doctors.length > 1
+          dots: true,
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 3000,
+          speed: 400,
+          swipe: true,
+          touchThreshold: 10,
+          focusOnSelect: true
         }
       }
     ]
@@ -126,8 +134,9 @@ const FeaturedDoctors = () => {
             {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
           </p>
         ) : (
-          <div className="px-0 sm:px-1 md:px-2 mt-6 sm:mt-8">
-            <Slider {...settings} className="doctor-slider">
+          <div className="px-0 sm:px-1 md:px-2 mt-6 sm:mt-8 relative">
+            <div className="relative overflow-visible">
+              <Slider {...settings} className="doctor-slider">
               {doctors.map((d) => {
                 const name = language === "ar" ? d.nameAr : d.name;
                 const specs = language === "ar" ? d.specialtiesAr : d.specialties;
@@ -184,9 +193,10 @@ const FeaturedDoctors = () => {
                 </motion.div>
               );
             })}
-          </Slider>
-        </div>
-      )}
+              </Slider>
+            </div>
+          </div>
+        )}
 
         {/* Button */}
         <div className={`flex justify-center mt-6 sm:mt-8 ${language === "ar" ? "flex-row-reverse" : ""}`}>
