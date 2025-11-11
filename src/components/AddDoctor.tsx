@@ -8,14 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 import { addDoctorApi } from "@/api/doctor";
 import { getDoctorApi, updateDoctorApi } from "@/api/doctor";
 // Optional shadcn components for combobox. If not present in your setup, we can replace with a custom list.
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 
 type DoctorFormData = {
   name: string;
   nameAr: string;
   specialties: string[]; // English
   specialtiesAr?: string[]; // Arabic (optional for backward compatibility)
+  _rawSpecialtiesEn?: string; // Raw input for English specialties
+  _rawSpecialtiesAr?: string; // Raw input for Arabic specialties
   image: {
     url: string;
     public_id: string;
@@ -37,6 +37,8 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
     nameAr: "",
     specialties: [],
     specialtiesAr: [],
+    _rawSpecialtiesEn: "",
+    _rawSpecialtiesAr: "",
     image: {
       url: "",
       public_id: ""
@@ -46,8 +48,6 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const imagePreviewRef = useRef<string | null>(null);
-  const [specialtyOpen, setSpecialtyOpen] = useState(false);
-  const [specialtyQuery, setSpecialtyQuery] = useState("");
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -111,6 +111,9 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Ensure any pending changes are processed
+    processSpecialties();
 
     try {
       // If adding new doctor, post to backend with multipart form
@@ -219,47 +222,37 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
     }
   };
 
-  const handleSpecialtiesEnChange = (value: string) => {
-    const specialties = value.split(',').map(s => s.trim()).filter(s => s !== '');
-    setFormData(prev => ({ ...prev, specialties }));
+  const handleSpecialtiesEnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const specialties = value ? value.split(',').map(s => s.trim()).filter(Boolean) : [];
+    setFormData(prev => ({
+      ...prev,
+      _rawSpecialtiesEn: value,
+      specialties
+    }));
   };
 
-  const handleSpecialtiesArChange = (value: string) => {
-    const specialtiesAr = value.split(',').map(s => s.trim()).filter(s => s !== '');
-    setFormData(prev => ({ ...prev, specialtiesAr }));
+  const handleSpecialtiesArChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const specialtiesAr = value ? value.split('،').map(s => s.trim()).filter(Boolean) : [];
+    setFormData(prev => ({
+      ...prev,
+      _rawSpecialtiesAr: value,
+      specialtiesAr
+    }));
   };
 
-  // Paired specialties for dropdown selection
-  const DENTAL_SPECIALTIES: { en: string; ar: string }[] = [
-    { en: "ORTHODONTICS", ar: "تقويم الأسنان" },
-    { en: "DENTOFACIAL ORTHOPEDICS    ORTHODONTIC SPECIALIST", ar: "تقويم الفكين والوجه" },
-    { en: "GENERAL DENTIST", ar: "طبيب أسنان عام" },
-    { en: "PROSTHODONTIC SPECIALIST  CROWN & BRIDGES", ar: "أخصائي تركيبات " },
-    { en: "ENDODONTIC CONSULTANT    ROOT CANAL TREATMENTS", ar: "استشاري علاج عصب وجذور الأسنان " },
-    { en: "MAXILLOFACIAL SURGEON IMPLANTOLOGIST", ar: "جراح وجه وفكين وزراعة الأسنان" },
-    { en: "PEDODIATRIC DENTIST", ar: "طبيب أخصائي أسنان الأطفال" },
-   ];
-
-   const addSpecialtyPair = (pair: { en: string; ar: string }) => {
-    setFormData(prev => {
-      const existsEn = prev.specialties.includes(pair.en);
-      const existsAr = prev.specialtiesAr.includes(pair.ar);
-      return {
-        ...prev,
-        specialties: existsEn ? prev.specialties : [...prev.specialties, pair.en],
-        specialtiesAr: existsAr ? prev.specialtiesAr : [...prev.specialtiesAr, pair.ar],
-      };
-    });
-  };
-
-  const removeSpecialtyByEn = (en: string) => {
-    setFormData(prev => {
-      const idx = prev.specialties.indexOf(en);
-      if (idx === -1) return prev;
-      const nextEn = prev.specialties.filter((_, i) => i !== idx);
-      const nextAr = (prev.specialtiesAr ?? []).filter((_, i) => i !== idx);
-      return { ...prev, specialties: nextEn, specialtiesAr: nextAr };
-    });
+  // Process the specialties when form is submitted or input loses focus
+  const processSpecialties = () => {
+    setFormData(prev => ({
+      ...prev,
+      specialties: prev._rawSpecialtiesEn ? 
+        prev._rawSpecialtiesEn.split(',').map(s => s.trim()).filter(Boolean) : 
+        [],
+      specialtiesAr: prev._rawSpecialtiesAr ? 
+        prev._rawSpecialtiesAr.split('،').map(s => s.trim()).filter(Boolean) : 
+        []
+    }));
   };
 
   // If editing, populate form with existing data
@@ -270,6 +263,8 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
         nameAr: editingDoctor.nameAr || "",
         specialties: editingDoctor.specialties || [],
         specialtiesAr: editingDoctor.specialtiesAr ?? [],
+        _rawSpecialtiesEn: editingDoctor.specialties?.join(', ') || "",
+        _rawSpecialtiesAr: editingDoctor.specialtiesAr?.join('، ') || "",
         image: editingDoctor.image || { url: "", public_id: "" }
       });
 
@@ -360,68 +355,35 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
             </div>
           </div>
 
-          {/* Specialties selector with search (paired EN/AR) */}
-          <div className="space-y-2">
-            <Label>Select Specialties</Label>
-            <Popover open={specialtyOpen} onOpenChange={setSpecialtyOpen}>
-              <PopoverTrigger asChild>
-                <Button variant="outline" type="button" className="w-full justify-between">
-                  Add specialties...
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="p-0 w-[360px]" align="start">
-                <Command>
-                  <CommandInput
-                    placeholder="Search specialties..."
-                    value={specialtyQuery}
-                    onValueChange={setSpecialtyQuery}
-                  />
-                  <CommandList>
-                    <CommandEmpty>No specialties found.</CommandEmpty>
-                    <CommandGroup>
-                      {DENTAL_SPECIALTIES
-                        .filter(s =>
-                          s.en.toLowerCase().includes(specialtyQuery.toLowerCase()) ||
-                          s.ar.includes(specialtyQuery)
-                        )
-                        .map((s) => (
-                          <CommandItem
-                            key={s.en}
-                            value={s.en}
-                            onSelect={() => {
-                              addSpecialtyPair(s);
-                            }}
-                          >
-                            <span className="flex-1">{s.en} — {s.ar}</span>
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-
-            {/* Selected chips */}
-            {formData.specialties.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {formData.specialties.map((en, idx) => (
-                  <span
-                    key={en}
-                    className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm"
-                  >
-                    {en} — {formData.specialtiesAr?.[idx] ?? ''}
-                    <button
-                      type="button"
-                      className="ml-1 text-muted-foreground hover:text-destructive"
-                      onClick={() => removeSpecialtyByEn(en)}
-                      aria-label={`Remove ${en}`}
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            )}
+          {/* Specialties Fields */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="specialties">Specialties (English, comma-separated)</Label>
+              <Input
+                id="specialties"
+                value={formData._rawSpecialtiesEn || formData.specialties.join(', ')}
+                onChange={handleSpecialtiesEnChange}
+                placeholder="e.g., Orthodontics, General Dentistry"
+                onBlur={processSpecialties}
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                {formData.specialties.length} {formData.specialties.length === 1 ? 'specialty' : 'specialties'} entered
+              </p>
+            </div>
+            <div>
+              <Label htmlFor="specialtiesAr">Specialties (Arabic, comma-separated)</Label>
+              <Input
+                id="specialtiesAr"
+                value={formData._rawSpecialtiesAr || formData.specialtiesAr?.join('، ') || ''}
+                onChange={handleSpecialtiesArChange}
+                placeholder="e.g., تقويم الأسنان, طب الأسنان العام"
+                onBlur={processSpecialties}
+                dir="rtl"
+              />
+              <p className="text-xs text-muted-foreground mt-1 text-right">
+                {formData.specialtiesAr?.length || 0} {formData.specialtiesAr?.length === 1 ? 'تخصص' : 'تخصصات'}
+              </p>
+            </div>
           </div>
 
           {/* Image Upload */}
