@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 import Slider from "react-slick"; 
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
