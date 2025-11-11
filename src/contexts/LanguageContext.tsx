@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 type Language = "en" | "ar";
 
@@ -159,16 +159,57 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+const LANGUAGE_KEY = 'selected_language';
+
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>("en");
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Initialize language from localStorage or browser settings
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem(LANGUAGE_KEY) as Language | null;
+    
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ar')) {
+      setLanguage(savedLanguage);
+    } else {
+      // Detect browser language
+      const browserLang = navigator.language.split('-')[0];
+      const detectedLang = (browserLang === 'ar') ? 'ar' : 'en';
+      setLanguage(detectedLang);
+      localStorage.setItem(LANGUAGE_KEY, detectedLang);
+    }
+    
+    setIsInitialized(true);
+  }, []);
+
+  // Update language in state and localStorage
+  const changeLanguage = (lang: Language) => {
+    setLanguage(lang);
+    localStorage.setItem(LANGUAGE_KEY, lang);
+    // Optional: Add RTL/LTR document direction change
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  };
 
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations.en] || key;
   };
 
+  if (!isInitialized) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="animate-pulse">Loading...</div>
+      </div>
+    );
+  }
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      <div dir={language === "ar" ? "rtl" : "ltr"} className={language === "ar" ? "font-arabic" : ""}>
+    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>
+      <div 
+        dir={language === "ar" ? "rtl" : "ltr"} 
+        lang={language} 
+        className={language === "ar" ? "font-arabic" : ""}
+      >
         {children}
       </div>
     </LanguageContext.Provider>
