@@ -19,6 +19,7 @@ export interface BlogPost {
   content: string;
   contentAr: string;
   published: boolean;
+  slug?: string;  // Added optional slug field for SEO-friendly URLs
   __v?: number;
 }
 

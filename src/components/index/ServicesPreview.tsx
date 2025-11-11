@@ -76,7 +76,7 @@ const ServicesPreview = () => {
                 direction: language === 'ar' ? 'rtl' : 'ltr'
               }}
             >
-              {[...services, ...services].slice(0, 10).map((s) => {
+              {services.slice(0, 6).map((s) => {
                 const title = language === "ar" ? s.serviceAr : s.service;
                 const desc =
                   language === "ar" ? s.descriptionAr : s.description;
@@ -98,11 +98,11 @@ const ServicesPreview = () => {
                         loading="lazy"
                       />
                       {/* Overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 text-white ${language === 'ar' ? 'text-right' : 'text-left'}`}>
-                        <h3 className={`text-xl font-semibold mb-2 ${language === 'ar' ? 'font-arabic' : ''}`}>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 text-white" dir={language}>
+                        <h3 className="text-xl font-semibold mb-2">
                           {title}
                         </h3>
-                        <p className={`text-sm opacity-90 line-clamp-2 ${language === 'ar' ? 'font-arabic' : ''}`}>
+                        <p className="text-sm opacity-90 line-clamp-2">
                           {desc}
                         </p>
                       </div>

@@ -94,11 +94,13 @@ export const BlogCard = ({ limit = 3, showViewAll = true }: BlogCardProps) => {
             key={post._id}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.3 }}
             viewport={{ once: true }}
             className="group"
           >
-            <Card className="h-full flex flex-col bg-background border border-muted/20 hover:border-primary/30 transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg">
+            <Link to={`/blog`} className="block h-full">
+              <Card className="h-full flex flex-col bg-background border border-muted/20 hover:border-primary/30 transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg">
               {/* Content */}
               <div className="flex flex-col flex-1 p-6">
                 <h3 className="text-xl font-semibold mb-4 line-clamp-2 text-primary group-hover:text-primary/90 transition-colors">
@@ -141,7 +143,8 @@ export const BlogCard = ({ limit = 3, showViewAll = true }: BlogCardProps) => {
                   </div>
                 )}
               </div>
-            </Card>
+              </Card>
+            </Link>
           </motion.div>
         ))}
       </div>
