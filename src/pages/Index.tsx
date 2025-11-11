@@ -1,7 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AboutSection from "@/components/index/AboutSection";

@@ -234,7 +234,7 @@ const Footer = () => {
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Celebrity Smile Clinic.{" "}
+            © {new Date().getFullYear()} {language === "ar" ? "مجمع ابتسامة المشاهير الطبي" : "Celebrity Smile Dental Clinic"}.{" "}
             {t("footerRights")}.
           </p>
         </div>

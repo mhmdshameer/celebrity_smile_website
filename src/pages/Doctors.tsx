@@ -33,7 +33,7 @@ const Doctors = () => {
 
   const handleWhatsAppBooking = (doctorName: string) => {
     const message = encodeURIComponent(`Hello! I would like to book an appointment with ${doctorName}.`);
-    window.open(`https://wa.me/1234567890?text=${message}`, "_blank");
+    window.open(`https://wa.me/966556005567?text=${message}`, "_blank");
   };
 
   return (

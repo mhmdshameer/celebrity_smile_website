@@ -31,61 +31,48 @@ const FeaturedDoctors = () => {
     };
   }, []);
 
-  // Enhanced slider settings for better mobile experience
+  // Slider settings with responsive breakpoints
   const settings = {
     dots: true,
+    infinite: true,
     speed: 500,
     slidesToShow: Math.min(3, doctors.length),
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: false,
-    centerMode: true,
-    centerPadding: '0',
+    arrows: true,
     swipeToSlide: true,
     draggable: true,
     pauseOnHover: true,
-    infinite: true,
     cssEase: 'ease-in-out',
     responsive: [
       {
-        breakpoint: 1024, // lg screens and up
+        breakpoint: 1024, // Desktop
         settings: {
           slidesToShow: Math.min(3, doctors.length),
           slidesToScroll: 1,
           centerMode: false,
-          infinite: true,
-          dots: true,
           arrows: true
         }
       },
       {
-        breakpoint: 768, // md screens
+        breakpoint: 768, // Tablets
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
           centerMode: false,
-          infinite: true,
-          dots: true,
           arrows: true
         }
       },
       {
-        breakpoint: 640, // sm screens
+        breakpoint: 480, // Mobile
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           centerMode: true,
-          centerPadding: '40px',
+          centerPadding: '20px',
           arrows: false,
-          dots: true,
-          infinite: true,
-          autoplay: true,
-          autoplaySpeed: 3000,
-          speed: 400,
-          swipe: true,
-          touchThreshold: 10,
-          focusOnSelect: true
+          dots: true
         }
       }
     ]
@@ -134,9 +121,9 @@ const FeaturedDoctors = () => {
             {language === "ar" ? "لا يوجد أطباء لعرضهم بعد." : "No doctors to show yet."}
           </p>
         ) : (
-          <div className="px-0 sm:px-1 md:px-2 mt-6 sm:mt-8 relative">
-            <div className="relative overflow-visible">
-              <Slider {...settings} className="doctor-slider">
+          <div className="w-full mt-6 sm:mt-8 relative">
+            <div className="relative w-full">
+              <Slider {...settings} className="w-full">
               {doctors.map((d) => {
                 const name = language === "ar" ? d.nameAr : d.name;
                 const specs = language === "ar" ? d.specialtiesAr : d.specialties;
@@ -146,15 +133,15 @@ const FeaturedDoctors = () => {
                 return (
                 <motion.div
                   key={d._id}
-                  className="px-2 sm:px-3 h-full"
+                  className="px-2 sm:px-3 h-full w-full"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
                 >
-                  <div className="h-full flex flex-col items-center group pb-2">
+                  <div className="h-full w-full flex flex-col items-center group pb-2">
                     {/* Doctor image with background */}
-                    <div className="relative w-full max-w-[240px] xs:max-w-[280px] h-[280px] xs:h-[320px] mb-4 sm:mb-6 flex items-center justify-center mx-auto">
+                    <div className="relative w-full max-w-[240px] xs:max-w-[280px] h-[280px] xs:h-[320px] mb-4 sm:mb-6 flex items-center justify-center mx-auto" style={{ width: '100%' }}>
                       {/* Background image container */}
                       <div className="absolute inset-0 top-6 sm:top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
                            style={{ backgroundImage: 'url(/doctor_bg.png)' }}>
