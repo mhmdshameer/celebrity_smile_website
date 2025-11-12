@@ -260,7 +260,7 @@ const PriceList = () => {
       <section className="relative bg-background py-16">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent py-2">
               {language === "ar" ? "التسعير الشفاف" : "Transparent Pricing"}
             </h2>
             <h3 className="text-xl md:text-2xl font-semibold mb-6 text-primary">
