@@ -16,6 +16,7 @@ import BlogPreview from "@/components/index/BlogPreview";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AppointmentForm from "@/components/AppointmentForm";
+import ClinicGallery from "@/components/index/ClinicGallery";
 
 // Real doctors will be fetched from API
 
@@ -180,6 +181,9 @@ const Index = () => {
 
       {/* Testimonials */}
       <TestimonialsSection t={t} />
+
+      {/* Clinic Gallery */}
+      <ClinicGallery />
 
       {/* Technology Section */}
       <TechnologySection t={t} />
