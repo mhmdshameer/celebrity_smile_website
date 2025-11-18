@@ -112,7 +112,7 @@ const Index = () => {
               </h2>
               <p className="text-lg md:text-xl mb-8 drop-shadow-lg leading-relaxed">
                 {language === "ar"
-                  ? "استمتع برعاية أسنان عالمية المستوى مع أحدث التقنيات والمهنيين الرحيمين. نقدم خدمات أسنان شاملة مصممة خصيصاً لاحتياجاتك الفريدة، مما يضمن ابتسامات صحية وجميلة لجميع مرضانا."
+                  ? "استمتع برعاية أسنان عالمية المستوى مع أحدث التقنيات والمهنيين. نقدم خدمات أسنان شاملة مصممة خصيصاً لاحتياجاتك الفريدة، مما يضمن ابتسامات صحية وجميلة لجميع مرضانا."
                   : "Experience world-class dental care with cutting-edge technology and compassionate professionals. We provide comprehensive dental services tailored to your unique needs, ensuring healthy and beautiful smiles for all our patients."
                 }
               </p>
