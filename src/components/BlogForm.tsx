@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from "./RichTextEditor";
 import {
   Select,
   SelectContent,
@@ -236,10 +236,9 @@ export function BlogForm({ initialData, onSubmit, onCancel, isSubmitting }: Blog
             <FormItem>
               <FormLabel>Content (English)</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Write your blog post in English"
-                  className="min-h-[200px]"
-                  {...field}
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />
@@ -255,11 +254,10 @@ export function BlogForm({ initialData, onSubmit, onCancel, isSubmitting }: Blog
             <FormItem>
               <FormLabel>المحتوى (بالعربية)</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="اكتب محتوى المدونة بالعربية"
-                  className="min-h-[200px]"
-                  dir="rtl"
-                  {...field}
+                <RichTextEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  isArabic={true}
                 />
               </FormControl>
               <FormMessage />
