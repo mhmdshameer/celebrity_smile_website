@@ -31,7 +31,7 @@ const ClinicGallery = () => {
     <section className="py-16 bg-gradient-to-b from-background to-gray-50 dark:to-gray-900/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent py-2">
             {language === 'ar' ? 'معرض العيادة' : 'Clinic Gallery'}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
