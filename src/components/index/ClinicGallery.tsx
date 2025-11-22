@@ -9,7 +9,8 @@ const ClinicGallery = () => {
   const images = [
     '/clinicOne.jpg',
     '/clinicTwo.jpg',
-    '/CLINIC PHOTO.jpeg'
+    '/CLINIC PHOTO.jpeg',
+    '/certificate.jpeg'
   ];
 
   useEffect(() => {

@@ -106,13 +106,21 @@ export default function RichTextEditor({
 
   const addYoutubeVideo = useCallback(() => {
     const url = window.prompt("Enter YouTube URL");
-    if (url) {
-      editor?.commands.setYoutubeVideo({
-        src: url,
-        width: 640,
-        height: 360,
-      });
+    if (!url) return;
+
+    // Convert Shorts to embed format
+    let embedUrl = url;
+
+    if (url.includes("youtube.com/shorts/")) {
+      const id = url.split("/shorts/")[1].split("?")[0];
+      embedUrl = `https://www.youtube.com/embed/${id}`;
     }
+
+    editor?.commands.setYoutubeVideo({
+      src: embedUrl,
+      width: 640,
+      height: 360,
+    });
   }, [editor]);
 
   useEffect(() => {
