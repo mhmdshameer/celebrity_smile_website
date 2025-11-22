@@ -104,23 +104,81 @@ export default function RichTextEditor({
     [editor]
   );
 
-  const addYoutubeVideo = useCallback(() => {
-    const url = window.prompt("Enter YouTube URL");
-    if (!url) return;
+  const getYoutubeEmbedOrFallback = (url: string) => {
+    let videoId = "";
 
-    // Convert Shorts to embed format
-    let embedUrl = url;
-
-    if (url.includes("youtube.com/shorts/")) {
-      const id = url.split("/shorts/")[1].split("?")[0];
-      embedUrl = `https://www.youtube.com/embed/${id}`;
+    // Normal YouTube links
+    if (url.includes("watch?v=")) {
+      videoId = url.split("watch?v=")[1].split("&")[0];
+    }
+    // Shorts format
+    else if (url.includes("youtube.com/shorts/")) {
+      videoId = url.split("/shorts/")[1].split("?")[0];
+    }
+    // youtu.be
+    else if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1].split("?")[0];
     }
 
-    editor?.commands.setYoutubeVideo({
-      src: embedUrl,
-      width: 640,
-      height: 360,
-    });
+    if (!videoId) return null;
+
+    // Regular embed URL
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+    return {
+      embedUrl,
+      fallbackHtml: `
+        <div style="
+          border: 1px solid #ddd; 
+          padding: 12px; 
+          border-radius: 8px;
+          background: #fafafa;
+        ">
+          <strong>Video Preview</strong>
+          <p>This video cannot be embedded.<br>Click below to watch on YouTube:</p>
+          <a 
+            href="${url}" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style="
+              color: #1a73e8; 
+              font-weight: bold; 
+              text-decoration: underline;
+            "
+          >
+            Open YouTube Video
+          </a>
+        </div>
+      `
+    };
+  };
+
+  const addYoutubeVideo = useCallback(() => {
+    const url = window.prompt("Enter YouTube URL");
+
+    if (!url) return;
+
+    const result = getYoutubeEmbedOrFallback(url);
+
+    if (!result) {
+      alert("Invalid YouTube URL. Please provide a valid YouTube video link.");
+      return;
+    }
+
+    const { embedUrl, fallbackHtml } = result;
+
+    try {
+      // Try embedding first
+      editor?.commands.setYoutubeVideo({
+        src: embedUrl,
+        width: 640,
+        height: 360,
+      });
+    } catch (e) {
+      console.error("Failed to embed YouTube video:", e);
+      // If embed fails → fallback preview
+      editor?.commands.insertContent(fallbackHtml);
+    }
   }, [editor]);
 
   useEffect(() => {
