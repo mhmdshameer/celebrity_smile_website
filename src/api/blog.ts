@@ -18,9 +18,19 @@ export interface BlogPost {
   date: string;
   content: string;
   contentAr: string;
+  excerpt?: string;  // Short summary in English
+  excerptAr?: string; // Short summary in Arabic
+  featuredImage?: {
+    url: string;
+    public_id: string;
+  };
+  readingTime?: number; // Estimated reading time in minutes
   published: boolean;
-  slug?: string;  // Added optional slug field for SEO-friendly URLs
+  slug?: string;  // SEO-friendly URL slug
   __v?: number;
+  // Optional fields that might come from the server
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 const handleResponse = async (response: Response) => {

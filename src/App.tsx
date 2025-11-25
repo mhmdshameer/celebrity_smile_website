@@ -29,6 +29,7 @@ import AdminDepartments from "./pages/admin/AdminDepartments";
 import AdminOffers from "./pages/admin/AdminOffers";
 import AdminPriceList from "./pages/admin/AdminPriceList";
 import AdminBlog from "./pages/admin/AdminBlog";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/price-list" element={<PriceList />} />
             <Route path="/privilege-card" element={<PrivilegeCard />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/signin" element={<SignIn />} />
             

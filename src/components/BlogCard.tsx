@@ -99,7 +99,7 @@ export const BlogCard = ({ limit = 3, showViewAll = true }: BlogCardProps) => {
             viewport={{ once: true }}
             className="group"
           >
-            <Link to={`/blog`} className="block h-full">
+            <Link to={`/blog/${post._id}`} className="block h-full">
               <Card className="h-full flex flex-col bg-background border border-muted/20 hover:border-primary/30 transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg">
               {/* Content */}
               <div className="flex flex-col flex-1 p-6">

@@ -3,10 +3,13 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useState } from "react";
 import { getAllBlogs, type BlogPost } from "@/api/blog";
-import { Calendar } from "lucide-react";
+import { Calendar, Clock, ArrowRight, Image as ImageIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { toast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Author } from "@/api/blog";
 
 const Blog = () => {
   const { language } = useLanguage();
@@ -14,6 +17,20 @@ const Blog = () => {
 
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Helper function to get author information
+  const getAuthorInfo = (authorId: string | Author) => {
+    if (!authorId) {
+      return { name: 'Unknown Author', nameAr: 'مؤلف غير معروف' };
+    }
+    if (typeof authorId === 'string') {
+      return { name: 'Loading...', nameAr: '...' };
+    }
+    return {
+      name: authorId.name || 'Unknown Author',
+      nameAr: authorId.nameAr || 'مؤلف غير معروف'
+    };
+  };
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -73,96 +90,102 @@ const Blog = () => {
       </section>
 
       {/* Blog Content */}
-      <section className="container mx-auto px-4 max-w-5xl py-20 space-y-16">
+      <section className="container mx-auto px-4 max-w-6xl py-12">
         {loading ? (
-          <div className="space-y-10">
-            {[1, 2, 3].map((i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="space-y-4">
-                <Skeleton className="h-64 w-full rounded-xl" />
-                <Skeleton className="h-8 w-3/4" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-48 w-full rounded-lg" />
+                <div className="space-y-2">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6" />
+                  <Skeleton className="h-4 w-1/2 mt-4" />
+                </div>
               </div>
             ))}
           </div>
         ) : blogs.length === 0 ? (
-          <div className="text-center text-muted-foreground text-lg">
-            {isArabic ? "لا توجد مقالات متاحة حالياً" : "No blog posts available yet"}
+          <div className="text-center py-20">
+            <h3 className="text-xl font-medium text-muted-foreground">
+              {isArabic ? "لا توجد مقالات متاحة حالياً" : "No blog posts available yet"}
+            </h3>
+            <p className="mt-2 text-muted-foreground">
+              {isArabic 
+                ? "يرجى التحقق مرة أخرى لاحقًا للحصول على محتوى جديد"
+                : "Please check back later for new content"}
+            </p>
           </div>
         ) : (
-          blogs.map((post, index) => (
-            <motion.article
-              key={post._id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              dir={isArabic ? "rtl" : "ltr"}
-              className="bg-card border border-muted/20 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
-            >
-            
-
-              {/* Content */}
-              <div className="p-8">
-                
-
-                <h2 className="text-3xl font-bold mb-4 text-primary leading-snug">
-                  {isArabic && post.titleAr ? post.titleAr : post.title}
-                </h2>
-
-                {/* Blog Content */}
-                <div
-                  className="prose max-w-none text-foreground leading-relaxed"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      isArabic && post.contentAr
-                        ? post.contentAr
-                        : post.content,
-                  }}
-                />
-
-                {/* Author Info */}
-                {typeof post.authorId === "object" && (
-                  <div className="mt-8 flex items-center justify-between border-t pt-4 border-muted/30">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full overflow-hidden bg-muted/50 flex-shrink-0">
-                        {post.authorId.image?.url ? (
-                          <img
-                            src={post.authorId.image.url}
-                            alt={isArabic ? post.authorId.nameAr : post.authorId.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-lg font-bold">
-                            {post.authorId.name.charAt(0).toUpperCase()}
-                          </div>
-                        )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogs.map((post, index) => (
+              <Link to={`/blog/${post._id}`} key={post._id} className="block h-full">
+                <motion.article
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="group bg-card border border-muted/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:border-primary/30"
+                >
+                  {/* Featured Image */}
+                  <div className="h-48 overflow-hidden bg-muted/20">
+                    {post.featuredImage?.url ? (
+                      <img
+                        src={post.featuredImage.url}
+                        alt={isArabic && post.titleAr ? post.titleAr : post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-muted">
+                        <ImageIcon className="w-12 h-12 text-muted-foreground" />
                       </div>
-                      <div>
-                        <p className="font-medium text-foreground text-base">
-                          {isArabic
-                            ? post.authorId.nameAr || post.authorId.name
-                            : post.authorId.name}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {isArabic ? "كاتب المقال" : "Author"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className={`flex items-center gap-2 text-muted-foreground text-sm ${isArabic ? 'mr-auto' : 'ml-auto'}`}>
-                      <Calendar className="w-4 h-4" />
-                      <span>
+                    )}
+                  </div>
+
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center text-sm text-muted-foreground mb-4">
+                      <p className="text-xs text-muted-foreground">
+                        {isArabic ? getAuthorInfo(post.authorId).nameAr : getAuthorInfo(post.authorId).name}
+                      </p>
+                      <time dateTime={post.date}>
                         {new Date(post.date).toLocaleDateString(
                           isArabic ? "ar-EG" : "en-US",
-                          { year: "numeric", month: "long", day: "numeric" }
+                          { year: 'numeric', month: 'short', day: 'numeric' }
                         )}
+                      </time>
+                      {post.readingTime && (
+                        <span className="flex items-center ml-4">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {post.readingTime} {isArabic ? 'دقيقة' : 'min read'}
+                        </span>
+                      )}
+                    </div>
+
+                    <h2 className="text-xl font-bold mb-3 text-primary line-clamp-2">
+                      {isArabic && post.titleAr ? post.titleAr : post.title}
+                    </h2>
+
+                    <div 
+                      className="prose prose-sm dark:prose-invert text-muted-foreground mb-4 line-clamp-3"
+                      dangerouslySetInnerHTML={{
+                        __html: isArabic && post.excerptAr 
+                          ? post.excerptAr 
+                          : post.excerpt || (isArabic && post.contentAr 
+                              ? post.contentAr.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' 
+                              : post.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...')
+                      }}
+                    />
+
+                    <div className="mt-auto pt-4 border-t border-muted/20">
+                      <span className="inline-flex items-center text-primary font-medium group-hover:underline">
+                        {isArabic ? "اقرأ المزيد" : "Read more"}
+                        <ArrowRight className={`ml-2 h-4 w-4 ${isArabic ? 'ml-0 mr-2 rotate-180' : ''}`} />
                       </span>
                     </div>
                   </div>
-                )}
-              </div>
-            </motion.article>
-          ))
+                </motion.article>
+              </Link>
+            ))}
+          </div>
         )}
       </section>
 
