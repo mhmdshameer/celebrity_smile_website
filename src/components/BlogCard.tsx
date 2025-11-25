@@ -47,7 +47,7 @@ export const BlogCard = ({ limit = 3, showViewAll = true }: BlogCardProps) => {
       }
     };
     fetchPosts();
-  }, [language, limit]);
+  }, [language, limit, isArabic]);
 
   if (loading) {
     return (
@@ -100,9 +100,9 @@ export const BlogCard = ({ limit = 3, showViewAll = true }: BlogCardProps) => {
             className="group"
           >
             <Link to={`/blog/${post._id}`} className="block h-full">
-              <Card className="h-full flex flex-col bg-background border border-muted/20 hover:border-primary/30 transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg">
+              <Card className="h-full flex flex-col bg-background border border-muted/20 hover:border-primary/30 transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg p-6">
               {/* Content */}
-              <div className="flex flex-col flex-1 p-6">
+              <div className="flex flex-col flex-1">
                 <h3 className="text-xl font-semibold mb-4 line-clamp-2 text-primary group-hover:text-primary/90 transition-colors">
                   {language === "ar" && post.titleAr ? post.titleAr : post.title}
                 </h3>

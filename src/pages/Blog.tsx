@@ -124,24 +124,9 @@ const Blog = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="group bg-card border border-muted/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:border-primary/30"
+                  className="group bg-card border border-muted/20 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full hover:border-primary/30 p-6"
                 >
-                  {/* Featured Image */}
-                  <div className="h-48 overflow-hidden bg-muted/20">
-                    {post.featuredImage?.url ? (
-                      <img
-                        src={post.featuredImage.url}
-                        alt={isArabic && post.titleAr ? post.titleAr : post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-muted">
-                        <ImageIcon className="w-12 h-12 text-muted-foreground" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-1">
+                  <div className="flex flex-col flex-1">
                     <div className="flex items-center text-sm text-muted-foreground mb-4">
                       <p className="text-xs text-muted-foreground">
                         {isArabic ? getAuthorInfo(post.authorId).nameAr : getAuthorInfo(post.authorId).name}
