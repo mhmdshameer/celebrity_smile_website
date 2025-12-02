@@ -32,6 +32,8 @@ const FeaturedDoctors = () => {
     };
   }, []);
 
+  const isRTL = language === "ar";
+
   // Slider settings with responsive breakpoints
   const settings = {
     dots: true,
@@ -46,32 +48,25 @@ const FeaturedDoctors = () => {
     draggable: true,
     pauseOnHover: true,
     cssEase: 'ease-in-out',
+    adaptiveHeight: true,
+    rtl: isRTL,
     responsive: [
       {
-        breakpoint: 1024, // Desktop
+        breakpoint: 1024, // ≤ 1024px: show 2 slides
         settings: {
-          slidesToShow: Math.min(3, doctors.length),
+          slidesToShow: Math.min(2, doctors.length),
           slidesToScroll: 1,
           centerMode: false,
           arrows: true
         }
       },
       {
-        breakpoint: 768, // Tablets
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          centerMode: false,
-          arrows: true
-        }
-      },
-      {
-        breakpoint: 480, // Mobile
+        breakpoint: 640, // ≤ 640px: phones show 1 slide
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          centerMode: true,
-          centerPadding: '20px',
+          centerMode: false,
+          centerPadding: '0px',
           arrows: false,
           dots: true
         }
@@ -124,7 +119,7 @@ const FeaturedDoctors = () => {
         ) : (
           <div className="w-full mt-6 sm:mt-8 relative">
             <div className="relative w-full">
-              <Slider {...settings} className="w-full">
+              <Slider key={isRTL ? 'rtl' : 'ltr'} {...settings} className="w-full">
               {doctors.map((d) => {
                 const name = language === "ar" ? d.nameAr : d.name;
                 const specs = language === "ar" ? d.specialtiesAr : d.specialties;
