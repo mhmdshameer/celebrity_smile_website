@@ -24,7 +24,7 @@ export default function GoogleReviewsEmbed() {
   return (
     <div className="my-10 w-full">
       <div
-        className="elfsight-app-b704ca3c-2af9-48c7-b15c-b84b3ea4b94e"
+        className="elfsight-app-555b2ae8-e91e-4c78-9e26-47cca14ebe17"
         data-elfsight-app-lazy
         data-elfsight-app-locale={getElfsightLanguage()}
       />
