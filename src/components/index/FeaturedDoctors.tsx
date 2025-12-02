@@ -34,45 +34,42 @@ const FeaturedDoctors = () => {
 
   const isRTL = language === "ar";
 
-  // Slider settings with responsive breakpoints
+  // Track viewport width to help react-slick recalc on real devices
+  const [vw, setVw] = useState<number>(0);
+  useEffect(() => {
+    const update = () => setVw(window.innerWidth || 0);
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('orientationchange', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('orientationchange', update);
+    };
+  }, []);
+
+  // Compute settings from current viewport width for consistent real-device behavior
+  const isTabletUp = vw >= 640;
+  const isDesktopUp = vw >= 1024;
+  const computedSlides = isDesktopUp ? Math.min(3, doctors.length) : isTabletUp ? Math.min(2, doctors.length) : 1;
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: Math.min(3, doctors.length),
+    slidesToShow: computedSlides,
     slidesToScroll: 1,
+    arrows: isTabletUp,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: true,
     swipeToSlide: true,
     draggable: true,
     pauseOnHover: true,
     cssEase: 'ease-in-out',
     adaptiveHeight: true,
+    variableWidth: false,
+    lazyLoad: 'ondemand' as const,
+    mobileFirst: true,
     rtl: isRTL,
-    responsive: [
-      {
-        breakpoint: 1024, // ≤ 1024px: show 2 slides
-        settings: {
-          slidesToShow: Math.min(2, doctors.length),
-          slidesToScroll: 1,
-          centerMode: false,
-          arrows: true
-        }
-      },
-      {
-        breakpoint: 640, // ≤ 640px: phones show 1 slide
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          centerMode: false,
-          centerPadding: '0px',
-          arrows: false,
-          dots: true
-        }
-      }
-    ]
-  };
+  } as const;
 
   const title =
     language === "ar"
@@ -119,64 +116,71 @@ const FeaturedDoctors = () => {
         ) : (
           <div className="w-full mt-6 sm:mt-8 relative">
             <div className="relative w-full">
-              <Slider key={isRTL ? 'rtl' : 'ltr'} {...settings} className="w-full">
-              {doctors.map((d) => {
-                const name = language === "ar" ? d.nameAr : d.name;
-                const specs = language === "ar" ? d.specialtiesAr : d.specialties;
-                const specialization = specs?.[0] ?? "";
-                const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
-
+              {(() => {
+                const sizeKey = vw >= 1024 ? 'desktop' : vw >= 640 ? 'tablet' : 'mobile';
+                const dirKey = isRTL ? 'rtl' : 'ltr';
                 return (
-                <motion.div
-                  key={d._id}
-                  className="px-2 sm:px-3 h-full w-full"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <div className="h-full w-full flex flex-col items-center group pb-2">
-                    {/* Doctor image with background */}
-                    <div className="relative w-full max-w-[240px] xs:max-w-[280px] h-[280px] xs:h-[320px] mb-4 sm:mb-6 flex items-center justify-center mx-auto" style={{ width: '100%' }}>
-                      {/* Background image container */}
-                      <div className="absolute inset-0 top-6 sm:top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
-                           style={{ backgroundImage: 'url(/doctor_bg.png)' }}>
-                      </div>
-                      
-                      {/* Doctor image */}
-                      <div className="relative w-full h-full flex items-end justify-center border-b-4 border-pink-100 dark:border-pink-900/50">
-                        <img
-                          src={img}
-                          alt={name}
-                          className="h-[88%] sm:h-[90%] w-auto object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
-                          style={{ 
-                            filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))',
-                            maxWidth: '100%',
-                            height: 'auto'
-                          }}
-                          loading="lazy"
-                          width="280"
-                          height="320"
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Doctor info */}
-                    <div className="text-center space-y-1 px-2 w-full">
-                      <h3 className="text-lg sm:text-xl font-bold text-foreground transition-colors group-hover:text-pink-600 line-clamp-2" style={{ minHeight: '3rem' }}>
-                        {name}
-                      </h3>
-                      {specialization && (
-                        <p className="text-xs sm:text-sm text-muted-foreground font-medium line-clamp-2" style={{ minHeight: '1.5rem' }}>
-                          {specialization}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-              </Slider>
+                  <Slider key={`${dirKey}-${sizeKey}`} {...settings} className="w-full">
+                    {doctors.map((d) => {
+                      const name = language === "ar" ? d.nameAr : d.name;
+                      const specs = language === "ar" ? d.specialtiesAr : d.specialties;
+                      const specialization = specs?.[0] ?? "";
+                      const img = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
+
+                      return (
+                        <motion.div
+                          key={d._id}
+                          className="px-2 sm:px-3 h-full w-full"
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, amount: 0.2 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                        >
+                          <div className="h-full w-full flex flex-col items-center group pb-2">
+                            {/* Doctor image with background */}
+                            <div className="relative w-full max-w-[240px] xs:max-w-[280px] h-[280px] xs:h-[320px] mb-4 sm:mb-6 flex items-center justify-center mx-auto" style={{ width: '100%' }}>
+                              {/* Background image container */}
+                              <div className="absolute inset-0 top-6 sm:top-8 w-full h-full bg-no-repeat bg-center bg-contain" 
+                                   style={{ backgroundImage: 'url(/doctor_bg.png)' }}>
+                              </div>
+                              
+                              {/* Doctor image */}
+                              <div className="relative w-full h-full flex items-end justify-center border-b-4 border-pink-100 dark:border-pink-900/50">
+                                <img
+                                  src={img}
+                                  alt={name}
+                                  className="h-[88%] sm:h-[90%] w-auto object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                                  style={{ 
+                                    filter: 'drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))',
+                                    maxWidth: '100%',
+                                    height: 'auto'
+                                  }}
+                                  loading="lazy"
+                                  width="280"
+                                  height="320"
+                                />
+                              </div>
+                            </div>
+                            
+                            {/* Doctor info */}
+                            <div className="text-center space-y-1 px-2 w-full">
+                              <h3 className="text-lg sm:text-xl font-bold text-foreground transition-colors group-hover:text-pink-600 line-clamp-2" style={{ minHeight: '3rem' }}>
+                                {name}
+                              </h3>
+                              {specialization && (
+                                <p className="text-xs sm:text-sm text-muted-foreground font-medium line-clamp-2" style={{ minHeight: '1.5rem' }}>
+                                  {specialization}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </Slider>
+                );
+              })()}
+              
             </div>
           </div>
         )}
