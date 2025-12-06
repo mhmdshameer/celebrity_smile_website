@@ -21,28 +21,6 @@ const HeroSection = ({ appointmentFormOpen, handleWhatsAppBooking, t }: HeroSect
         minHeight: '100vh'
       }}
     >
-      {/* Video Background */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          minHeight: '100vh',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0
-        }}
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/promo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
 
       {/* Brand Color Overlay */}
       <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
