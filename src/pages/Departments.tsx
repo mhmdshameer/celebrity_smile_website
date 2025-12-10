@@ -1,10 +1,20 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
-const departments = [
+interface Department {
+  name: string;
+  nameAr: string;
+  image: string;
+  description: string;
+  descriptionAr: string;
+  color: string;
+  services: { en: string; ar: string; }[];
+  link?: string;
+}
+
+const departments: Department[] = [
   {
     name: "Department of Endodontics",
     nameAr: "قسم معالجة الجذور",
@@ -78,7 +88,8 @@ const departments = [
       { en: "Dental sealants & fluoride treatments", ar: "حشوات السيلانت وعلاجات الفلورايد" },
       { en: "Habit counseling (thumb sucking, pacifier use)", ar: "استشارات العادات (مص الإصهام، استخدام المصاصة)" },
       { en: "Emergency dental care", ar: "الرعاية الطارئة للأسنان" }
-    ]
+    ],
+    link: "/pediatric-dentistry"
   },
   {
     name: "Department of Prosthodontics",
@@ -143,13 +154,13 @@ export const Departments = () => {
             const isEven = index % 2 === 0;
             const direction = isEven ? 'right' : 'left';
             const isRTL = isArabic ? !isEven : isEven;
-            
+
             return (
               <section key={index} className="py-12 md:py-16">
                 <div className="container mx-auto px-4">
                   <div className={`flex flex-col ${isRTL ? 'md:flex-row' : 'md:flex-row-reverse'} items-center justify-between gap-8 md:gap-12`}>
                     {/* Image */}
-                    <motion.div 
+                    <motion.div
                       className={`flex items-center justify-center w-full md:w-auto`}
                       initial={{ opacity: 0, x: isRTL ? -100 : 100 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -157,8 +168,8 @@ export const Departments = () => {
                       transition={{ duration: 0.8, ease: [0.16, 0.77, 0.47, 0.99] }}
                     >
                       <div className={`relative ${dept.color} rounded-2xl shadow-xl overflow-hidden`}>
-                        <img 
-                          src={dept.image} 
+                        <img
+                          src={dept.image}
                           alt={isArabic ? dept.nameAr : dept.name}
                           className="w-full h-auto max-w-[300px] md:max-w-[350px] object-cover"
                         />
@@ -166,7 +177,7 @@ export const Departments = () => {
                     </motion.div>
 
                     {/* Content */}
-                    <motion.div 
+                    <motion.div
                       className="flex-1"
                       initial={{ opacity: 0, x: isRTL ? 100 : -100 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -189,6 +200,16 @@ export const Departments = () => {
                               </li>
                             ))}
                           </ul>
+                          {dept.link && (
+                            <div className="mt-8">
+                              <a
+                                href={dept.link}
+                                className="inline-flex items-center px-6 py-3 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                              >
+                                {isArabic ? "زيارة القسم" : "Visit Department"}
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </motion.div>
