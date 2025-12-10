@@ -16,21 +16,6 @@ interface Department {
 
 const departments: Department[] = [
   {
-    name: "Department of Endodontics",
-    nameAr: "قسم معالجة الجذور",
-    image: "endodontics.png",
-    description: "Our Endodontics Department specializes in preserving your natural teeth through advanced root canal treatments. Our team of endodontists uses state-of-the-art microscopic technology to treat even the most complex cases with precision and care.",
-    descriptionAr: "يتخصص قسم معالجة الجذور لدينا في الحفاظ على أسنانك الطبيعية من خلال علاجات قناة الجذر المتقدمة. يستخدم فريق أطباء قناة الجذر لدينا أحدث تقنيات المجهر لعلاج حتى أكثر الحالات تعقيدًا بدقة وعناية فائقة.",
-    color: "bg-blue-50 dark:bg-blue-900/30",
-    services: [
-      { en: "Root canal therapy", ar: "علاج قناة الجذر" },
-      { en: "Endodontic retreatment", ar: "إعادة علاج قناة الجذر" },
-      { en: "Apicoectomy (root-end surgery)", ar: "استئصال قمة الجذر (جراحة نهاية الجذر)" },
-      { en: "Treatment of dental trauma", ar: "علاج إصابات الأسنان" },
-      { en: "Internal tooth whitening", ar: "تبييض الأسنان الداخلي" }
-    ]
-  },
-  {
     name: "Department of General Dentistry",
     nameAr: "قسم طب الأسنان العام",
     image: "general.png",
@@ -46,33 +31,18 @@ const departments: Department[] = [
     ]
   },
   {
-    name: "Department of Maxillofacial Surgery",
-    nameAr: "قسم جراحة الفم والوجه والفكين",
-    image: "maxillofacial.png",
-    description: "Our Maxillofacial Surgery department specializes in surgical treatments for diseases, injuries, and defects in the head, neck, face, jaws, and hard and soft tissues of the mouth. Our board-certified surgeons are trained in the most advanced surgical techniques.",
-    descriptionAr: "يتخصص قسم جراحة الوجه والفكين في العلاجات الجراحية لأمراض وإصابات وتشوهات الرأس والرقبة والوجه والفكين والأنسجة الصلبة واللينة للفم. يتمتع الجراحون المعتمدون لدينا بتدريب على أحدث التقنيات الجراحية.",
-    color: "bg-purple-50 dark:bg-purple-900/30",
+    name: "Department of Endodontics",
+    nameAr: "قسم معالجة الجذور",
+    image: "endodontics.png",
+    description: "Our Endodontics Department specializes in preserving your natural teeth through advanced root canal treatments. Our team of endodontists uses state-of-the-art microscopic technology to treat even the most complex cases with precision and care.",
+    descriptionAr: "يتخصص قسم معالجة الجذور لدينا في الحفاظ على أسنانك الطبيعية من خلال علاجات قناة الجذر المتقدمة. يستخدم فريق أطباء قناة الجذر لدينا أحدث تقنيات المجهر لعلاج حتى أكثر الحالات تعقيدًا بدقة وعناية فائقة.",
+    color: "bg-blue-50 dark:bg-blue-900/30",
     services: [
-      { en: "Dental implant surgery", ar: "جراحة زراعة الأسنان" },
-      { en: "Wisdom teeth removal", ar: "خلع أضراس العقل" },
-      { en: "Corrective jaw surgery", ar: "جراحة الفك التصحيحية" },
-      { en: "TMJ disorders treatment", ar: "علاج اضطرابات المفصل الفكي الصدغي" },
-      { en: "Facial trauma surgery", ar: "جراحة إصابات الوجه" }
-    ]
-  },
-  {
-    name: "Department of Orthodontics",
-    nameAr: "قسم تقويم الأسنان",
-    image: "orthodontics.png",
-    description: "Our Orthodontics Department is dedicated to creating beautiful, healthy smiles through customized treatment plans. Whether you're considering traditional braces or clear aligners, our orthodontists will help you achieve optimal dental alignment and bite function.",
-    descriptionAr: "يهتم قسم تقويم الأسنان لدينا بإنشاء ابتسامات جميلة وصحية من خلال خطط علاجية مخصصة. سواء كنت تفكر في تقويم الأسنان التقليدي أو التقويم الشفاف، سيساعدك أخصائيو تقويم الأسنان لدينا على تحقيق المحاذاة المثلى للأسنان ووظيفة العض.",
-    color: "bg-yellow-50 dark:bg-yellow-900/30",
-    services: [
-      { en: "Traditional metal braces", ar: "تقويم الأسنان المعدني التقليدي" },
-      { en: "Ceramic braces", ar: "تقويم الأسنان السيراميك" },
-      { en: "Invisalign clear aligners", ar: "تقويم الأسنان الشفاف إنفزلاين" },
-      { en: "Lingual braces", ar: "تقويم الأسنان اللساني" },
-      { en: "Early interceptive treatment", ar: "العلاج التقويمي المبكر" }
+      { en: "Root canal therapy", ar: "علاج قناة الجذر" },
+      { en: "Endodontic retreatment", ar: "إعادة علاج قناة الجذر" },
+      { en: "Apicoectomy (root-end surgery)", ar: "استئصال قمة الجذر (جراحة نهاية الجذر)" },
+      { en: "Treatment of dental trauma", ar: "علاج إصابات الأسنان" },
+      { en: "Internal tooth whitening", ar: "تبييض الأسنان الداخلي" }
     ]
   },
   {
@@ -92,6 +62,21 @@ const departments: Department[] = [
     link: "/pediatric-dentistry"
   },
   {
+    name: "Department of Orthodontics",
+    nameAr: "قسم تقويم الأسنان",
+    image: "orthodontics.png",
+    description: "Our Orthodontics Department is dedicated to creating beautiful, healthy smiles through customized treatment plans. Whether you're considering traditional braces or clear aligners, our orthodontists will help you achieve optimal dental alignment and bite function.",
+    descriptionAr: "يهتم قسم تقويم الأسنان لدينا بإنشاء ابتسامات جميلة وصحية من خلال خطط علاجية مخصصة. سواء كنت تفكر في تقويم الأسنان التقليدي أو التقويم الشفاف، سيساعدك أخصائيو تقويم الأسنان لدينا على تحقيق المحاذاة المثلى للأسنان ووظيفة العض.",
+    color: "bg-yellow-50 dark:bg-yellow-900/30",
+    services: [
+      { en: "Traditional metal braces", ar: "تقويم الأسنان المعدني التقليدي" },
+      { en: "Ceramic braces", ar: "تقويم الأسنان السيراميك" },
+      { en: "Invisalign clear aligners", ar: "تقويم الأسنان الشفاف إنفزلاين" },
+      { en: "Lingual braces", ar: "تقويم الأسنان اللساني" },
+      { en: "Early interceptive treatment", ar: "العلاج التقويمي المبكر" }
+    ]
+  },
+  {
     name: "Department of Prosthodontics",
     nameAr: "قسم التركيبات السنية",
     image: "prosthodontics.png",
@@ -104,6 +89,21 @@ const departments: Department[] = [
       { en: "Dental implants & implant-supported dentures", ar: "زراعة الأسنان وأطقم الأسنان المدعمة بالزرعات" },
       { en: "Full mouth rehabilitation", ar: "إعادة تأهيل الفم بالكامل" },
       { en: "TMJ and occlusal therapy", ar: "علاج المفصل الفكي الصدغي والإطباق" }
+    ]
+  },
+  {
+    name: "Department of Maxillofacial Surgery",
+    nameAr: "قسم جراحة الفم والوجه والفكين",
+    image: "maxillofacial.png",
+    description: "Our Maxillofacial Surgery department specializes in surgical treatments for diseases, injuries, and defects in the head, neck, face, jaws, and hard and soft tissues of the mouth. Our board-certified surgeons are trained in the most advanced surgical techniques.",
+    descriptionAr: "يتخصص قسم جراحة الوجه والفكين في العلاجات الجراحية لأمراض وإصابات وتشوهات الرأس والرقبة والوجه والفكين والأنسجة الصلبة واللينة للفم. يتمتع الجراحون المعتمدون لدينا بتدريب على أحدث التقنيات الجراحية.",
+    color: "bg-purple-50 dark:bg-purple-900/30",
+    services: [
+      { en: "Dental implant surgery", ar: "جراحة زراعة الأسنان" },
+      { en: "Wisdom teeth removal", ar: "خلع أضراس العقل" },
+      { en: "Corrective jaw surgery", ar: "جراحة الفك التصحيحية" },
+      { en: "TMJ disorders treatment", ar: "علاج اضطرابات المفصل الفكي الصدغي" },
+      { en: "Facial trauma surgery", ar: "جراحة إصابات الوجه" }
     ]
   }
 ];

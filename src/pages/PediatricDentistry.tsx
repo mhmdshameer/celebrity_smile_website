@@ -167,6 +167,9 @@ const PediatricDentistry = () => {
 
             {/* 1. Hero Section */}
             <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-blue-50 to-green-50 overflow-hidden">
+                {/* Navbar Background Overlay */}
+                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-600/90 to-transparent z-10" />
+
                 <div className="absolute inset-0 bg-[url('/bg-doodles.png')] opacity-5 pointer-events-none"></div>
                 <div className="container mx-auto px-4 py-12 md:py-24">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
