@@ -19,15 +19,15 @@ const BlogPost = () => {
   // Helper function to get author information
   const getAuthorInfo = (authorId: string | Author) => {
     if (!authorId) {
-      return { 
-        name: 'Unknown Author', 
+      return {
+        name: 'Unknown Author',
         nameAr: 'مؤلف غير معروف',
         image: null
       };
     }
     if (typeof authorId === 'string') {
-      return { 
-        name: 'Loading...', 
+      return {
+        name: 'Loading...',
         nameAr: '...',
         image: null
       };
@@ -42,7 +42,7 @@ const BlogPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
         const data = await getBlogPost(id);
@@ -66,9 +66,9 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
         <Navigation />
-        
+
         {/* Hero Section */}
         <section className="relative h-[50vh] overflow-hidden">
           <img
@@ -78,7 +78,7 @@ const BlogPost = () => {
           />
           <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
         </section>
-        
+
         <div className="container mx-auto px-4 py-16 max-w-4xl">
           <Skeleton className="h-12 w-3/4 mb-6" />
           <div className="flex items-center space-x-4 mb-8">
@@ -102,15 +102,15 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center w-full overflow-x-hidden">
         <Navigation />
         <div className="text-center p-8">
           <h1 className="text-2xl font-bold mb-4">
             {isArabic ? "المقال غير موجود" : "Post not found"}
           </h1>
           <p className="text-muted-foreground">
-            {isArabic 
-              ? "عذراً، لم يتم العثور على المقال المطلوب." 
+            {isArabic
+              ? "عذراً، لم يتم العثور على المقال المطلوب."
               : "Sorry, the requested blog post could not be found."}
           </p>
         </div>
@@ -120,9 +120,9 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative h-[50vh] overflow-hidden">
         <img
@@ -132,55 +132,62 @@ const BlogPost = () => {
         />
         <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
       </section>
-      
+
       <main className="flex-1 py-12">
         <article className="container mx-auto px-4 max-w-4xl">
-          <header className="mb-8">
-            <h1 className="text-4xl font-bold mb-4 text-primary">
+          <header className="mb-10 border-b pb-8">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
               {isArabic && post.titleAr ? post.titleAr : post.title}
             </h1>
-            
-            <div className="flex items-center text-muted-foreground">
-              <div className="flex items-center">
-                <Calendar className="w-4 h-4 mr-2" />
-                <span>
-                  {new Date(post.date).toLocaleDateString(
-                    isArabic ? "ar-EG" : "en-US",
-                    { year: 'numeric', month: 'long', day: 'numeric' }
-                  )}
-                </span>
-              </div>
-              
+
+            <div className="flex items-center gap-4">
               {post.authorId && (
-                <div className={`flex items-center ${isArabic ? 'mr-6' : 'ml-6'}`}>
-                  <div className="w-8 h-8 rounded-full bg-muted mr-2 overflow-hidden">
+                <div className="relative">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-primary/10 overflow-hidden shadow-sm">
                     {getAuthorInfo(post.authorId).image?.url ? (
-                      <img 
-                        src={getAuthorInfo(post.authorId).image?.url} 
+                      <img
+                        src={getAuthorInfo(post.authorId).image?.url}
                         alt={isArabic ? getAuthorInfo(post.authorId).nameAr : getAuthorInfo(post.authorId).name}
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-sm">
+                      <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary font-bold text-lg">
                         {getAuthorInfo(post.authorId).name?.charAt(0).toUpperCase()}
                       </div>
                     )}
                   </div>
-                  <span>{isArabic ? getAuthorInfo(post.authorId).nameAr : getAuthorInfo(post.authorId).name}</span>
                 </div>
               )}
+
+              <div className="flex flex-col">
+                {post.authorId && (
+                  <span className="font-bold text-lg text-foreground">
+                    {isArabic ? getAuthorInfo(post.authorId).nameAr : getAuthorInfo(post.authorId).name}
+                  </span>
+                )}
+
+                <div className="flex items-center text-muted-foreground text-sm">
+                  <Calendar className="w-3.5 h-3.5 mr-1.5" />
+                  <span>
+                    {new Date(post.date).toLocaleDateString(
+                      isArabic ? "ar-EG" : "en-US",
+                      { year: 'numeric', month: 'long', day: 'numeric' }
+                    )}
+                  </span>
+                </div>
+              </div>
             </div>
           </header>
 
-          <div 
-            className="prose max-w-none"
+          <div
+            className="prose max-w-none [&_img]:max-w-full [&_img]:h-auto [&_iframe]:w-full [&_iframe]:aspect-video [&_video]:w-full"
             dangerouslySetInnerHTML={{
               __html: isArabic && post.contentAr ? post.contentAr : post.content
             }}
           />
         </article>
       </main>
-      
+
       <Footer />
     </div>
   );
