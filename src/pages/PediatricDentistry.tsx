@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
     Accordion,
     AccordionContent,
@@ -17,7 +17,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
     Phone,
     Calendar,
@@ -134,24 +134,61 @@ const PediatricDentistry = () => {
 
     const testimonials = [
         {
-            text: isArabic ? "ابنتي تستمتع أخيرًا بزيارات طبيب الأسنان. طبيبة أسنان أطفال لطيفة جدًا." : "My daughter finally enjoys dental visits. Very gentle pediatric dentist.",
-            author: isArabic ? "أم سارة" : "Sarah's Mom",
-            rating: 5
+            text: isArabic
+                ? "واجه ابني مشاكل في قناة الجذر في سن مبكرة وحصلنا على النصيحة والعلاج الصحيح من الدكتورة بافيتا. طبيبة تهتم جداً وخاصة في التعامل مع الأطفال للعلاج. أنصح بشدة بهذا الطبيب والمستشفى أيضاً."
+                : "My son faced root canal issues at his early age were we got right advise and treatment from doctor Bhavita. Very well caring doctor especially handling kids for treatment. I HIGHLY RECOMMEND THIS DOCTOR AND HOSPITAL AS WELL",
+            author: "Mohamed Saffin",
+            rating: 5,
+            badge: isArabic ? "عناية الأطفال" : "Pediatric Care"
         },
         {
-            text: isArabic ? "علاج غير مؤلم. بيئة نظيفة وصديقة للأطفال." : "Painless treatment. Clean and child-friendly environment.",
-            author: isArabic ? "أبو محمد" : "Mohammed's Dad",
-            rating: 5
+            text: isArabic
+                ? "كانت تجربتنا إيجابية للغاية مع الدكتورة دعاء في عيادة سمايل للمشاهير. كان ابننا البالغ من العمر ثلاث سنوات يتألم وكان متردداً في الجلوس على كرسي الأسنان. كانت الدكتورة دعاء رائعة معه تماماً."
+                : "We had an incredibly positive experience with Dr. Dua at Celebrity Smile Dental Clinic. Our three-year-old son was in pain and initially very reluctant... Dr. Dua was absolutely brilliant with him.",
+            author: "Nafiya P",
+            rating: 5,
+            badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua",
+            date: isArabic ? "منذ يومين" : "2 days ago"
         },
         {
-            text: isArabic ? "فريق عمل رائع وتعامل ممتاز مع الأطفال." : "Great team and excellent handling of children.",
-            author: isArabic ? "أم ليلى" : "Laila's Mom",
-            rating: 5
+            text: isArabic
+                ? "أنصح بشدة بالدكتورة بافيتا. قدمت لنا النصيحة الصحيحة بخصوص مشكلة تسوس أسنان طفلنا."
+                : "Highly recommend Dr. Bhavitha. She gave us a right advice regarding our kid teeth cavity problem.",
+            author: "nathiya rahman",
+            rating: 5,
+            badge: isArabic ? "علاج التسوس" : "Cavity Treatment"
         },
         {
-            text: isArabic ? "تجربة مميزة، شكراً لكم." : "Amazing experience, thank you.",
-            author: isArabic ? "أبو فهد" : "Fahad's Dad",
-            rating: 5
+            text: isArabic
+                ? "قمت بعلاج أسنان أطفالي عند الدكتورة دعاء محمد لأكثر من سن وعلى عدة زيارات. ممتازة وتعاملها مع الأطفال راقي."
+                : "I had my children's teeth done by Dr. Doaa Mohamed for more than one tooth and over several visits. She is excellent and her interaction with children is outstanding.",
+            author: "FAZ FAZ",
+            rating: 5,
+            badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua"
+        },
+        {
+            text: isArabic
+                ? "كان لابنتي الصغيرة موعد مع الدكتورة دعاء. كانت في الموعد المحدد وكانت الخدمة ممتازة. لم تشعر ابنتي بأي ألم حيث عالجت 3 أسنان وخرجت سعيدة. السعر جيد أيضًا."
+                : "My little daughter had an appointment with Dr. Duaa. She was on time and the service was excellent. My daughter did not feel any pain as she treated 3 teeth and left happy. The price is also good.",
+            author: "Ahmed maily",
+            rating: 5,
+            badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua"
+        },
+        {
+            text: isArabic
+                ? "أود أن أشكر الدكتورة دعاء، طبيبة أسنان الأطفال، على صبرها وطريقة تعاملها مع الطفل وتشجيعها له، وما شاء الله أخلاقها ويدها خفيفة كالحرير."
+                : "I would like to thank Dr. Doaa, a pediatric dentist, for her patience, her way of dealing with the child, her encouragement of him, and, God willing, her manners and her hands are as soft as silk.",
+            author: "Rawan Al",
+            rating: 5,
+            badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua"
+        },
+        {
+            text: isArabic
+                ? "المركز بشكل عام رائع من حيث المواعيد والاستقبال. تجربتي كانت مع الدكتورة دعاء، التي قامت بعمل ممتاز في أسنان بناتي، وكان تعاملها مع الأطفال أكثر من رائع."
+                : "The center is generally great in terms of appointments and reception. My experience was with Dr. Duaa, who did excellent work on my daughters’ teeth, and her treatment of the children was more than wonderful.",
+            author: isArabic ? "أميرة الحارثي" : "Amira Al-Harthy",
+            rating: 5,
+            badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua"
         }
     ];
 
@@ -184,7 +221,7 @@ const PediatricDentistry = () => {
                             <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
                                 {/* Placeholder for Hero Image */}
                                 <img
-                                    src="/pediatric_dentist_hero.png"
+                                    src="https://images.unsplash.com/photo-1588776813186-6f4667a0f25e?q=80&w=2576&auto=format&fit=crop"
                                     alt="Happy Child at Dentist"
                                     className="w-full h-full object-cover bg-blue-100"
                                     onError={(e) => {
@@ -192,7 +229,6 @@ const PediatricDentistry = () => {
                                     }}
                                 />
                             </div>
-                            {/* Floating elements could go here */}
                         </motion.div>
 
                         {/* Right Side (Text - Desktop Left / Mobile Bottom) */}
@@ -226,17 +262,6 @@ const PediatricDentistry = () => {
                                     {isArabic ? "اتصل الآن" : "Call Now"}
                                 </Button>
                             </div>
-
-                            {/* Trust Badges */}
-                            {/* <div className="flex flex-wrap gap-4 items-center pt-4 border-t border-gray-200">
-                                <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Ministry_of_Health_Saudi_Arabia.svg/2560px-Ministry_of_Health_Saudi_Arabia.svg.png" alt="MOH" className="h-8 md:h-10 object-contain" />
-                                </div>
-                                <div className="h-6 w-px bg-gray-300 hidden sm:block"></div>
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/STC_Pay_Logo.svg/2560px-STC_Pay_Logo.svg.png" alt="STC Pay" className="h-6 md:h-8 object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                                <img src="https://seeklogo.com/images/T/tabby-logo-D12404FA58-seeklogo.com.png" alt="Tabby" className="h-6 md:h-8 object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                                <img src="https://seeklogo.com/images/T/tamara-logo-B3A5A0A584-seeklogo.com.png" alt="Tamara" className="h-6 md:h-8 object-contain opacity-80 hover:opacity-100 transition-opacity" />
-                            </div> */}
                         </motion.div>
 
                     </div>
@@ -398,7 +423,7 @@ const PediatricDentistry = () => {
                                     />
                                 ) : (
                                     <img
-                                        src="/pediatric_dentist_profile.png"
+                                        src="https://images.unsplash.com/photo-1594824476960-4842964d5da0?q=80&w=2574&auto=format&fit=crop"
                                         alt="Pediatric Dentist"
                                         className="w-full h-full object-cover"
                                         onError={(e) => {
@@ -455,31 +480,94 @@ const PediatricDentistry = () => {
                 </div>
             </section>
 
-            {/* 5. Parent Testimonials (Carousel) */}
-            <section className="py-12 md:py-20 bg-pink-50/30">
+            {/* 5. Google Reviews Style Section */}
+            <section className="py-12 md:py-20 bg-white">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-                            {isArabic ? "ماذا يقول الآباء" : "Happy Parents, Happy Smiles"}
+                    {/* Google Reviews Header */}
+                    <div className="flex flex-col items-center justify-center mb-12 space-y-2">
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
+                            {isArabic ? "ثقة الآباء، محبة الأطفال" : "Trusted by Parents, Loved by Kids"}
                         </h2>
+                        <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-gray-800">5.0</span>
+                            <div className="flex">
+                                {[...Array(5)].map((_, i) => (
+                                    <Star key={i} className="w-6 h-6 fill-[#FBBC04] text-[#FBBC04]" />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="text-gray-600 text-sm">
+                            {isArabic ? "بناءً على مراجعات موثقة لخدمات الأطفال" : "Based on verified reviews for Pediatric Services"}
+                        </div>
+                        <div className="flex items-center gap-1 mt-2">
+                            <span className="text-sm font-medium text-gray-500">powered by</span>
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+                                alt="Google"
+                                className="h-6 w-auto"
+                            />
+                        </div>
                     </div>
 
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <Carousel className="w-full">
-                            <CarouselContent>
+                            <CarouselContent className="-ml-4">
                                 {testimonials.map((t, i) => (
-                                    <CarouselItem key={i} className="md:basis-1/2">
-                                        <div className="p-2">
-                                            <Card className="border-none shadow-md bg-white">
-                                                <CardContent className="flex flex-col items-center p-8 text-center">
-                                                    <div className="flex gap-1 mb-4">
-                                                        {[...Array(t.rating)].map((_, i) => (
-                                                            <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                                                        ))}
+                                    <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                                        <div className="h-full">
+                                            <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group">
+                                                <CardContent className="p-8 flex flex-col h-full text-left">
+                                                    {/* Badge */}
+                                                    <div className={`absolute top-0 ${isRTL ? 'right-0' : 'left-0'} bg-blue-50 text-blue-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-none z-20 uppercase tracking-wider`}>
+                                                        {t.badge}
                                                     </div>
-                                                    <p className="text-lg text-gray-600 mb-6 font-medium">"{t.text}"</p>
-                                                    <div className="mt-auto">
-                                                        <span className="font-bold text-primary">{t.author}</span>
+
+                                                    {/* Google Icon */}
+                                                    <div className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} opacity-50 group-hover:opacity-100 transition-opacity`}>
+                                                        <img
+                                                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                                                            alt="G"
+                                                            className="w-5 h-5"
+                                                        />
+                                                    </div>
+
+                                                    {/* Header: Avatar, Name, Date */}
+                                                    <div className="flex items-start gap-3 mb-4 mt-2">
+                                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm
+                                                            ${i % 3 === 0 ? 'bg-purple-500' : i % 3 === 1 ? 'bg-indigo-500' : 'bg-pink-500'}
+                                                        `}>
+                                                            {t.author.charAt(0)}
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-bold text-gray-800 text-sm leading-tight">{t.author}</div>
+                                                            <div className="flex items-center gap-1 mt-1">
+                                                                <div className="flex gap-0.5">
+                                                                    {[...Array(5)].map((_, i) => (
+                                                                        <Star key={i} className="w-3 h-3 fill-[#FBBC04] text-[#FBBC04]" />
+                                                                    ))}
+                                                                </div>
+                                                                <span className="text-[10px] text-gray-400 mx-1">•</span>
+                                                                <div className="text-[10px] text-gray-400">
+                                                                    {/* @ts-ignore */}
+                                                                    {t.date || (isArabic ? `${i + 1} أشهر مضت` : `${i + 1} months ago`)}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Review Text */}
+                                                    <p className="text-sm text-gray-600 leading-relaxed font-normal italic relative">
+                                                        <span className="absolute -top-2 -left-1 text-4xl text-gray-100 font-serif">"</span>
+                                                        {t.text}
+                                                        <span className="absolute -bottom-4 right-0 text-4xl text-gray-100 font-serif">"</span>
+                                                    </p>
+
+                                                    {/* Verified Badge Bottom */}
+                                                    <div className="mt-auto pt-4 flex items-center gap-1.5 opacity-60">
+                                                        <ShieldCheck className="w-3 h-3 text-green-600" />
+                                                        <span className="text-[10px] font-medium text-gray-500 uppercase tracking-widest">
+                                                            {isArabic ? "مراجعة موثقة" : "Verified Review"}
+                                                        </span>
                                                     </div>
                                                 </CardContent>
                                             </Card>
@@ -487,80 +575,16 @@ const PediatricDentistry = () => {
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <CarouselPrevious className="hidden md:flex" />
-                            <CarouselNext className="hidden md:flex" />
+                            <CarouselPrevious className={`hidden md:flex ${isRTL ? 'right-0 translate-x-12' : 'left-0 -translate-x-12'}`} />
+                            <CarouselNext className={`hidden md:flex ${isRTL ? 'left-0 -translate-x-12' : 'right-0 translate-x-12'}`} />
                         </Carousel>
+
                     </div>
                 </div>
             </section>
 
-            {/* 6. Photo Gallery */}
-            {/* <section className="py-20 bg-white" >
-                <div className="container mx-auto px-4">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-                        {isArabic ? "جولة في عيادتنا للأطفال" : "Our Kid-Friendly Clinic"}
-                    </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {[
-                            { src: "https://images.unsplash.com/photo-1606811971618-4486d14f3f72?q=80&w=2574", alt: "Play Area" },
-                            { src: "https://images.unsplash.com/photo-1519494476857-81788c94e41f?q=80&w=2670", alt: "Treatment Room" },
-                            { src: "https://images.unsplash.com/photo-1445583934509-4152fbc3121d?q=80&w=2670", alt: "Gentle Care" },
-                            { src: "https://images.unsplash.com/photo-1598256989494-06c27685b8c3?q=80&w=2669", alt: "Modern Equipment" },
-                            { src: "https://plus.unsplash.com/premium_photo-1661766456242-0193bb9dc730?q=80&w=2670", alt: "Happy Smiles" },
-                            { src: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=2670", alt: "Toys & Fun" },
-                        ].map((img, i) => (
-                            <motion.div
-                                key={i}
-                                className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer group"
-                                whileHover={{ scale: 1.02 }}
-                            >
-                                <img
-                                    src={img.src}
-                                    alt={img.alt}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                    onError={(e) => {
-                                        e.currentTarget.src = `https://placehold.co/400x400?text=Clinic+Photo+${i + 1}`;
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span className="text-white font-medium">{img.alt}</span>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </section> */}
-
-            {/* 7. Pricing (Optional) */}
-            <section className="py-12 md:py-20 bg-gray-50" >
-                <div className="container mx-auto px-4 max-w-3xl">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
-                        {isArabic ? "أسعار العلاجات الشائعة" : "Treatment Pricing"}
-                    </h2>
-                    <Card className="overflow-hidden border-none shadow-lg">
-                        <div className="bg-primary p-4 text-white font-bold grid grid-cols-2">
-                            <span>{isArabic ? "العلاج" : "Treatment"}</span>
-                            <span className="text-right">{isArabic ? "السعر يبدأ من" : "Starting Price"}</span>
-                        </div>
-                        <div className="divide-y">
-                            {[
-                                { name: "Fissure Sealant", price: "SAR 150" },
-                                { name: "Composite Filling", price: "SAR 200" },
-                                { name: "Stainless Steel Crown", price: "SAR 350" },
-                                { name: "Pulpotomy", price: "SAR 300" },
-                            ].map((item, i) => (
-                                <div key={i} className="grid grid-cols-2 p-4 hover:bg-gray-50 transition-colors">
-                                    <span className="font-medium text-gray-700">{item.name}</span>
-                                    <span className="text-right font-bold text-primary">{item.price}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </Card>
-                </div>
-            </section>
-
-            {/* 8. FAQ Section */}
-            <section className="py-12 md:py-20 bg-white" >
+            {/* 6. FAQ Section */}
+            <section className="py-12 md:py-20 bg-white">
                 <div className="container mx-auto px-4 max-w-3xl">
                     <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
                         {isArabic ? "أسئلة شائعة" : "Frequently Asked Questions"}
@@ -578,8 +602,8 @@ const PediatricDentistry = () => {
                 </div>
             </section>
 
-            {/* 9. Final CTA */}
-            <section className="py-16 md:py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center" >
+            {/* 7. Final CTA */}
+            <section className="py-16 md:py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
                         {isArabic ? "امنح طفلك ابتسامة صحية وواثقة" : "Give Your Child a Healthy, Confident Smile"}
@@ -601,7 +625,7 @@ const PediatricDentistry = () => {
             </section>
 
             <Footer />
-        </div >
+        </div>
     );
 };
 
