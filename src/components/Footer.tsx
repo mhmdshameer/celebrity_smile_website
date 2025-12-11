@@ -202,31 +202,47 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">{t("footerContact")}</h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">
-                  {language === 'ar'
-                    ? '3247 شارع الأجواد، حي الربوة، جدة 23462، المملكة العربية السعودية'
-                    : '3247 Al Ajawad St, Al Rabi\'a, Jeddah 23462, Saudi Arabia'
-                  }
-                </span>
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/dtoZJDHLwrRfMZVA9?g_st=ic"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start space-x-3 group"
+                >
+                  <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5 group-hover:text-pink-600 transition-colors" />
+                  <span className="text-muted-foreground group-hover:text-primary transition-colors">
+                    {language === 'ar'
+                      ? '3247 شارع الأجواد، حي الربوة، جدة 23462، المملكة العربية السعودية'
+                      : '3247 Al Ajawad St, Al Rabi\'a, Jeddah 23462, Saudi Arabia'
+                    }
+                  </span>
+                </a>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground" dir={language === 'ar' ? 'ltr' : 'auto'}>
-                  {language === 'ar' ? '+966 55 600 5567' : '+966 55 600 5567'}
-                </span>
+              <li>
+                <a
+                  href="tel:+966556005567"
+                  className="flex items-center space-x-3 group"
+                >
+                  <Phone className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
+                  <span className="text-muted-foreground group-hover:text-primary transition-colors" dir={language === 'ar' ? 'ltr' : 'auto'}>
+                    {language === 'ar' ? '+966 55 600 5567' : '+966 55 600 5567'}
+                  </span>
+                </a>
               </li>
-              <li className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">
-                  ce.sm.dental@gmail.com
-                </span>
+              <li>
+                <a
+                  href="mailto:ce.sm.dental@gmail.com"
+                  className="flex items-center space-x-3 group"
+                >
+                  <Mail className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
+                  <span className="text-muted-foreground group-hover:text-primary transition-colors">
+                    ce.sm.dental@gmail.com
+                  </span>
+                </a>
               </li>
             </ul>
           </div>
