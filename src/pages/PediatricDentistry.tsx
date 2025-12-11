@@ -17,7 +17,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     Phone,
     Calendar,
@@ -28,11 +28,93 @@ import {
     Check,
     Baby,
     Stethoscope,
-    Star
+    Star,
+    X // For close button
 } from "lucide-react";
 import { getDoctorApi, type DoctorResponse } from "@/api/doctor";
 import { Helmet } from "react-helmet-async";
 import { useToast } from "@/components/ui/use-toast";
+
+// Helper Component for Review Card
+const ReviewCard = ({ t, i, isArabic, isRTL, onReadMore }: { t: any, i: number, isArabic: boolean, isRTL: boolean, onReadMore: (review: any) => void }) => {
+    const MAX_LENGTH = 150; // Character limit for truncation
+    const shouldTruncate = t.text.length > MAX_LENGTH;
+
+    return (
+        <div className="h-full">
+            <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group">
+                <CardContent className="p-8 flex flex-col h-full text-left">
+                    {/* Badge */}
+                    <div className={`absolute top-0 ${isRTL ? 'right-0' : 'left-0'} bg-blue-50 text-blue-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-none z-20 uppercase tracking-wider`}>
+                        {t.badge}
+                    </div>
+
+                    {/* Google Icon */}
+                    <div className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} opacity-50 group-hover:opacity-100 transition-opacity`}>
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                            alt="G"
+                            className="w-5 h-5"
+                        />
+                    </div>
+
+                    {/* Header: Avatar, Name, Date */}
+                    <div className="flex items-start gap-3 mb-4 mt-2">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm
+                            ${i % 3 === 0 ? 'bg-purple-500' : i % 3 === 1 ? 'bg-indigo-500' : 'bg-pink-500'}
+                        `}>
+                            {t.author.charAt(0)}
+                        </div>
+                        <div>
+                            <div className="font-bold text-gray-800 text-sm leading-tight">{t.author}</div>
+                            <div className="flex items-center gap-1 mt-1">
+                                <div className="flex gap-0.5">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} className="w-3 h-3 fill-[#FBBC04] text-[#FBBC04]" />
+                                    ))}
+                                </div>
+                                <span className="text-[10px] text-gray-400 mx-1">•</span>
+                                <div className="text-[10px] text-gray-400">
+                                    {/* @ts-ignore */}
+                                    {t.date || (isArabic ? `${i + 1} أشهر مضت` : `${i + 1} months ago`)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Review Text */}
+                    <div className="relative mb-6 flex-grow">
+                        <p className="text-sm text-gray-600 leading-relaxed font-normal italic line-clamp-4">
+                            <span className="absolute -top-2 -left-1 text-4xl text-gray-100 font-serif">"</span>
+                            {t.text}
+                            <span className="absolute -bottom-4 right-0 text-4xl text-gray-100 font-serif">"</span>
+                        </p>
+
+                        {shouldTruncate && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onReadMore(t);
+                                }}
+                                className="text-xs font-bold text-blue-500 hover:text-blue-700 mt-2 focus:outline-none"
+                            >
+                                {isArabic ? "قراءة المزيد" : "Read More"}
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Verified Badge Bottom */}
+                    <div className="mt-auto pt-4 flex items-center gap-1.5 opacity-60">
+                        <ShieldCheck className="w-3 h-3 text-green-600" />
+                        <span className="text-[10px] font-medium text-gray-500 uppercase tracking-widest">
+                            {isArabic ? "مراجعة موثقة" : "Verified Review"}
+                        </span>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
+};
 
 const PediatricDentistry = () => {
     const { language } = useLanguage();
@@ -41,6 +123,7 @@ const PediatricDentistry = () => {
     const { toast } = useToast();
     const [doctor, setDoctor] = useState<DoctorResponse | null>(null);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [selectedReview, setSelectedReview] = useState<any | null>(null);
 
     useEffect(() => {
         const fetchDoctor = async () => {
@@ -144,7 +227,7 @@ const PediatricDentistry = () => {
         {
             text: isArabic
                 ? "كانت تجربتنا إيجابية للغاية مع الدكتورة دعاء في عيادة سمايل للمشاهير. كان ابننا البالغ من العمر ثلاث سنوات يتألم وكان متردداً في الجلوس على كرسي الأسنان. كانت الدكتورة دعاء رائعة معه تماماً."
-                : "We had an incredibly positive experience with Dr. Dua at Celebrity Smile Dental Clinic. Our three-year-old son was in pain and initially very reluctant... Dr. Dua was absolutely brilliant with him.",
+                : "We had an incredibly positive experience with Dr. Dua at Celebrity Smile Dental Clinic. Our three-year-old son was in pain and initially very reluctant (as expected!) to sit in the dental chair. Dr. Dua was absolutely brilliant with him. She has a remarkable way with children—she was patient, gentle, and managed to convince him to sit and cooperate through the entire procedure. She successfully completed the necessary filling without any distress. Alhamdulillah, we are so relieved and grateful for her skill and wonderful bedside manner. If you need a dentist who is fantastic with young children, look no further than Dr. Dua!",
             author: "Nafiya P",
             rating: 5,
             badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua",
@@ -514,64 +597,13 @@ const PediatricDentistry = () => {
                             <CarouselContent className="-ml-4">
                                 {testimonials.map((t, i) => (
                                     <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                                        <div className="h-full">
-                                            <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group">
-                                                <CardContent className="p-8 flex flex-col h-full text-left">
-                                                    {/* Badge */}
-                                                    <div className={`absolute top-0 ${isRTL ? 'right-0' : 'left-0'} bg-blue-50 text-blue-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-none z-20 uppercase tracking-wider`}>
-                                                        {t.badge}
-                                                    </div>
-
-                                                    {/* Google Icon */}
-                                                    <div className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} opacity-50 group-hover:opacity-100 transition-opacity`}>
-                                                        <img
-                                                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                                                            alt="G"
-                                                            className="w-5 h-5"
-                                                        />
-                                                    </div>
-
-                                                    {/* Header: Avatar, Name, Date */}
-                                                    <div className="flex items-start gap-3 mb-4 mt-2">
-                                                        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm
-                                                            ${i % 3 === 0 ? 'bg-purple-500' : i % 3 === 1 ? 'bg-indigo-500' : 'bg-pink-500'}
-                                                        `}>
-                                                            {t.author.charAt(0)}
-                                                        </div>
-                                                        <div>
-                                                            <div className="font-bold text-gray-800 text-sm leading-tight">{t.author}</div>
-                                                            <div className="flex items-center gap-1 mt-1">
-                                                                <div className="flex gap-0.5">
-                                                                    {[...Array(5)].map((_, i) => (
-                                                                        <Star key={i} className="w-3 h-3 fill-[#FBBC04] text-[#FBBC04]" />
-                                                                    ))}
-                                                                </div>
-                                                                <span className="text-[10px] text-gray-400 mx-1">•</span>
-                                                                <div className="text-[10px] text-gray-400">
-                                                                    {/* @ts-ignore */}
-                                                                    {t.date || (isArabic ? `${i + 1} أشهر مضت` : `${i + 1} months ago`)}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Review Text */}
-                                                    <p className="text-sm text-gray-600 leading-relaxed font-normal italic relative">
-                                                        <span className="absolute -top-2 -left-1 text-4xl text-gray-100 font-serif">"</span>
-                                                        {t.text}
-                                                        <span className="absolute -bottom-4 right-0 text-4xl text-gray-100 font-serif">"</span>
-                                                    </p>
-
-                                                    {/* Verified Badge Bottom */}
-                                                    <div className="mt-auto pt-4 flex items-center gap-1.5 opacity-60">
-                                                        <ShieldCheck className="w-3 h-3 text-green-600" />
-                                                        <span className="text-[10px] font-medium text-gray-500 uppercase tracking-widest">
-                                                            {isArabic ? "مراجعة موثقة" : "Verified Review"}
-                                                        </span>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        </div>
+                                        <ReviewCard
+                                            t={t}
+                                            i={i}
+                                            isArabic={isArabic}
+                                            isRTL={isRTL}
+                                            onReadMore={(review) => setSelectedReview(review)}
+                                        />
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
@@ -625,6 +657,77 @@ const PediatricDentistry = () => {
             </section>
 
             <Footer />
+
+            {/* Pop-out Overlay for Reviews */}
+            <AnimatePresence>
+                {selectedReview && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedReview(null)}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
+                            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+                        >
+                            <button
+                                onClick={() => setSelectedReview(null)}
+                                className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-10"
+                            >
+                                <X className="w-5 h-5 text-gray-600" />
+                            </button>
+
+                            <div className="p-8 md:p-10">
+                                {/* Header */}
+                                <div className="flex items-center gap-4 mb-6">
+                                    <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold text-3xl">
+                                        {selectedReview.author.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-gray-900">{selectedReview.author}</h3>
+                                        <div className="flex items-center gap-2 mt-1">
+                                            <div className="flex">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Star key={i} className="w-5 h-5 fill-[#FBBC04] text-[#FBBC04]" />
+                                                ))}
+                                            </div>
+                                            <span className="text-gray-400">•</span>
+                                            <span className="text-sm text-gray-500">
+                                                {/* @ts-ignore */}
+                                                {selectedReview.date || "Recent Review"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wide mb-6">
+                                    {selectedReview.badge}
+                                </div>
+
+                                <div className="prose prose-lg text-gray-700 leading-relaxed italic">
+                                    "{selectedReview.text}"
+                                </div>
+
+                                <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500">
+                                    <ShieldCheck className="w-4 h-4 text-green-600" />
+                                    <span>{isArabic ? "مراجعة موثقة من جوجل" : "Verified Google Review"}</span>
+                                    <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+                                        alt="Google"
+                                        className="h-4 w-auto ml-auto opacity-50"
+                                    />
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
         </div>
     );
 };
