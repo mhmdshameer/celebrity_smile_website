@@ -171,7 +171,7 @@ const PediatricDentistry = () => {
                 <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-600/90 to-transparent z-10" />
 
                 <div className="absolute inset-0 bg-[url('/bg-doodles.png')] opacity-5 pointer-events-none"></div>
-                <div className="container mx-auto px-4 py-12 md:py-24">
+                <div className="container mx-auto px-4 pt-32 pb-12 md:py-24">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                         {/* Left Side (Image - Desktop Right / Mobile Top due to order) */}
@@ -205,7 +205,7 @@ const PediatricDentistry = () => {
                             <div className="inline-block px-4 py-1 mb-4 rounded-full bg-blue-100 text-blue-600 font-bold text-sm">
                                 {isArabic ? "طب أسنان الأطفال المتخصص" : "Specialized Pediatric Dentistry"}
                             </div>
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#2D3748] mb-6 leading-tight">
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[#2D3748] mb-6 leading-tight">
                                 {isArabic
                                     ? "رعاية أسنان أطفال لطيفة ومتخصصة في المملكة"
                                     : "Gentle & Specialized Pediatric Dental Care in Saudi Arabia"}
@@ -244,7 +244,7 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 2. Why Choose Celebrity Smile */}
-            <section className="py-20 bg-white">
+            <section className="py-12 md:py-20 bg-white">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -379,9 +379,9 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 4. About the Pediatric Dentist */}
-            <section className="py-20 bg-white overflow-hidden">
+            <section className="py-12 md:py-20 bg-white overflow-hidden">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+                    <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20">
                         {/* Image */}
                         <motion.div
                             className="w-full md:w-1/2"
@@ -456,7 +456,7 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 5. Parent Testimonials (Carousel) */}
-            <section className="py-20 bg-pink-50/30">
+            <section className="py-12 md:py-20 bg-pink-50/30">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -532,7 +532,7 @@ const PediatricDentistry = () => {
             </section> */}
 
             {/* 7. Pricing (Optional) */}
-            <section className="py-20 bg-gray-50" >
+            <section className="py-12 md:py-20 bg-gray-50" >
                 <div className="container mx-auto px-4 max-w-3xl">
                     <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
                         {isArabic ? "أسعار العلاجات الشائعة" : "Treatment Pricing"}
@@ -560,7 +560,7 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 8. FAQ Section */}
-            <section className="py-20 bg-white" >
+            <section className="py-12 md:py-20 bg-white" >
                 <div className="container mx-auto px-4 max-w-3xl">
                     <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">
                         {isArabic ? "أسئلة شائعة" : "Frequently Asked Questions"}
@@ -579,7 +579,7 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 9. Final CTA */}
-            <section className="py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center" >
+            <section className="py-16 md:py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center" >
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
                         {isArabic ? "امنح طفلك ابتسامة صحية وواثقة" : "Give Your Child a Healthy, Confident Smile"}
