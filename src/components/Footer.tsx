@@ -113,10 +113,10 @@ const Footer = () => {
                 aria-label="Snapchat"
               >
                 <div className="h-5 w-5 flex items-center justify-center">
-                  <img 
-                    src="/snapchat.svg" 
-                    alt="Snapchat" 
-                    className="h-5 w-5 dark:invert dark:brightness-0 dark:opacity-80 opacity-60 hover:opacity-100 transition-opacity" 
+                  <img
+                    src="/snapchat.svg"
+                    alt="Snapchat"
+                    className="h-5 w-5 dark:invert dark:brightness-0 dark:opacity-80 opacity-60 hover:opacity-100 transition-opacity"
                   />
                 </div>
               </a>
@@ -210,7 +210,7 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                 <span className="text-muted-foreground">
-                  {language === 'ar' 
+                  {language === 'ar'
                     ? '3247 شارع الأجواد، حي الربوة، جدة 23462، المملكة العربية السعودية'
                     : '3247 Al Ajawad St, Al Rabi\'a, Jeddah 23462, Saudi Arabia'
                   }
@@ -219,7 +219,7 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-primary flex-shrink-0" />
                 <span className="text-muted-foreground" dir={language === 'ar' ? 'ltr' : 'auto'}>
-                  {language === 'ar' ?  '+966 55 600 5567' : '+966 55 600 5567'}
+                  {language === 'ar' ? '+966 55 600 5567' : '+966 55 600 5567'}
                 </span>
               </li>
               <li className="flex items-center space-x-3">
@@ -232,8 +232,19 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>
+        <div className="border-t mt-8 pt-8 flex flex-col items-center gap-6">
+          {/* Payment Methods */}
+          <div className="flex flex-wrap justify-center items-center gap-4 opacity-80 hover:opacity-100 transition-all duration-300">
+            <img src="/payment/americanexpress.png" alt="American Express" className="h-8 w-auto object-contain" />
+            <img src="/payment/thamara.png" alt="Tamara" className="h-8 w-auto object-contain" />
+            <img src="/payment/tabby.png" alt="Tabby" className="h-8 w-auto object-contain" />
+            <img src="/payment/clipart.png" alt="Payment" className="h-8 w-auto object-contain" />
+            <img src="/payment/applepay.png" alt="Apple Pay" className="h-8 w-auto object-contain" />
+            <img src="/payment/visa.png" alt="Visa" className="h-8 w-auto object-contain" />
+            <img src="/payment/mada.png" alt="Mada" className="h-8 w-auto object-contain" />
+          </div>
+
+          <p className="text-sm text-muted-foreground text-center">
             © {new Date().getFullYear()} {language === "ar" ? "مجمع ابتسامة المشاهير الطبي" : "Celebrity Smile Dental Clinic"}.{" "}
             {t("footerRights")}.
           </p>
