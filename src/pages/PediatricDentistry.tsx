@@ -37,15 +37,15 @@ import { useToast } from "@/components/ui/use-toast";
 
 // Helper Component for Review Card
 const ReviewCard = ({ t, i, isArabic, isRTL, onReadMore }: { t: any, i: number, isArabic: boolean, isRTL: boolean, onReadMore: (review: any) => void }) => {
-    const MAX_LENGTH = 150; // Character limit for truncation
+    const MAX_LENGTH = 150;
     const shouldTruncate = t.text.length > MAX_LENGTH;
 
     return (
-        <div className="h-full">
+        <div className="h-full" dir={isRTL ? "rtl" : "ltr"}>
             <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group">
-                <CardContent className="p-8 flex flex-col h-full text-left">
+                <CardContent className="p-8 flex flex-col h-full text-start">
                     {/* Badge */}
-                    <div className={`absolute top-0 ${isRTL ? 'right-0' : 'left-0'} bg-blue-50 text-blue-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-none z-20 uppercase tracking-wider`}>
+                    <div className={`absolute top-0 ${isRTL ? 'right-0 rounded-bl-xl' : 'left-0 rounded-br-xl'} bg-blue-50 text-blue-600 text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-none z-20 uppercase tracking-wider`}>
                         {t.badge}
                     </div>
 
@@ -66,7 +66,7 @@ const ReviewCard = ({ t, i, isArabic, isRTL, onReadMore }: { t: any, i: number, 
                             {t.author.charAt(0)}
                         </div>
                         <div>
-                            <div className="font-bold text-gray-800 text-sm leading-tight">{t.author}</div>
+                            <div className="font-bold text-gray-800 text-sm leading-tight text-start">{t.author}</div>
                             <div className="flex items-center gap-1 mt-1">
                                 <div className="flex gap-0.5">
                                     {[...Array(5)].map((_, i) => (
@@ -84,10 +84,10 @@ const ReviewCard = ({ t, i, isArabic, isRTL, onReadMore }: { t: any, i: number, 
 
                     {/* Review Text */}
                     <div className="relative mb-6 flex-grow">
-                        <p className="text-sm text-gray-600 leading-relaxed font-normal italic line-clamp-4">
-                            <span className="absolute -top-2 -left-1 text-4xl text-gray-100 font-serif">"</span>
+                        <p className="text-sm text-gray-600 leading-relaxed font-normal italic line-clamp-4 relative z-10">
+                            <span className={`absolute -top-2 ${isRTL ? '-right-2' : '-left-2'} text-4xl text-gray-200 font-serif opacity-50`}>"</span>
                             {t.text}
-                            <span className="absolute -bottom-4 right-0 text-4xl text-gray-100 font-serif">"</span>
+                            <span className={`absolute -bottom-4 ${isRTL ? 'left-0' : 'right-0'} text-4xl text-gray-200 font-serif opacity-50`}>"</span>
                         </p>
 
                         {shouldTruncate && (
@@ -136,6 +136,20 @@ const PediatricDentistry = () => {
         };
         fetchDoctor();
     }, []);
+
+    const handleWhatsApp = () => {
+        const phoneNumber = "966556005567";
+        const message = encodeURIComponent(
+            isArabic
+                ? "مرحباً، أود حجز موعد لطب أسنان الأطفال"
+                : "Hello, I would like to book a pediatric dentistry appointment"
+        );
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+    };
+
+    const handleCall = () => {
+        window.location.href = "tel:+966556005567";
+    };
 
     const fadeIn = {
         initial: { opacity: 0, y: 20 },
@@ -233,14 +247,7 @@ const PediatricDentistry = () => {
             badge: isArabic ? "ذكرت د. دعاء" : "Mentioned Dr. Dua",
             date: isArabic ? "منذ يومين" : "2 days ago"
         },
-        {
-            text: isArabic
-                ? "أنصح بشدة بالدكتورة بافيتا. قدمت لنا النصيحة الصحيحة بخصوص مشكلة تسوس أسنان طفلنا."
-                : "Highly recommend Dr. Bhavitha. She gave us a right advice regarding our kid teeth cavity problem.",
-            author: "nathiya rahman",
-            rating: 5,
-            badge: isArabic ? "علاج التسوس" : "Cavity Treatment"
-        },
+
         {
             text: isArabic
                 ? "قمت بعلاج أسنان أطفالي عند الدكتورة دعاء محمد لأكثر من سن وعلى عدة زيارات. ممتازة وتعاملها مع الأطفال راقي."
@@ -276,7 +283,7 @@ const PediatricDentistry = () => {
     ];
 
     return (
-        <div className={`min-h-screen flex flex-col ${isRTL ? 'rtl' : 'ltr'}`}>
+        <div className={`min-h-screen flex flex-col`} dir={isRTL ? 'rtl' : 'ltr'}>
             <Navigation />
 
             <Helmet>
@@ -296,7 +303,7 @@ const PediatricDentistry = () => {
 
                         {/* Left Side (Image - Desktop Right / Mobile Top due to order) */}
                         <motion.div
-                            className={`relative ${isRTL ? 'md:order-1' : 'md:order-2'}`}
+                            className="order-1 md:order-2 relative"
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.8 }}
@@ -316,7 +323,7 @@ const PediatricDentistry = () => {
 
                         {/* Right Side (Text - Desktop Left / Mobile Bottom) */}
                         <motion.div
-                            className={`${isRTL ? 'md:order-2' : 'md:order-1'}`}
+                            className="order-2 md:order-1"
                             variants={fadeIn}
                             initial="initial"
                             animate="animate"
@@ -336,11 +343,20 @@ const PediatricDentistry = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                                <Button size="lg" className="bg-[#FD3DB5] hover:bg-[#d63499] text-white rounded-full px-8 text-lg h-14 shadow-lg hover:shadow-xl transition-all">
+                                <Button
+                                    size="lg"
+                                    onClick={handleWhatsApp}
+                                    className="bg-[#FD3DB5] hover:bg-[#d63499] text-white rounded-full px-8 text-lg h-14 shadow-lg hover:shadow-xl transition-all"
+                                >
                                     <Calendar className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                                     {isArabic ? "حجز موعد للأطفال" : "Book Pediatric Appointment"}
                                 </Button>
-                                <Button size="lg" variant="outline" className="rounded-full px-8 text-lg h-14 border-2 border-blue-400 text-blue-600 hover:bg-blue-50">
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    onClick={handleCall}
+                                    className="rounded-full px-8 text-lg h-14 border-2 border-blue-400 text-blue-600 hover:bg-blue-50"
+                                >
                                     <Phone className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                                     {isArabic ? "اتصل الآن" : "Call Now"}
                                 </Button>
@@ -526,7 +542,7 @@ const PediatricDentistry = () => {
                             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
                                 {isArabic ? "أخصائي طب أسنان الأطفال" : "Child Specialist Pediatric Dentist"}
                             </h2>
-                            <p className="text-xl text-gray-600 mb-8 italic border-l-4 border-yellow-300 pl-4 py-2 bg-yellow-50 rounded-r-lg">
+                            <p className={`text-xl text-gray-600 mb-8 italic border-${isRTL ? 'r' : 'l'}-4 border-yellow-300 p${isRTL ? 'r' : 'l'}-4 py-2 bg-yellow-50 rounded-${isRTL ? 'l' : 'r'}-lg`}>
                                 {isArabic
                                     ? "حريصة، لطيفة، وذات خبرة في علاج الرضع والأطفال والمراهقين باستخدام تقنيات طب أسنان الأطفال الحديثة."
                                     : "“Caring, gentle, and experienced in treating infants, toddlers, children, and teens using modern pediatric dental techniques.”"}
@@ -593,10 +609,16 @@ const PediatricDentistry = () => {
                     </div>
 
                     <div className="max-w-5xl mx-auto">
-                        <Carousel className="w-full">
-                            <CarouselContent className="-ml-4">
+                        <Carousel
+                            className="w-full"
+                            opts={{
+                                direction: isRTL ? 'rtl' : 'ltr',
+                                loop: true
+                            }}
+                        >
+                            <CarouselContent className={isRTL ? "-mr-4" : "-ml-4"}>
                                 {testimonials.map((t, i) => (
-                                    <CarouselItem key={i} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                                    <CarouselItem key={i} className={`${isRTL ? "pr-4" : "pl-4"} md:basis-1/2 lg:basis-1/3`}>
                                         <ReviewCard
                                             t={t}
                                             i={i}
@@ -607,8 +629,8 @@ const PediatricDentistry = () => {
                                     </CarouselItem>
                                 ))}
                             </CarouselContent>
-                            <CarouselPrevious className={`hidden md:flex ${isRTL ? 'right-0 translate-x-12' : 'left-0 -translate-x-12'}`} />
-                            <CarouselNext className={`hidden md:flex ${isRTL ? 'left-0 -translate-x-12' : 'right-0 translate-x-12'}`} />
+                            <CarouselPrevious className={`hidden md:flex ${isRTL ? 'right-0 left-auto translate-x-12 rotate-180' : 'left-0 -translate-x-12'}`} />
+                            <CarouselNext className={`hidden md:flex ${isRTL ? 'left-0 right-auto -translate-x-12 rotate-180' : 'right-0 translate-x-12'}`} />
                         </Carousel>
 
                     </div>
@@ -646,10 +668,19 @@ const PediatricDentistry = () => {
                             : "Book your appointment today at Celebrity Smile Clinic, Makkah."}
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-10 text-lg h-14 font-bold">
+                        <Button
+                            size="lg"
+                            onClick={handleWhatsApp}
+                            className="bg-white text-purple-600 hover:bg-gray-100 rounded-full px-10 text-lg h-14 font-bold"
+                        >
                             {isArabic ? "احجز موعد" : "Book Appointment"}
                         </Button>
-                        <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 rounded-full px-10 text-lg h-14 font-bold bg-transparent">
+                        <Button
+                            size="lg"
+                            variant="outline"
+                            onClick={handleCall}
+                            className="border-2 border-white text-white hover:bg-white/10 rounded-full px-10 text-lg h-14 font-bold bg-transparent"
+                        >
                             {isArabic ? "اتصل بنا" : "Call Now"}
                         </Button>
                     </div>

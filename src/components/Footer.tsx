@@ -216,8 +216,8 @@ const Footer = () => {
                   <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5 group-hover:text-pink-600 transition-colors" />
                   <span className="text-muted-foreground group-hover:text-primary transition-colors">
                     {language === 'ar'
-                      ? '3247 شارع الأجواد، حي الربوة، جدة 23462، المملكة العربية السعودية'
-                      : '3247 Al Ajawad St, Al Rabi\'a, Jeddah 23462, Saudi Arabia'
+                      ? '3247 شارع الأجواد، حي الربوة، مكة المكرمة 23462، المملكة العربية السعودية'
+                      : '3247 Al Ajawad St, Al Rabi\'a, Makkah 23462, Saudi Arabia'
                     }
                   </span>
                 </a>
