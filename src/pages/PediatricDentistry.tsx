@@ -289,7 +289,7 @@ const PediatricDentistry = () => {
             <Helmet>
                 <title>{isArabic ? "طبيب أسنان أطفال في السعودية | رعاية أسنان لطيفة للأطفال" : "Pediatric Dentist in Saudi Arabia | Child-Friendly Dental Care"}</title>
                 <meta name="description" content={isArabic ? "عيادة سمايل للمشاهير تقدم رعاية أسنان لطيفة للأطفال والرضع والمراهقين. العناية الوقائية، الحشوات، علاجات العصب، والمزيد في بيئة آمنة." : "Celebrity Smile provides gentle pediatric dentistry for babies, children, and teens. Preventive care, fillings, pulpectomy, crowns, trauma care & more."} />
-                <meta name="keywords" content={isArabic ? "طبيب أسنان أطفال مكة, أسنان أطفال السعودية, عيادة أسنان أطفال" : "pediatric dentist Saudi Arabia, kids dentist Makkah, child dental care Saudi, pediatric dentistry"} />
+                <meta name="keywords" content={isArabic ? "طبيب أسنان أطفال جدة, أسنان أطفال السعودية, عيادة أسنان أطفال" : "pediatric dentist Saudi Arabia, kids dentist Jeddah, child dental care Saudi, pediatric dentistry"} />
             </Helmet>
 
             {/* 1. Hero Section */}
@@ -664,8 +664,8 @@ const PediatricDentistry = () => {
                     </h2>
                     <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
                         {isArabic
-                            ? "احجز موعداً اليوم في عيادة سمايل للمشاهير، مكة المكرمة."
-                            : "Book your appointment today at Celebrity Smile Clinic, Makkah."}
+                            ? "احجز موعداً اليوم في عيادة سمايل للمشاهير، جدة."
+                            : "Book your appointment today at Celebrity Smile Clinic, Jeddah."}
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Button
