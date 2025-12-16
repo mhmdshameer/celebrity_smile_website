@@ -251,13 +251,13 @@ const Footer = () => {
         <div className="border-t mt-8 pt-8 flex flex-col items-center gap-6">
           {/* Payment Methods */}
           <div className="flex flex-wrap justify-center items-center gap-4 opacity-80 hover:opacity-100 transition-all duration-300">
-            <img src="/payment/americanexpress.png" alt="American Express" className="h-8 w-auto object-contain" />
-            <img src="/payment/thamara.png" alt="Tamara" className="h-8 w-auto object-contain" />
-            <img src="/payment/tabby.png" alt="Tabby" className="h-8 w-auto object-contain" />
-            <img src="/payment/clipart.png" alt="Payment" className="h-8 w-auto object-contain" />
-            <img src="/payment/applepay.png" alt="Apple Pay" className="h-8 w-auto object-contain" />
-            <img src="/payment/visa.png" alt="Visa" className="h-8 w-auto object-contain" />
             <img src="/payment/mada.png" alt="Mada" className="h-8 w-auto object-contain" />
+            <img src="/payment/visa.png" alt="Visa" className="h-8 w-auto object-contain" />
+            <img src="/payment/clipart.png" alt="Mastercard" className="h-8 w-auto object-contain" />
+            <img src="/payment/applepay.png" alt="Apple Pay" className="h-8 w-auto object-contain" />
+            <img src="/payment/americanexpress.png" alt="American Express" className="h-8 w-auto object-contain" />
+            <img src="/payment/tabby.png" alt="Tabby" className="h-8 w-auto object-contain" />
+            <img src="/payment/thamara.png" alt="Tamara" className="h-8 w-auto object-contain" />
           </div>
 
           <p className="text-sm text-muted-foreground text-center">

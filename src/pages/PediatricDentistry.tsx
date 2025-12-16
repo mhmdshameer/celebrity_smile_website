@@ -654,7 +654,7 @@ const PediatricDentistry = () => {
             </section>
 
             {/* 7. Final CTA */}
-            <section className="py-16 md:py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center">
+            <section className="pt-16 md:py-24 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl md:text-5xl font-bold mb-6">
                         {isArabic ? "امنح طفلك ابتسامة صحية وواثقة" : "Give Your Child a Healthy, Confident Smile"}
