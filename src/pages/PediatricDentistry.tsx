@@ -17,6 +17,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import AppointmentForm from "@/components/AppointmentForm";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Phone,
@@ -124,6 +126,7 @@ const PediatricDentistry = () => {
     const [doctor, setDoctor] = useState<DoctorResponse | null>(null);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedReview, setSelectedReview] = useState<any | null>(null);
+    const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
 
     useEffect(() => {
         const fetchDoctor = async () => {
@@ -138,13 +141,7 @@ const PediatricDentistry = () => {
     }, []);
 
     const handleWhatsApp = () => {
-        const phoneNumber = "966556005567";
-        const message = encodeURIComponent(
-            isArabic
-                ? "مرحباً، أود حجز موعد لطب أسنان الأطفال"
-                : "Hello, I would like to book a pediatric dentistry appointment"
-        );
-        window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+        setIsAppointmentOpen(true);
     };
 
     const handleCall = () => {
@@ -308,10 +305,10 @@ const PediatricDentistry = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
+                            <div className="relative aspect-auto md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
                                 {/* Placeholder for Hero Image */}
                                 <img
-                                    src="https://images.unsplash.com/photo-1588776813186-6f4667a0f25e?q=80&w=2576&auto=format&fit=crop"
+                                    src="/landingPage.jpg"
                                     alt="Happy Child at Dentist"
                                     className="w-full h-full object-cover bg-blue-100"
                                     onError={(e) => {
@@ -759,6 +756,15 @@ const PediatricDentistry = () => {
                 )}
             </AnimatePresence>
 
+            {/* Appointment Dialog */}
+            <Dialog open={isAppointmentOpen} onOpenChange={setIsAppointmentOpen}>
+                <DialogContent className="sm:max-w-xl p-0 bg-transparent border-none shadow-none [&>button]:hidden">
+                    <AppointmentForm
+                        onClose={() => setIsAppointmentOpen(false)}
+                        source="Pediatric Dentistry Page"
+                    />
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

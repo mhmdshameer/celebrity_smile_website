@@ -22,7 +22,8 @@ interface AppointmentFormProps {
 export default function AppointmentForm({
   onClose,
   phoneNumber = "966556005567", // ✅ Clinic WhatsApp number
-}: AppointmentFormProps) {
+  source = "", // Source of the appointment request
+}: AppointmentFormProps & { source?: string }) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
@@ -33,18 +34,19 @@ export default function AppointmentForm({
   });
   const [date, setDate] = useState<Date>();
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!formData.name.trim() || !formData.phone.trim()) {
-    alert(language === "ar" ? "يرجى ملء الحقول المطلوبة" : "Please fill in required fields");
-    return;
-  }
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      alert(language === "ar" ? "يرجى ملء الحقول المطلوبة" : "Please fill in required fields");
+      return;
+    }
 
-  const formattedPhoneNumber = "966556005567"; // no "+" or spaces
+    const formattedPhoneNumber = "966556005567"; // no "+" or spaces
 
-  const whatsappMessageEn = `
+    const whatsappMessageEn = `
 *Appointment Request*
+${source ? `📍 Source: ${source}` : ""}
 
 👤 Name: ${formData.name}
 📞 Phone: ${formData.phone}
@@ -54,8 +56,9 @@ ${date ? `📅 Preferred Date: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 Message: ${formData.message}` : ""}
 `.trim();
 
-  const whatsappMessageAr = `
+    const whatsappMessageAr = `
 *طلب موعد*
+${source ? `📍 المصدر: ${source}` : ""}
 
 👤 الاسم: ${formData.name}
 📞 رقم الهاتف: ${formData.phone}
@@ -65,38 +68,38 @@ ${date ? `📅 التاريخ المفضل: ${format(date, "PPP")}` : ""}
 ${formData.message ? `📝 رسالة إضافية: ${formData.message}` : ""}
 `.trim();
 
-  const finalMessage = language === "ar" ? whatsappMessageAr : whatsappMessageEn;
+    const finalMessage = language === "ar" ? whatsappMessageAr : whatsappMessageEn;
 
-  // 🧠 Important — encode safely for both platforms
-  const encodedMessage = encodeURIComponent(finalMessage).replace(/%0A/g, "%0D%0A");
+    // 🧠 Important — encode safely for both platforms
+    const encodedMessage = encodeURIComponent(finalMessage).replace(/%0A/g, "%0D%0A");
 
-  // ✅ Multi-platform fallback logic
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // ✅ Multi-platform fallback logic
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  let whatsappURL = "";
+    let whatsappURL = "";
 
-  if (isMobile) {
-    // 📱 Mobile app link
-    whatsappURL = `whatsapp://send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
-  } else {
-    // 💻 Desktop browsers — fallback to official API
-    whatsappURL = `https://api.whatsapp.com/send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
-  }
+    if (isMobile) {
+      // 📱 Mobile app link
+      whatsappURL = `whatsapp://send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
+    } else {
+      // 💻 Desktop browsers — fallback to official API
+      whatsappURL = `https://api.whatsapp.com/send?phone=${formattedPhoneNumber}&text=${encodedMessage}`;
+    }
 
-  // 🔥 Open in same tab (works better on desktop than _blank)
-  window.location.href = whatsappURL;
+    // 🔥 Open in same tab (works better on desktop than _blank)
+    window.location.href = whatsappURL;
 
-  // Reset
-  setFormData({
-    name: "",
-    phone: "",
-    email: "",
-    service: "",
-    message: "",
-  });
-  setDate(undefined);
-  onClose();
-};
+    // Reset
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      service: "",
+      message: "",
+    });
+    setDate(undefined);
+    onClose();
+  };
 
   return (
     <motion.div
