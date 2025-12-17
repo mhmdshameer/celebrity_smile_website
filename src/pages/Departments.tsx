@@ -113,7 +113,7 @@ export const Departments = () => {
   const isArabic = language === "ar";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Navigation />
 
       {/* Hero Section */}
