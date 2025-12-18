@@ -287,6 +287,18 @@ const PediatricDentistry = () => {
                 <title>{isArabic ? "طبيب أسنان أطفال في السعودية | رعاية أسنان لطيفة للأطفال" : "Pediatric Dentist in Saudi Arabia | Child-Friendly Dental Care"}</title>
                 <meta name="description" content={isArabic ? "عيادة سمايل للمشاهير تقدم رعاية أسنان لطيفة للأطفال والرضع والمراهقين. العناية الوقائية، الحشوات، علاجات العصب، والمزيد في بيئة آمنة." : "Celebrity Smile provides gentle pediatric dentistry for babies, children, and teens. Preventive care, fillings, pulpectomy, crowns, trauma care & more."} />
                 <meta name="keywords" content={isArabic ? "طبيب أسنان أطفال جدة, أسنان أطفال السعودية, عيادة أسنان أطفال" : "pediatric dentist Saudi Arabia, kids dentist Jeddah, child dental care Saudi, pediatric dentistry"} />
+
+                {/* Google tag (gtag.js) */}
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-WK213FF0FJ"></script>
+                <script>
+                    {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+
+                    gtag('config', 'G-WK213FF0FJ');
+                  `}
+                </script>
             </Helmet>
 
             {/* 1. Hero Section */}
