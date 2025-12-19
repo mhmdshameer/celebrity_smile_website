@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Map from "@/components/Map";
 
@@ -110,7 +110,7 @@ const Contact = () => {
                     <Textarea
                       id="message"
                       placeholder={language === "ar" ? "الرسالة" : "Message"}
-                      rows={4}
+                      rows={7}
                       required
                     />
                   </div>
@@ -153,6 +153,18 @@ const Contact = () => {
                         {language === "ar" ? "الهاتف" : "Phone"}
                       </p>
                       <p className="text-muted-foreground" dir="ltr">
+                        012 272 0100
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <MessageCircle className="h-5 w-5 text-primary mt-1" />
+                    <div>
+                      <p className="font-semibold">
+                        {language === "ar" ? "واتساب" : "WhatsApp"}
+                      </p>
+                      <p className="text-muted-foreground" dir="ltr">
                         +966 55 600 5567
                       </p>
                     </div>
@@ -165,7 +177,7 @@ const Contact = () => {
                         {language === "ar" ? "البريد الإلكتروني" : "Email"}
                       </p>
                       <p className="text-muted-foreground">
-                        ce.sm.dental.1@gmail.com
+                        info@celebritysmile.sa
                       </p>
                     </div>
                   </div>
@@ -187,14 +199,14 @@ const Contact = () => {
                     </div>
                   </div>
                   <Button
-                    onClick={handleWhatsAppContact}
+                    onClick={() => window.location.href = "tel:0122720100"}
                     className="w-full"
                     size="lg"
                   >
                     <Phone className="h-5 w-5 mr-2" />
                     {language === "ar"
-                      ? "تواصل عبر واتساب"
-                      : "Contact via WhatsApp"}
+                      ? "اتصل الآن"
+                      : "Call Now"}
                   </Button>
                 </CardContent>
               </Card>
@@ -212,7 +224,7 @@ const Contact = () => {
       </div>
 
       <Footer />
-    </div>
+    </div >
   );
 };
 

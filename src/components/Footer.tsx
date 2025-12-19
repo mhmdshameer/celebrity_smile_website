@@ -224,23 +224,23 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="tel:+966556005567"
+                  href="tel:0122720100"
                   className="flex items-center space-x-3 group"
                 >
                   <Phone className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
                   <span className="text-muted-foreground group-hover:text-primary transition-colors" dir={language === 'ar' ? 'ltr' : 'auto'}>
-                    {language === 'ar' ? '+966 55 600 5567' : '+966 55 600 5567'}
+                    {language === 'ar' ? '012 272 0100' : '012 272 0100'}
                   </span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:ce.sm.dental@gmail.com"
+                  href="mailto:info@celebritysmile.sa"
                   className="flex items-center space-x-3 group"
                 >
                   <Mail className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
                   <span className="text-muted-foreground group-hover:text-primary transition-colors">
-                    ce.sm.dental@gmail.com
+                    info@celebritysmile.sa
                   </span>
                 </a>
               </li>
