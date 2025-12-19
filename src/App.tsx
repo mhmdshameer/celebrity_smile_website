@@ -11,6 +11,7 @@ import { AdminLayout } from "./components/AdminLayout";
 import { AuthProvider } from "./contexts/auth-context";
 import ProtectedRoute from "./components/protected-route";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import Services from "./pages/Services";
@@ -46,6 +47,7 @@ const App = () => (
           <BrowserRouter>
             <AuthProvider>
               <ScrollToTop />
+              <GoogleAnalytics />
               <FloatingWhatsApp />
               <Routes>
                 <Route path="/" element={<Index />} />

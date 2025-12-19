@@ -235,6 +235,17 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                  href="tel:+966556005567"
+                  className="flex items-center space-x-3 group"
+                >
+                  <MessageSquare className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
+                  <span className="text-muted-foreground group-hover:text-primary transition-colors" dir={language === 'ar' ? 'ltr' : 'auto'}>
+                    +966 55 600 5567
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
                   href="mailto:info@celebritysmile.sa"
                   className="flex items-center space-x-3 group"
                 >
