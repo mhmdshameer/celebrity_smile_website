@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -8,7 +9,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Star, ShieldCheck, Quote } from "lucide-react";
+import { Star, ShieldCheck, Quote, X } from "lucide-react";
+
+import { getTestimonials } from "@/data/testimonials";
 
 interface TestimonialsSectionProps {
   t: (key: string) => string;
@@ -18,69 +21,9 @@ const TestimonialsSection = ({ t }: TestimonialsSectionProps) => {
   const { language } = useLanguage();
   const isArabic = language === "ar";
   const isRTL = isArabic;
+  const [selectedReview, setSelectedReview] = useState<any | null>(null);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: isArabic ? "محمد العتيبي" : "Mohammed Al-Otaibi",
-      initial: "M",
-      rating: 5,
-      date: isArabic ? "منذ 3 أسابيع" : "3 weeks ago",
-      text: isArabic
-        ? "تجربة رائعة في عيادة سمايل للمشاهير. الأطباء محترفون جداً والعيادة نظيفة ومرتبة. أنصح بها بشدة لعلاج الأسنان."
-        : "Great experience at Celebrity Smile Clinic. The doctors are very professional and the clinic is clean and tidy. Highly recommend for dental treatment.",
-      badge: isArabic ? "مراجعة موثقة" : "Verified Review",
-      color: "bg-blue-500"
-    },
-    {
-      id: 2,
-      name: isArabic ? "سارة الهاشمي" : "Sarah Al-Hashimi",
-      initial: "S",
-      rating: 5,
-      date: isArabic ? "منذ شهر" : "1 month ago",
-      text: isArabic
-        ? "دكتورة دعاء كانت ممتازة مع أطفالي. تعامل راقي وخدمة مميزة. شكراً لكم على الاهتمام والرعاية."
-        : "Dr. Doaa was excellent with my kids. Classy dealing and distinguished service. Thank you for the care and attention.",
-      badge: isArabic ? "عناية الأطفال" : "Pediatric Care",
-      color: "bg-pink-500"
-    },
-    {
-      id: 3,
-      name: isArabic ? "عبدالله فهد" : "Abdullah Fahad",
-      initial: "A",
-      rating: 5,
-      date: isArabic ? "منذ شهرين" : "2 months ago",
-      text: isArabic
-        ? "قمت بعمل تقويم لأسناني والنتيجة كانت مذهلة. شكراً للدكتور على المتابعة المستمرة والنتائج الجميلة."
-        : "I did orthodontics for my teeth and the result was amazing. Thanks to the doctor for the continuous follow-up and beautiful results.",
-      badge: isArabic ? "تقويم الأسنان" : "Orthodontics",
-      color: "bg-purple-500"
-    },
-    {
-      id: 4,
-      name: isArabic ? "نورة سعد" : "Noura Saad",
-      initial: "N",
-      rating: 5,
-      date: isArabic ? "منذ 3 أشهر" : "3 months ago",
-      text: isArabic
-        ? "أفضل عيادة أسنان في جدة. الأسعار معقولة والخدمة ممتازة. الاستقبال ودود جداً ومتعاون."
-        : "The best dental clinic in Jeddah. Prices are reasonable and service is excellent. The reception is very friendly and cooperative.",
-      badge: isArabic ? "خدمة العملاء" : "Customer Service",
-      color: "bg-green-500"
-    },
-    {
-      id: 5,
-      name: isArabic ? "خالد العمري" : "Khaled Al-Amri",
-      initial: "K",
-      rating: 5,
-      date: isArabic ? "منذ 4 أشهر" : "4 months ago",
-      text: isArabic
-        ? "زراعة الأسنان كانت ناجحة وبدون ألم يذكر. شكراً للكادر الطبي على احترافيتهم."
-        : "Dental implants were successful and with little to no pain. Thanks to the medical staff for their professionalism.",
-      badge: isArabic ? "زراعة الأسنان" : "Dental Implants",
-      color: "bg-indigo-500"
-    }
-  ];
+  const testimonials = getTestimonials(isArabic);
 
   return (
     <motion.section
@@ -117,8 +60,8 @@ const TestimonialsSection = ({ t }: TestimonialsSectionProps) => {
               {testimonials.map((testimonial) => (
                 <CarouselItem key={testimonial.id} className={`${isRTL ? "pr-4" : "pl-4"} md:basis-1/2 lg:basis-1/3 h-full`}>
                   <div className="h-full">
-                    <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group">
-                      <CardContent className="p-8 flex flex-col h-full text-start relative">
+                    <Card className="h-full border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 bg-white rounded-2xl relative overflow-hidden group hover:-translate-y-1">
+                      <CardContent className="p-8 flex flex-col h-full text-start relative min-h-[300px]">
                         {/* Quote Icon Background */}
                         <Quote className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} w-12 h-12 text-gray-100 rotate-180`} />
 
@@ -156,12 +99,23 @@ const TestimonialsSection = ({ t }: TestimonialsSectionProps) => {
                         </div>
 
                         {/* Review Text */}
-                        <p className="text-gray-600 leading-relaxed font-normal italic relative z-10 flex-grow">
-                          "{testimonial.text}"
-                        </p>
+                        <div className="relative mb-6 flex-grow z-10">
+                          <p className="text-gray-600 leading-relaxed font-normal italic line-clamp-3">
+                            "{testimonial.text}"
+                          </p>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedReview(testimonial);
+                            }}
+                            className="text-xs font-bold text-blue-500 hover:text-blue-700 mt-2 focus:outline-none"
+                          >
+                            {isArabic ? "قراءة المزيد" : "Read More"}
+                          </button>
+                        </div>
 
                         {/* Verified Footer */}
-                        <div className="mt-6 border-t border-gray-50 pt-4 flex items-center gap-1.5 opacity-70">
+                        <div className="mt-auto border-t border-gray-50 pt-4 flex items-center gap-1.5 opacity-70">
                           <ShieldCheck className="w-3 h-3 text-green-600" />
                           <span className="text-[10px] font-medium text-gray-500 uppercase tracking-widest">
                             {isArabic ? "مراجعة جوجل موثقة" : "Verified Google Review"}
@@ -179,6 +133,75 @@ const TestimonialsSection = ({ t }: TestimonialsSectionProps) => {
           </Carousel>
         </div>
       </div>
+
+      {/* Pop-out Overlay for Reviews */}
+      <AnimatePresence>
+        {selectedReview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedReview(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
+              className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+            >
+              <button
+                onClick={() => setSelectedReview(null)}
+                className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors z-10`}
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+
+              <div className="p-8 md:p-10 text-start" dir={isRTL ? 'rtl' : 'ltr'}>
+                {/* Header */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-3xl ${selectedReview.color}`}>
+                    {selectedReview.initial}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">{selectedReview.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 fill-[#FBBC04] text-[#FBBC04]" />
+                        ))}
+                      </div>
+                      <span className="text-gray-400">•</span>
+                      <span className="text-sm text-gray-500">
+                        {selectedReview.date}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase tracking-wide mb-6">
+                  {selectedReview.badge}
+                </div>
+
+                <div className="prose prose-lg text-gray-700 leading-relaxed italic">
+                  "{selectedReview.text}"
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500">
+                  <ShieldCheck className="w-4 h-4 text-green-600" />
+                  <span>{isArabic ? "مراجعة موثقة من جوجل" : "Verified Google Review"}</span>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+                    alt="Google"
+                    className="h-4 w-auto ml-auto opacity-50"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.section>
   );
 };
