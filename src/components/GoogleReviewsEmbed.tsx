@@ -3,13 +3,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function GoogleReviewsEmbed() {
   const { language } = useLanguage();
-  
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://elfsightcdn.com/platform.js";
     script.async = true;
     document.body.appendChild(script);
-    
+
     return () => {
       // Cleanup script when component unmounts
       document.body.removeChild(script);
@@ -24,7 +24,7 @@ export default function GoogleReviewsEmbed() {
   return (
     <div className="my-10 w-full">
       <div
-        className="elfsight-app-555b2ae8-e91e-4c78-9e26-47cca14ebe17"
+        className="elfsight-app-b704ca3c-2af9-48c7-b15c-b84b3ea4b94e"
         data-elfsight-app-lazy
         data-elfsight-app-locale={getElfsightLanguage()}
       />
