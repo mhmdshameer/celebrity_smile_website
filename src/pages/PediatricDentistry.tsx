@@ -151,6 +151,14 @@ const PediatricDentistry = () => {
     }, []);
 
     const handleWhatsApp = () => {
+        // Track click event
+        if (window.gtag) {
+            window.gtag('event', 'book_appointment_click', {
+                'event_category': 'conversion',
+                'event_label': 'hero_section',
+                'source': 'pediatric_page'
+            });
+        }
         setIsAppointmentOpen(true);
     };
 

@@ -27,6 +27,14 @@ const Index = () => {
   const [appointmentFormBtmOpen, setAppointmentFormBtmOpen] = useState(false);
 
   const handleWhatsAppBooking = () => {
+    // Track click event
+    if (window.gtag) {
+      window.gtag('event', 'book_appointment_click', {
+        'event_category': 'conversion',
+        'event_label': 'hero_section',
+        'source': 'home_page'
+      });
+    }
 
     // Open the appointment form after a short delay to ensure smooth scrolling
     setTimeout(() => {
@@ -35,6 +43,14 @@ const Index = () => {
   };
 
   const handleWhatsAppBookingBtm = () => {
+    // Track click event
+    if (window.gtag) {
+      window.gtag('event', 'book_appointment_click', {
+        'event_category': 'conversion',
+        'event_label': 'bottom_cta',
+        'source': 'home_page'
+      });
+    }
     setAppointmentFormBtmOpen(true);
   };
 
