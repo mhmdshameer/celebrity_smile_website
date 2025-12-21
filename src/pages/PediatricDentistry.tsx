@@ -129,15 +129,25 @@ const PediatricDentistry = () => {
     const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
 
     useEffect(() => {
-        const fetchDoctor = async () => {
-            try {
-                const data = await getDoctorApi("69088f7d81705df783f3b631");
-                setDoctor(data);
-            } catch (err) {
-                console.error("Failed to fetch pediatric doctor", err);
-            }
+        // Using static data provided by user
+        const doctorData: any = {
+            "image": {
+                "url": "https://res.cloudinary.com/dkxmfqafi/image/upload/v1766085915/celebrity_smile/doctors/kbc9blzdkj0f8q2b3pur.png",
+                "public_id": "celebrity_smile/doctors/kbc9blzdkj0f8q2b3pur"
+            },
+            "_id": "6944551bea6938f6edf62d61",
+            "name": "DR DOAA MOHAMMED",
+            "nameAr": "الدكتورة / دعاء محمد",
+            "specialties": [
+                "PEDODONTIST",
+                "CHILD SPECIALIST"
+            ],
+            "specialtiesAr": [
+                "أخصائي أسنان الأطفال"
+            ],
+            "slug": "dr-doaa-mohammed"
         };
-        fetchDoctor();
+        setDoctor(doctorData);
     }, []);
 
     const handleWhatsApp = () => {
@@ -531,16 +541,16 @@ const PediatricDentistry = () => {
                                     />
                                 ) : (
                                     <img
-                                        src="https://images.unsplash.com/photo-1594824476960-4842964d5da0?q=80&w=2574&auto=format&fit=crop"
-                                        alt="Pediatric Dentist"
-                                        className="w-full h-full object-cover"
+                                        src="https://res.cloudinary.com/dkxmfqafi/image/upload/v1766085915/celebrity_smile/doctors/kbc9blzdkj0f8q2b3pur.png"
+                                        alt="Dr. Doaa Mohammed"
+                                        className="w-full h-full object-contain pt-4 hover:scale-105 transition-transform duration-500"
                                         onError={(e) => {
                                             e.currentTarget.src = "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2670&auto=format&fit=crop"; // Fallback
                                         }}
                                     />
                                 )}
                                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white">
-                                    <h3 className="text-2xl font-bold">{doctor ? (isArabic ? doctor.nameAr : doctor.name) : "Dr. Sarah Johnson"}</h3>
+                                    <h3 className="text-2xl font-bold">{doctor ? (isArabic ? doctor.nameAr : doctor.name) : (isArabic ? "الدكتورة / دعاء محمد" : "Dr. Doaa Mohammed")}</h3>
                                     <p className="opacity-90">{isArabic ? "أخصائية طب أسنان أطفال" : "Pediatric Dental Specialist"}</p>
                                 </div>
                             </div>
