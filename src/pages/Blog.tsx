@@ -3,12 +3,11 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useEffect, useState } from "react";
 import { getAllBlogs, type BlogPost } from "@/api/blog";
-import { Calendar, Clock, ArrowRight, Image as ImageIcon } from "lucide-react";
+import { Clock, ArrowRight, Image as ImageIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { toast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Author } from "@/api/blog";
 
 const Blog = () => {
