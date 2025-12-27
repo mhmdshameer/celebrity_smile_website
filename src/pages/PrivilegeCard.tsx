@@ -4,6 +4,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, CreditCard, Star } from "lucide-react";
+import { trackWhatsAppClick } from "@/utils/analytics";
 
 const PrivilegeCard = () => {
   const { t, language } = useLanguage();
@@ -48,7 +49,8 @@ const PrivilegeCard = () => {
   ];
 
   const handleWhatsAppInquiry = () => {
-    const phoneNumber = "966XXXXXXXXX";
+    trackWhatsAppClick('privilege_card', 'card_inquiry');
+    const phoneNumber = "966556005567";
     const message = encodeURIComponent(
       language === "ar"
         ? "مرحباً، أود الاستفسار عن بطاقة الامتياز"

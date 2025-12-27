@@ -1,5 +1,5 @@
-
 import { Link, useLocation } from 'react-router-dom';
+import { trackWhatsAppClick } from '@/utils/analytics';
 
 // Add floating animation styles
 const floatingAnimation = {
@@ -28,12 +28,13 @@ const FloatingWhatsApp = () => {
         animation: 'float 3s ease-in-out infinite',
       }}
     >
-      <Link 
-        to="https://wa.me/message/5GVMII7DXT37H1" 
+      <Link
+        to="https://wa.me/message/5GVMII7DXT37H1"
         target="_blank"
         rel="noopener noreferrer"
         className="bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center w-14 h-14"
         aria-label="Chat on WhatsApp"
+        onClick={() => trackWhatsAppClick('floating_button', 'general_inquiry')}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

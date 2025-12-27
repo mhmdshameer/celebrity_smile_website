@@ -9,11 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Mail, Phone, MapPin, Clock, MessageCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Map from "@/components/Map";
+import { trackCallNow, trackWhatsAppClick, trackFormSubmit } from "@/utils/analytics";
 
 const Contact = () => {
   const { t, language } = useLanguage();
 
   const handleWhatsAppContact = () => {
+    trackWhatsAppClick('contact', 'contact_inquiry');
     const phoneNumber = "966556005567"; // Correct WhatsApp number from Footer
     const message = encodeURIComponent(
       language === "ar"
@@ -25,6 +27,7 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    trackFormSubmit('contact_form');
     toast({
       title: language === "ar" ? "تم إرسال الرسالة" : "Message Sent",
       description:
@@ -32,6 +35,11 @@ const Contact = () => {
           ? "شكراً لتواصلك معنا. سنرد عليك قريباً"
           : "Thank you for contacting us. We'll get back to you soon.",
     });
+  };
+
+  const handleCallNow = () => {
+    trackCallNow('contact', '0122720100');
+    window.location.href = "tel:0122720100";
   };
 
   return (
@@ -199,7 +207,7 @@ const Contact = () => {
                     </div>
                   </div>
                   <Button
-                    onClick={() => window.location.href = "tel:0122720100"}
+                    onClick={handleCallNow}
                     className="w-full"
                     size="lg"
                   >

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
+import { trackBookAppointment } from "@/utils/analytics";
 
 // Doctors will be loaded from API
 
@@ -32,6 +33,7 @@ const Doctors = () => {
   }, []);
 
   const handleWhatsAppBooking = (doctorName: string) => {
+    trackBookAppointment('doctors', doctorName);
     const message = encodeURIComponent(`Hello! I would like to book an appointment with ${doctorName}.`);
     window.open(`https://wa.me/966556005567?text=${message}`, "_blank");
   };

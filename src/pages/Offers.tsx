@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar, Clock, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { trackBookAppointment, trackCallNow } from "@/utils/analytics";
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg
@@ -56,6 +57,7 @@ const Offers = () => {
   };
 
   const handleBookAppointment = () => {
+    trackBookAppointment('offers');
     // WhatsApp number and message
     const phoneNumber = "966556005567";
     const message = encodeURIComponent(
@@ -67,6 +69,7 @@ const Offers = () => {
   };
 
   const handleCall = () => {
+    trackCallNow('offers', '0122720100');
     window.location.href = "tel:0122720100";
   };
 

@@ -13,6 +13,7 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { trackFormSubmit } from "@/utils/analytics";
 
 interface AppointmentFormProps {
   onClose: () => void;
@@ -41,6 +42,9 @@ export default function AppointmentForm({
       alert(language === "ar" ? "يرجى ملء الحقول المطلوبة" : "Please fill in required fields");
       return;
     }
+
+    // Track form submission
+    trackFormSubmit('appointment_form', { source: source || 'unknown' });
 
     const formattedPhoneNumber = "966556005567"; // no "+" or spaces
 

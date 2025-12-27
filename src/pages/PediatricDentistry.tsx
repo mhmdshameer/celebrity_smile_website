@@ -36,6 +36,7 @@ import {
 import { getDoctorApi, type DoctorResponse } from "@/api/doctor";
 import { Helmet } from "react-helmet-async";
 import { useToast } from "@/components/ui/use-toast";
+import { trackBookAppointment, trackCallNow } from "@/utils/analytics";
 
 // Helper Component for Review Card
 const ReviewCard = ({ t, i, isArabic, isRTL, onReadMore }: { t: any, i: number, isArabic: boolean, isRTL: boolean, onReadMore: (review: any) => void }) => {
@@ -151,18 +152,12 @@ const PediatricDentistry = () => {
     }, []);
 
     const handleWhatsApp = () => {
-        // Track click event
-        if (window.gtag) {
-            window.gtag('event', 'book_appointment_click', {
-                'event_category': 'conversion',
-                'event_label': 'hero_section',
-                'source': 'pediatric_page'
-            });
-        }
+        trackBookAppointment('pediatric_dentistry');
         setIsAppointmentOpen(true);
     };
 
     const handleCall = () => {
+        trackCallNow('pediatric_dentistry', '+966556005567');
         window.location.href = "tel:+966556005567";
     };
 
