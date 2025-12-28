@@ -12,6 +12,7 @@ const translations = {
   en: {
     // Navigation
     home: "Home",
+    about: "About Us",
     doctors: "Doctors",
     services: "Services",
     departments: "Departments",
@@ -20,23 +21,23 @@ const translations = {
     privilegeCard: "Privilege Card",
     blog: "Blog",
     contact: "Contact Us",
-    
+
     // Home Page
     aboutTitle: "About Celebrity Smile Clinic",
     aboutDescription: "Celebrity Smile Clinic is a leading dental care provider committed to delivering exceptional dental services with a focus on patient comfort and satisfaction.",
     bookAppointment: "Book Appointment",
     learnMore: "Learn More",
-    
+
     // Footer
     footerAbout: "About Us",
     footerServices: "Our Services",
     footerContact: "Contact Information",
     footerRights: "All rights reserved",
-    
+
     // Doctors
     ourDoctors: "Our Doctors",
     viewProfile: "View Profile",
-    
+
     // Contact
     getInTouch: "Get In Touch",
     name: "Name",
@@ -44,12 +45,12 @@ const translations = {
     phone: "Phone",
     message: "Message",
     send: "Send Message",
-    
+
     // Common
     loading: "Loading...",
     submit: "Submit",
     cancel: "Cancel",
-    
+
     // Statistics
     yearsExperience: "Years of Experience",
     happyPatients: "Happy Patients",
@@ -69,14 +70,14 @@ const translations = {
     yearsExcellence: "years of excellence",
     certifiedDoctors: "Internationally certified doctors",
     multilingualTeam: "Multilingual team",
-    
+
     // Testimonials
     testimonials: "What Our Patients Say",
-    
+
     // Technology
     ourTechnology: "State-of-the-Art Technology",
     techDesc: "We invest in the latest dental technology to provide you with the best possible care",
-    
+
     // CTA
     readyToSmile: "Ready to Transform Your Smile?",
     ctaDescription: "Schedule your appointment today and experience world-class dental care",
@@ -85,6 +86,7 @@ const translations = {
   ar: {
     // Navigation
     home: "الرئيسية",
+    about: "من نحن",
     doctors: "الأطباء",
     services: "الخدمات",
     departments: "الأقسام",
@@ -93,23 +95,23 @@ const translations = {
     privilegeCard: "بطاقة الامتياز",
     blog: "المدونة",
     contact: "اتصل بنا",
-    
+
     // Home Page
     aboutTitle: "عن عيادة سيليبريتي سمايل",
     aboutDescription: "مجمع ابتسامة المشاهير الطبي هو مزود رائد لخدمات طب الأسنان، ملتزم بتقديم رعاية استثنائية مع التركيز على راحة المريض ورضاه.",
     bookAppointment: "حجز موعد",
     learnMore: "اعرف المزيد",
-    
+
     // Footer
     footerAbout: "عنا",
     footerServices: "خدماتنا",
     footerContact: "معلومات الاتصال",
     footerRights: "جميع الحقوق محفوظة",
-    
+
     // Doctors
     ourDoctors: "أطباؤنا",
     viewProfile: "عرض الملف الشخصي",
-    
+
     // Contact
     getInTouch: "تواصل معنا",
     name: "الاسم",
@@ -117,12 +119,12 @@ const translations = {
     phone: "الهاتف",
     message: "الرسالة",
     send: "إرسال الرسالة",
-    
+
     // Common
     loading: "جاري التحميل...",
     submit: "إرسال",
     cancel: "إلغاء",
-    
+
     // Statistics
     yearsExperience: "سنوات من الخبرة",
     happyPatients: "مريض سعيد",
@@ -142,14 +144,14 @@ const translations = {
     yearsExcellence: "سنوات من التميز",
     certifiedDoctors: "أطباء معتمدون دولياً",
     multilingualTeam: "فريق متعدد اللغات",
-    
+
     // Testimonials
     testimonials: "ماذا يقول مرضانا",
-    
+
     // Technology
     ourTechnology: "أحدث التقنيات",
     techDesc: "نستثمر في أحدث تقنيات طب الأسنان لنقدم لك أفضل رعاية ممكنة",
-    
+
     // CTA
     readyToSmile: "هل أنت مستعد لتحويل ابتسامتك؟",
     ctaDescription: "احجز موعدك اليوم واختبر رعاية أسنان عالمية المستوى",
@@ -168,7 +170,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Initialize language from localStorage or browser settings
   useEffect(() => {
     const savedLanguage = localStorage.getItem(LANGUAGE_KEY) as Language | null;
-    
+
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ar')) {
       setLanguage(savedLanguage);
     } else {
@@ -178,7 +180,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setLanguage(detectedLang);
       localStorage.setItem(LANGUAGE_KEY, detectedLang);
     }
-    
+
     setIsInitialized(true);
   }, []);
 
@@ -205,9 +207,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>
-      <div 
-        dir={language === "ar" ? "rtl" : "ltr"} 
-        lang={language} 
+      <div
+        dir={language === "ar" ? "rtl" : "ltr"}
+        lang={language}
         className={language === "ar" ? "font-arabic" : ""}
       >
         {children}

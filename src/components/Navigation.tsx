@@ -23,6 +23,7 @@ const Navigation = () => {
 
   const menuItems = [
     { key: "home", path: "/" },
+    { key: "about", path: "/about" },
     { key: "doctors", path: "/doctors" },
     { key: "services", path: "/services" },
     { key: "departments", path: "/departments" },

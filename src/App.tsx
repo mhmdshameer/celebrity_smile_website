@@ -12,6 +12,7 @@ import { AuthProvider } from "./contexts/auth-context";
 import ProtectedRoute from "./components/protected-route";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import GoogleAnalytics from "./components/GoogleAnalytics";
+import About from "./pages/About";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import Services from "./pages/Services";
@@ -62,6 +63,7 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/pediatric-dentistry" element={<PediatricDentistry />} />
+                <Route path="/about" element={<About />} />
 
                 {/* Admin Routes - Protected */}
                 <Route element={<ProtectedRoute />}>
