@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, CreditCard, Star } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import { trackWhatsAppClick } from "@/utils/analytics";
 
 const PrivilegeCard = () => {
@@ -99,8 +99,8 @@ const PrivilegeCard = () => {
               </div>
               <CardDescription className="text-lg">
                 {language === "ar"
-                  ? "1,500 ريال سعودي / سنوياً"
-                  : "1,500 SAR / Annually"}
+                  ? "150 ريال سعودي / سنوياً"
+                  : "150 SAR / Annually"}
               </CardDescription>
             </CardHeader>
             <CardContent>
