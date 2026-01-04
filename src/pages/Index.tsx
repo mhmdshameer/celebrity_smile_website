@@ -16,6 +16,7 @@ import DepartmentsPreview from "@/components/index/DepartmentsPreview";
 import BlogPreview from "@/components/index/BlogPreview";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import AppointmentForm from "@/components/AppointmentForm";
 import ClinicGallery from "@/components/index/ClinicGallery";
 
@@ -65,6 +66,27 @@ const Index = () => {
         boxSizing: 'border-box'
       }}
     >
+
+      <Helmet>
+        <title>
+          {language === "ar"
+            ? "مجمع ابتسامة المشاهير الطبي جدة المملكة العربية السعودية"
+            : "Celebrity Smile Dental Clinic Jeddah Saudi Arabia"}
+        </title>
+        <meta
+          property="og:title"
+          content={language === "ar"
+            ? "مجمع ابتسامة المشاهير الطبي جدة المملكة العربية السعودية"
+            : "Celebrity Smile Dental Clinic Jeddah Saudi Arabia"}
+        />
+        <meta
+          name="description"
+          content={language === "ar"
+            ? "أفضل عيادة أسنان في جدة، المملكة العربية السعودية. خدمات شاملة لطب الأسنان بأحدث التقنيات."
+            : "Best Dental Clinic in Jeddah, Saudi Arabia. Comprehensive dental services with state-of-the-art technology."}
+        />
+      </Helmet>
+
       <Navigation />
 
       {/* Hero Section with Video Background */}
