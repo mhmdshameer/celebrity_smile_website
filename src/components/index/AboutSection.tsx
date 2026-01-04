@@ -31,7 +31,7 @@ const AboutSection = () => {
         >
           <img
             src="/CLINIC PHOTO.jpeg"
-            alt={language === "ar" ? "عيادة سيليبريتي سمايل" : "Celebrity Smile Clinic"}
+            alt={language === "ar" ? "عيادة سيليبريتي سمايل" : "Celebrity Smile Dental Clinic"}
             loading="lazy"
             className="w-[500px] h-[500px] object-cover rounded-2xl shadow-xl border"
           />

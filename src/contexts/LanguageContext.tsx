@@ -23,8 +23,8 @@ const translations = {
     contact: "Contact Us",
 
     // Home Page
-    aboutTitle: "About Celebrity Smile Clinic",
-    aboutDescription: "Celebrity Smile Clinic is a leading dental care provider committed to delivering exceptional dental services with a focus on patient comfort and satisfaction.",
+    aboutTitle: "About Celebrity Smile Dental Clinic",
+    aboutDescription: "Celebrity Smile Dental Clinic is a leading dental care provider committed to delivering exceptional dental services with a focus on patient comfort and satisfaction.",
     bookAppointment: "Book Appointment",
     learnMore: "Learn More",
 
@@ -59,7 +59,7 @@ const translations = {
 
     // New Statistics Section
     doctorsExperienceTitle: "Our Commitment to Excellence",
-    doctorsExperienceDesc: "At Celebrity Smile Clinic, we set a new standard for dental care. Our commitment is simple, to provide exceptional results using the most advanced technology available. Our professional team delivers personalized treatments, ensuring every patient receives innovative, high quality care that not only meets but exceeds expectations, solidifying our reputation as the leading choice in the region.",
+    doctorsExperienceDesc: "At Celebrity Smile Dental Clinic, we set a new standard for dental care. Our commitment is simple, to provide exceptional results using the most advanced technology available. Our professional team delivers personalized treatments, ensuring every patient receives innovative, high quality care that not only meets but exceeds expectations, solidifying our reputation as the leading choice in the region.",
 
     // Service Statistics
     smileMakeoverCases: "Smile makeover case",

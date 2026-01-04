@@ -7,7 +7,7 @@ export const getTestimonials = (isArabic: boolean) => [
         date: isArabic ? "منذ 3 أسابيع" : "3 weeks ago",
         text: isArabic
             ? "تجربة رائعة في عيادة سمايل للمشاهير. الأطباء محترفون جداً والعيادة نظيفة ومرتبة. أنصح بها بشدة لعلاج الأسنان."
-            : "Great experience at Celebrity Smile Clinic. The doctors are very professional and the clinic is clean and tidy. Highly recommend for dental treatment.",
+            : "Great experience at Celebrity Smile Dental Clinic. The doctors are very professional and the clinic is clean and tidy. Highly recommend for dental treatment.",
         badge: isArabic ? "مراجعة موثقة" : "Verified Review",
         color: "bg-blue-500"
     },

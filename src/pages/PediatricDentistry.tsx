@@ -687,7 +687,7 @@ const PediatricDentistry = () => {
                     <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
                         {isArabic
                             ? "احجز موعداً اليوم في عيادة سمايل للمشاهير، جدة."
-                            : "Book your appointment today at Celebrity Smile Clinic, Jeddah."}
+                            : "Book your appointment today at Celebrity Smile Dental Clinic, Jeddah."}
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Button
