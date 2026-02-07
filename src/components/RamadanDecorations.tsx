@@ -76,7 +76,7 @@ const AnimatedCrescent = () => {
                     ${language === 'ar' ? 'font-arabic text-xl pt-1' : 'text-lg font-serif'}`}
                     style={{ direction: 'rtl' }}
                 >
-                    <span className="text-primary font-bold drop-shadow-md text-2xl">
+                    <span className="text-[#FFD700] font-bold drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] text-2xl">
                         {language === 'ar' ? "رمضان كريم" : "Ramadan Kareem"}
                     </span>
                 </div>
