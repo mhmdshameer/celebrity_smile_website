@@ -77,7 +77,7 @@ const AnimatedCrescent = () => {
                     style={{ direction: 'rtl' }}
                 >
                     <span className="text-[#FFD700] font-bold drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] text-2xl">
-                        {language === 'ar' ? "رمضان كريم" : "Ramadan Kareem"}
+                        {language === 'ar' ? "عيد مبارك" : "Eid Mubarak"}
                     </span>
                 </div>
             </motion.div>
@@ -151,7 +151,7 @@ const BackgroundPattern = () => (
     />
 );
 
-const RamadanDecorations = () => {
+const EidDecorations = () => {
     return (
         <>
             <BackgroundPattern />
@@ -172,4 +172,4 @@ const RamadanDecorations = () => {
     );
 };
 
-export default RamadanDecorations;
+export default EidDecorations;
