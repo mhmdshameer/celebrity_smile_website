@@ -36,7 +36,7 @@ To enable the interactive map on the contact page, you'll need to set up a Googl
 VITE_GOOGLE_MAPS_API_KEY=your_api_key_here
 ```
 
-6. The map will show the clinic location at: 3247 Al Ajawad St, Al Rabi', Jeddah 23462, Saudi Arabia
+6. The map will show the clinic location at: Al Ajwad St, Al Samir District, Jeddah, 23462, Saudi Arabia
 
 **Edit a file directly in GitHub**
 

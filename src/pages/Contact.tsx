@@ -148,8 +148,8 @@ const Contact = () => {
                       </p>
                       <p className="text-muted-foreground">
                         {language === "ar"
-                          ? "3247 شارع العجواد، الرابية، مكة المكرمة 23462، المملكة العربية السعودية"
-                          : "3247 Al Ajawad St, Al Rabi', Makkah 23462, Saudi Arabia"}
+                          ? "شارع الأجواد، حي السامر، جدة 23462، المملكة العربية السعودية"
+                          : "Al Ajwad St, Al Samir District, Jeddah, 23462, Saudi Arabia"}
                       </p>
                     </div>
                   </div>
