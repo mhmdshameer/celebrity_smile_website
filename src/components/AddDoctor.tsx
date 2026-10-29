@@ -84,31 +84,6 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
     setImagePreview(null);
   };
 
-  const uploadImage = async (file: File): Promise<{ url: string; public_id: string }> => {
-    const formDataUpload = new FormData();
-    formDataUpload.append('image', file);
-
-    try {
-      const response = await fetch(process.env.VITE_API_BASE_URL + '/upload', {
-        method: 'POST',
-        body: formDataUpload,
-      });
-
-      if (!response.ok) {
-        throw new Error('Upload failed');
-      }
-
-      const data = await response.json();
-      return {
-        url: data.url,
-        public_id: data.public_id
-      };
-    } catch (error) {
-      console.error('Image upload error:', error);
-      throw new Error('Failed to upload image');
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -147,23 +122,14 @@ export default function AddDoctor({ onAddDoctor, editingDoctor, onUpdateDoctor, 
         setIsUploading(true);
         
         try {
-          let uploadedImage = null;
-          
-          // If there's a new image, upload it first
-          if (selectedFile) {
-            uploadedImage = await uploadImage(selectedFile);
-            // Update the form data with the new image URL
-            formData.image = uploadedImage;
-          }
-          
-          // Use the updateDoctorApi function with the selected file and current image data
+          // The backend uploads a new file to Cloudinary and removes the old image
           await updateDoctorApi(editingDoctor.id, {
             name: formData.name,
             nameAr: formData.nameAr,
             specialties: formData.specialties.filter(s => s.trim() !== ""),
             specialtiesAr: (formData.specialtiesAr ?? []).filter(s => s.trim() !== ""),
-            file: selectedFile, // Pass the file if it exists
-            image: formData.image // Pass the current image data (either existing or newly uploaded)
+            file: selectedFile ?? undefined, // Pass the file if it exists
+            image: formData.image // Existing image, kept when no new file is selected
           });
           
           // Fetch the updated doctor data
