@@ -1,120 +1,122 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getDoctorsApi, type DoctorResponse } from "@/api/doctor";
 import { trackBookAppointment } from "@/utils/analytics";
+import { SectionHeading } from "@/components/brand/SectionHeading";
+import { Reveal } from "@/components/brand/Reveal";
+import { DoctorFilters } from "@/components/doctors/DoctorFilters";
+import { DoctorPortraitCard } from "@/components/doctors/DoctorPortraitCard";
+import { getAvailableCategories, getDoctorCategories, type DoctorCategory } from "@/lib/doctorCategories";
 
-// Doctors will be loaded from API
+type Status = "loading" | "ready" | "error";
 
 const Doctors = () => {
   const { t, language } = useLanguage();
   const [doctors, setDoctors] = useState<DoctorResponse[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [status, setStatus] = useState<Status>("loading");
+  const [active, setActive] = useState<DoctorCategory | "all">("all");
+
+  const load = useCallback(async (isMounted: () => boolean = () => true) => {
+    setStatus("loading");
+    try {
+      const list = await getDoctorsApi();
+      if (!isMounted()) return;
+      setDoctors(list);
+      setStatus("ready");
+    } catch (error) {
+      console.error("Failed to load doctors:", error);
+      if (isMounted()) setStatus("error");
+    }
+  }, []);
 
   useEffect(() => {
     let mounted = true;
-    const load = async () => {
-      try {
-        setLoading(true);
-        const list = await getDoctorsApi();
-        if (!mounted) return;
-        setDoctors(list);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    };
-    load();
+    load(() => mounted);
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [load]);
+
+  const categories = useMemo(() => getAvailableCategories(doctors), [doctors]);
 
   const handleWhatsAppBooking = (doctorName: string) => {
-    trackBookAppointment('doctors', doctorName);
-    const message = encodeURIComponent(`Hello! I would like to book an appointment with ${doctorName}.`);
-    window.open(`https://wa.me/966556005567?text=${message}`, "_blank");
+    trackBookAppointment("doctors", doctorName);
+    const message =
+      language === "ar"
+        ? `مرحباً! أود حجز موعد مع ${doctorName}.`
+        : `Hello! I would like to book an appointment with ${doctorName}.`;
+    window.open(`https://wa.me/966556005567?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative h-[50vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/doctors.jpg"
-            alt="Our Expert Doctors"
-            className="w-full h-full object-cover"
+      <main className="flex-1 pt-32 md:pt-40">
+        <section className="container mx-auto px-4">
+          <SectionHeading
+            as="h1"
+            eyebrow={t("doctorsEyebrow")}
+            title={t("doctorsTitle")}
+            emphasis={t("doctorsTitleEmphasis")}
+            subtitle={t("doctorsSubtitle")}
           />
-          <div className="absolute inset-0 bg-[#FD3DB5] opacity-20" />
-        </div>
-      </section>
 
-      {/* Content Section */}
-      <section className="relative bg-background py-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-primary">
-              {language === "ar" ? "أطباؤنا الخبراء" : "Our Expert Doctors"}
-            </h1>
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-primary">
-              {language === "ar" ? "فريق من المهنيين المتخصصين" : "Meet Our Team of Specialized Professionals"}
-            </h2>
-            <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
-              {language === "ar"
-                ? "تعرف على فريقنا من أطباء الأسنان ذوي الخبرة العالية الذين يكرسون جهودهم لصحة فمك. كل طبيب متخصص في مجاله وملتزم بتقديم أفضل الرعاية والاهتمام الشخصي لكل مريض."
-                : "Meet our team of highly experienced dental professionals dedicated to your oral health. Each doctor specializes in their field and is committed to providing the best care and personal attention to every patient."
-              }
-            </p>
-          </div>
-        </div>
-      </section>
+          {status === "ready" && doctors.length > 0 && (
+            <Reveal delay={0.3} className="mt-10">
+              <DoctorFilters categories={categories} active={active} onChange={setActive} />
+            </Reveal>
+          )}
+        </section>
 
-      <div className="flex-1">
-        <div className="container mx-auto px-4 pt-16 pb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {loading && (
-              <p className="col-span-full text-center text-muted-foreground">{t("loading")}</p>
-            )}
-            {!loading && doctors.length === 0 && (
-              <p className="col-span-full text-center text-muted-foreground">No doctors to show yet.</p>
-            )}
-            {!loading && doctors.map((d) => {
-              const displayName = language === "ar" ? d.nameAr : d.name;
-              const displaySpecsArr = language === "ar" ? (d.specialtiesAr ?? []) : (d.specialties ?? []);
-              const displaySpec = displaySpecsArr[0] ?? "";
-              const imgSrc = d.image?.url || "https://via.placeholder.com/400x400?text=Doctor";
-              return (
-                <Card key={d._id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={imgSrc}
-                      alt={displayName}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <CardContent className="p-6 text-center">
-                    <h3 className="text-xl font-semibold mb-2">{displayName}</h3>
-                    {displaySpec && <p className="text-muted-foreground mb-4">{displaySpec}</p>}
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => handleWhatsAppBooking(displayName)}
-                    >
-                      {t("bookAppointment")}
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+        <section className="container mx-auto max-w-6xl px-4 pb-8 pt-12">
+          {status === "loading" && (
+            <div className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4" aria-busy="true">
+              <span className="sr-only">{t("loading")}</span>
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[3/4] rounded-b-md rounded-t-[999px] bg-muted" />
+                  <div className="mt-4 h-5 w-3/4 rounded-sm bg-muted" />
+                  <div className="mt-2 h-3 w-1/2 rounded-sm bg-muted" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {status === "error" && (
+            <div className="mx-auto flex max-w-md flex-col items-center gap-5 py-12 text-center">
+              <p className="text-muted-foreground">{t("doctorsLoadError")}</p>
+              <button
+                type="button"
+                onClick={() => load()}
+                className="rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
+              >
+                {t("tryAgain")}
+              </button>
+            </div>
+          )}
+
+          {status === "ready" && doctors.length === 0 && (
+            <p className="py-12 text-center text-muted-foreground">{t("doctorsEmpty")}</p>
+          )}
+
+          {status === "ready" && doctors.length > 0 && (
+            <ul className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+              {doctors.map((doctor, i) => (
+                <Reveal as="li" key={doctor._id} delay={0.35 + (i % 4) * 0.08}>
+                  <DoctorPortraitCard
+                    doctor={doctor}
+                    dimmed={active !== "all" && !getDoctorCategories(doctor).includes(active)}
+                    onBook={handleWhatsAppBooking}
+                  />
+                </Reveal>
+              ))}
+            </ul>
+          )}
+        </section>
+      </main>
 
       <Footer />
     </div>
