@@ -19,7 +19,10 @@ export default {
         arabic: ['"IBM Plex Sans Arabic"', "Manrope", "sans-serif"],
       },
       colors: {
-        gold: "hsl(var(--gold))",
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          text: "hsl(var(--gold-text))",
+        },
         blush: "hsl(var(--blush))",
         ivory: "hsl(var(--ivory))",
         ink: "hsl(var(--ink))",

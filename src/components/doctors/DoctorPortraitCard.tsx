@@ -29,7 +29,7 @@ export const DoctorPortraitCard = ({ doctor, dimmed, onBook }: DoctorPortraitCar
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-b-md rounded-t-[999px] bg-[radial-gradient(120%_80%_at_50%_100%,hsl(333_32%_88%)_0%,hsl(34_47%_97%)_75%)] transition-all duration-500 [@media(hover:hover)]:group-hover:-translate-y-1.5 [@media(hover:hover)]:group-hover:shadow-[0_24px_40px_-12px_hsl(var(--primary)/0.25)]">
         {badge && (
-          <span className="absolute left-1/2 top-[8%] z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-primary shadow-sm">
+          <span className="absolute left-1/2 top-[8%] z-10 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[hsl(var(--plum))] shadow-sm">
             {t(BADGE_KEYS[badge])}
           </span>
         )}
@@ -64,7 +64,7 @@ export const DoctorPortraitCard = ({ doctor, dimmed, onBook }: DoctorPortraitCar
 
       <h3 className="mt-4 font-display text-xl font-semibold leading-tight text-foreground">{displayName}</h3>
       {specialties.length > 0 && (
-        <p className="mt-1 text-[10px] font-semibold uppercase leading-relaxed tracking-[0.14em] text-gold">
+        <p className="mt-1 text-[10px] font-semibold uppercase leading-relaxed tracking-[0.14em] text-gold-text">
           {specialties.join(" · ")}
         </p>
       )}

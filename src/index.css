@@ -13,6 +13,8 @@ All colors MUST be HSL.
     --ivory: 34 47% 96%;
     --ink: 328 33% 12%;
     --gold: 36 36% 52%;
+    /* Deeper gold for small text on light surfaces (WCAG AA) */
+    --gold-text: 36 40% 34%;
     --blush: 333 32% 88%;
 
     --background: var(--ivory);
@@ -64,6 +66,7 @@ All colors MUST be HSL.
 
   .dark {
     --blush: 330 22% 20%;
+    --gold-text: 36 36% 62%;
 
     --background: 330 30% 7%;
     --foreground: var(--ivory);
