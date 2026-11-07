@@ -30,7 +30,7 @@ export const SectionHeading = ({
           {centered && <span aria-hidden className="h-px w-9 bg-gold" />}
         </Reveal>
       )}
-      <Reveal delay={0.1}>
+      <Reveal delay={0.1} fade={Heading !== "h1"}>
         <Heading className="font-display text-4xl font-medium leading-[1.05] text-foreground md:text-6xl">
           {title}
           {emphasis && (

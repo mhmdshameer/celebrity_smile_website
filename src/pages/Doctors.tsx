@@ -105,7 +105,7 @@ const Doctors = () => {
           {status === "ready" && doctors.length > 0 && (
             <ul className="grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
               {doctors.map((doctor, i) => (
-                <Reveal as="li" key={doctor._id} delay={0.35 + (i % 4) * 0.08}>
+                <Reveal as="li" key={doctor._id} blur={false} delay={0.35 + (i % 4) * 0.08}>
                   <DoctorPortraitCard
                     doctor={doctor}
                     dimmed={active !== "all" && !getDoctorCategories(doctor).includes(active)}
