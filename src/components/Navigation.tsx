@@ -94,7 +94,7 @@ const Navigation = () => {
             <img
               src="/CSDC-LOGO.png"
               alt="CSDC Logo"
-              className={cn("w-auto transition-all duration-500 dark:brightness-0 dark:invert", isScrolled ? "h-10" : "h-12")}
+              className={cn("w-auto transition-all duration-500 dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1", isScrolled ? "h-10" : "h-12")}
             />
           </Link>
 
@@ -163,7 +163,7 @@ const Navigation = () => {
             transition={{ duration: 0.3 }}
           >
             <div className="container mx-auto flex h-20 items-center justify-between px-4">
-              <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-12 w-auto dark:brightness-0 dark:invert" />
+              <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-12 w-auto dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1" />
               <button
                 type="button"
                 className="grid h-10 w-10 place-items-center rounded-full text-foreground hover:bg-foreground/5"

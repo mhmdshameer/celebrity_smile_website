@@ -1,30 +1,53 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageSquare, Linkedin } from "lucide-react";
+import { trackBookAppointment } from "@/utils/analytics";
+import { Reveal } from "@/components/brand/Reveal";
 
 const Footer = () => {
   const { t, language } = useLanguage();
 
+  const handleBook = () => {
+    trackBookAppointment("footer");
+    const message =
+      language === "ar" ? "مرحباً! أود حجز موعد." : "Hello! I would like to book an appointment.";
+    window.open(`https://wa.me/966556005567?text=${encodeURIComponent(message)}`, "_blank");
+  };
+
   return (
-    <footer className="bg-muted/50 border-t mt-20">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="relative mt-24 bg-ink text-ivory">
+      <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-gold/60" />
+      <div className="container mx-auto px-4 pb-10 pt-16 md:pt-20">
+        <Reveal className="flex flex-col items-start justify-between gap-8 border-b border-ivory/10 pb-14 md:flex-row md:items-end">
+          <h2 className="max-w-xl font-display text-4xl font-medium leading-tight md:text-5xl">
+            {t("footerCtaTitle")}
+          </h2>
+          <button
+            type="button"
+            onClick={handleBook}
+            className="shrink-0 rounded-sm bg-ivory px-7 py-3.5 text-sm font-semibold text-ink transition-all hover:-translate-y-0.5 hover:bg-white"
+          >
+            {t("bookOnWhatsApp")}
+          </button>
+        </Reveal>
+
+        <div className="grid grid-cols-1 gap-12 pt-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
           {/* About Section */}
           <div>
             <img
               src="/CSDC-LOGO.png"
               alt="CSDC Logo"
-              className="h-14 w-auto mb-2"
+              className="mb-5 h-16 w-auto rounded-sm bg-ivory px-3 py-2"
             />
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="mb-6 max-w-sm text-sm leading-relaxed text-ivory/65">
               {t("aboutDescription")}
             </p>
-            <div className="flex space-x-3">
+            <div className="flex flex-wrap gap-4">
               <a
                 href="https://www.instagram.com/csdsjed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-pink-600 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="Instagram"
               >
                 <svg
@@ -48,7 +71,7 @@ const Footer = () => {
                 href="https://www.facebook.com/profile.php?id=100067089760378"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-600 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="Facebook"
               >
                 <svg
@@ -70,7 +93,7 @@ const Footer = () => {
                 href="https://wa.me/message/5GVMII7DXT37H1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-green-500 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="WhatsApp"
               >
                 <svg
@@ -87,7 +110,7 @@ const Footer = () => {
                 href="https://x.com/csdsjed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-black dark:hover:text-white transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="X (Twitter)"
               >
                 <svg
@@ -109,14 +132,14 @@ const Footer = () => {
                 href="https://t.snapchat.com/zVfBMUhQ"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-yellow-400 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="Snapchat"
               >
                 <div className="h-5 w-5 flex items-center justify-center">
                   <img
                     src="/snapchat.svg"
                     alt="Snapchat"
-                    className="h-5 w-5 dark:invert dark:brightness-0 dark:opacity-80 opacity-60 hover:opacity-100 transition-opacity"
+                    className="h-5 w-5 opacity-60 brightness-0 invert transition-opacity hover:opacity-100"
                   />
                 </div>
               </a>
@@ -124,7 +147,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/company/celebrity-smile-dental-clinic"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-700 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
@@ -133,7 +156,7 @@ const Footer = () => {
                 href="https://www.tiktok.com/@csdsjed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-black dark:hover:text-white transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="TikTok"
               >
                 <svg
@@ -156,7 +179,7 @@ const Footer = () => {
                 href="https://maps.app.goo.gl/dtoZJDHLwrRfMZVA9?g_st=ic"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-500 transition-colors"
+                className="text-ivory/60 transition-colors hover:text-gold"
                 aria-label="Google Maps"
               >
                 <MapPin className="h-5 w-5" />
@@ -166,12 +189,12 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">{t("footerQuickLinks")}</h3>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   to="/services"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-ivory/60 transition-colors hover:text-gold"
                 >
                   {t("services")}
                 </Link>
@@ -179,7 +202,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/doctors"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-ivory/60 transition-colors hover:text-gold"
                 >
                   {t("doctors")}
                 </Link>
@@ -187,7 +210,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/offers"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-ivory/60 transition-colors hover:text-gold"
                 >
                   {t("offers")}
                 </Link>
@@ -195,7 +218,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/blog"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  className="text-ivory/60 transition-colors hover:text-gold"
                 >
                   {t("blog")}
                 </Link>
@@ -204,17 +227,17 @@ const Footer = () => {
           </div>
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t("footerContact")}</h3>
+            <h3 className="mb-5 text-[11px] font-semibold uppercase tracking-[0.3em] text-gold">{t("footerContact")}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a
                   href="https://maps.app.goo.gl/dtoZJDHLwrRfMZVA9?g_st=ic"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start space-x-3 group"
+                  className="flex items-start gap-3 group"
                 >
-                  <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5 group-hover:text-pink-600 transition-colors" />
-                  <span className="text-muted-foreground group-hover:text-primary transition-colors">
+                  <MapPin className="h-5 w-5 text-gold flex-shrink-0 mt-0.5 transition-colors" />
+                  <span className="text-ivory/70 transition-colors group-hover:text-ivory">
                     {language === 'ar'
                       ? 'شارع الأجواد، حي السامر، جدة 23462، المملكة العربية السعودية'
                       : 'Al Ajwad St, Al Samir District, Jeddah, 23462, Saudi Arabia'
@@ -225,10 +248,10 @@ const Footer = () => {
               <li>
                 <a
                   href="tel:0122720100"
-                  className="flex items-center space-x-3 group"
+                  className="flex items-center gap-3 group"
                 >
-                  <Phone className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
-                  <span className="text-muted-foreground group-hover:text-primary transition-colors" dir={language === 'ar' ? 'ltr' : 'auto'}>
+                  <Phone className="h-5 w-5 text-gold flex-shrink-0 transition-colors" />
+                  <span className="text-ivory/70 transition-colors group-hover:text-ivory" dir={language === 'ar' ? 'ltr' : 'auto'}>
                     {language === 'ar' ? '012 272 0100' : '012 272 0100'}
                   </span>
                 </a>
@@ -236,10 +259,10 @@ const Footer = () => {
               <li>
                 <a
                   href="tel:+966556005567"
-                  className="flex items-center space-x-3 group"
+                  className="flex items-center gap-3 group"
                 >
-                  <MessageSquare className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
-                  <span className="text-muted-foreground group-hover:text-primary transition-colors" dir={language === 'ar' ? 'ltr' : 'auto'}>
+                  <MessageSquare className="h-5 w-5 text-gold flex-shrink-0 transition-colors" />
+                  <span className="text-ivory/70 transition-colors group-hover:text-ivory" dir={language === 'ar' ? 'ltr' : 'auto'}>
                     +966 55 600 5567
                   </span>
                 </a>
@@ -247,10 +270,10 @@ const Footer = () => {
               <li>
                 <a
                   href="mailto:info@celebritysmile.sa"
-                  className="flex items-center space-x-3 group"
+                  className="flex items-center gap-3 group"
                 >
-                  <Mail className="h-5 w-5 text-primary flex-shrink-0 group-hover:text-pink-600 transition-colors" />
-                  <span className="text-muted-foreground group-hover:text-primary transition-colors">
+                  <Mail className="h-5 w-5 text-gold flex-shrink-0 transition-colors" />
+                  <span className="text-ivory/70 transition-colors group-hover:text-ivory">
                     info@celebritysmile.sa
                   </span>
                 </a>
@@ -259,19 +282,19 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 flex flex-col items-center gap-6">
+        <div className="mt-14 flex flex-col items-center gap-6 border-t border-ivory/10 pt-8">
           {/* Payment Methods */}
-          <div className="flex flex-wrap justify-center items-center gap-4 opacity-80 hover:opacity-100 transition-all duration-300">
-            <img src="/payment/mada.png" alt="Mada" className="h-8 w-auto object-contain" />
-            <img src="/payment/visa.png" alt="Visa" className="h-8 w-auto object-contain" />
-            <img src="/payment/clipart.png" alt="Mastercard" className="h-8 w-auto object-contain" />
-            <img src="/payment/applepay.png" alt="Apple Pay" className="h-8 w-auto object-contain" />
-            <img src="/payment/americanexpress.png" alt="American Express" className="h-8 w-auto object-contain" />
-            <img src="/payment/tabby.png" alt="Tabby" className="h-8 w-auto object-contain" />
-            <img src="/payment/thamara.png" alt="Tamara" className="h-8 w-auto object-contain" />
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <img src="/payment/mada.png" alt="Mada" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/visa.png" alt="Visa" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/clipart.png" alt="Mastercard" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/applepay.png" alt="Apple Pay" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/americanexpress.png" alt="American Express" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/tabby.png" alt="Tabby" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
+            <img src="/payment/thamara.png" alt="Tamara" className="h-9 w-auto rounded-sm bg-white object-contain px-2 py-1" />
           </div>
 
-          <p className="text-sm text-muted-foreground text-center">
+          <p className="text-center text-xs text-ivory/50">
             © {new Date().getFullYear()} {language === "ar" ? "مجمع ابتسامة المشاهير الطبي" : "Celebrity Smile Dental Clinic"}.{" "}
             {t("footerRights")}.
           </p>

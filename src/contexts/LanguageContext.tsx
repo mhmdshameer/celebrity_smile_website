@@ -33,6 +33,9 @@ const translations = {
     footerServices: "Our Services",
     footerContact: "Contact Information",
     footerRights: "All rights reserved",
+    footerCtaTitle: "Your celebrity smile starts here.",
+    footerQuickLinks: "Quick Links",
+    bookOnWhatsApp: "Book on WhatsApp",
 
     // Doctors
     ourDoctors: "Our Doctors",
@@ -107,6 +110,9 @@ const translations = {
     footerServices: "خدماتنا",
     footerContact: "معلومات الاتصال",
     footerRights: "جميع الحقوق محفوظة",
+    footerCtaTitle: "ابتسامتك المميزة تبدأ من هنا.",
+    footerQuickLinks: "روابط سريعة",
+    bookOnWhatsApp: "احجز عبر واتساب",
 
     // Doctors
     ourDoctors: "أطباؤنا",

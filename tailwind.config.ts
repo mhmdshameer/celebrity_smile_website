@@ -22,6 +22,7 @@ export default {
         gold: "hsl(var(--gold))",
         blush: "hsl(var(--blush))",
         ivory: "hsl(var(--ivory))",
+        ink: "hsl(var(--ink))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
