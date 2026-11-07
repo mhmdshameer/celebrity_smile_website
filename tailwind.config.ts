@@ -13,7 +13,15 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['"Cormorant Garamond"', "serif"],
+        sans: ["Manrope", "system-ui", "sans-serif"],
+        arabic: ['"IBM Plex Sans Arabic"', "Manrope", "sans-serif"],
+      },
       colors: {
+        gold: "hsl(var(--gold))",
+        blush: "hsl(var(--blush))",
+        ivory: "hsl(var(--ivory))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

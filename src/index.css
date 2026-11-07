@@ -2,41 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Quiet Luxury palette */
+    --plum: 329 72% 35%;
+    --ivory: 34 47% 96%;
+    --ink: 328 33% 12%;
+    --gold: 36 36% 52%;
+    --blush: 333 32% 88%;
+
+    --background: var(--ivory);
+    --foreground: var(--ink);
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: var(--ink);
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: var(--ink);
 
-    --primary: 322 98% 62%;
+    --primary: var(--plum);
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 322 98% 95%;
-    --secondary-foreground: 322 98% 20%;
+    --secondary: var(--blush);
+    --secondary-foreground: var(--ink);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 34 30% 92%;
+    --muted-foreground: 328 12% 40%;
 
-    --accent: 322 90% 85%;
-    --accent-foreground: 322 98% 20%;
+    --accent: var(--blush);
+    --accent-foreground: var(--plum);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 322 98% 62%;
+    --border: 34 20% 86%;
+    --input: 34 20% 86%;
+    --ring: var(--plum);
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,45 +63,44 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Deep Royal Blue Background */
-    --background: 222.2 47% 11%;
-    --foreground: 210 40% 98%;
+    --blush: 330 22% 20%;
 
-    /* Slightly lighter blue for cards */
-    --card: 217.2 32.6% 17.5%;
-    --card-foreground: 210 40% 98%;
+    --background: 330 30% 7%;
+    --foreground: var(--ivory);
 
-    --popover: 222.2 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --card: 330 25% 11%;
+    --card-foreground: var(--ivory);
 
-    /* Gold Primary for Eid */
-    --primary: 46 65% 52%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --popover: 330 25% 11%;
+    --popover-foreground: var(--ivory);
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --primary: 330 60% 66%;
+    --primary-foreground: var(--ink);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --secondary: 330 20% 15%;
+    --secondary-foreground: var(--ivory);
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 330 20% 15%;
+    --muted-foreground: 34 15% 70%;
+
+    --accent: 330 20% 15%;
+    --accent-foreground: var(--ivory);
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 46 65% 52%; /* Gold Ring */
-    
-    --sidebar-background: 222.2 47% 11%;
+    --border: 330 15% 20%;
+    --input: 330 15% 20%;
+    --ring: 330 60% 66%;
+
+    --sidebar-background: 330 30% 7%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 46 65% 52%;
+    --sidebar-primary: 330 60% 66%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 330 20% 15%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-border: 330 15% 20%;
+    --sidebar-ring: 330 60% 66%;
   }
 }
 
@@ -104,6 +110,27 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+
+  /* Arabic swaps both families for their Arabic pairings */
+  .font-arabic,
+  .font-arabic .font-sans {
+    font-family: "IBM Plex Sans Arabic", "Manrope", system-ui, sans-serif;
+  }
+
+  .font-arabic .font-display {
+    font-family: "Amiri", "Cormorant Garamond", serif;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
