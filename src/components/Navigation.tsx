@@ -3,7 +3,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "next-themes";
 import { trackBookAppointment } from "@/utils/analytics";
 
@@ -36,19 +37,21 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Keep the page from scrolling behind the open mobile menu
+  // Close the mobile menu whenever the route changes (including browser Back)
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileMenuOpen]);
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const handleBook = () => {
     trackBookAppointment("navigation");
     const message =
-      language === "ar" ? "مرحباً! أود حجز موعد." : "Hello! I would like to book an appointment.";
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+      language === "ar"
+        ? "مرحباً! أود حجز موعد."
+        : "Hello! I would like to book an appointment.";
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
   };
 
   const toggleLanguage = () => setLanguage(language === "en" ? "ar" : "en");
@@ -77,149 +80,166 @@ const Navigation = () => {
   );
 
   return (
-    <nav
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 bg-background/95 transition-all duration-500",
-        isScrolled && "border-b border-border/70 backdrop-blur supports-[backdrop-filter]:bg-background/80",
-      )}
-    >
-      <div className="container mx-auto px-4">
-        <div
+    <>
+        <nav
           className={cn(
-            "flex items-center justify-between gap-6 transition-all duration-500",
-            isScrolled ? "h-16" : "h-20",
+            "fixed inset-x-0 top-0 z-50 bg-background/95 transition-all duration-500",
+            isScrolled &&
+              "border-b border-border/70 backdrop-blur supports-[backdrop-filter]:bg-background/80",
           )}
         >
-          <Link to="/" className="shrink-0" aria-label="Celebrity Smile Dental Clinic">
-            <img
-              src="/CSDC-LOGO.png"
-              alt="CSDC Logo"
-              className={cn("w-auto transition-all duration-500 dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1", isScrolled ? "h-10" : "h-12")}
-            />
-          </Link>
-
-          {/* Desktop links */}
-          <div className="hidden items-center gap-5 xl:flex">
-            {menuItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.key}
-                  to={item.path}
-                  aria-current={isActive ? "page" : undefined}
+          <div className="container mx-auto px-4">
+            <div
+              className={cn(
+                "flex items-center justify-between gap-6 transition-all duration-500",
+                isScrolled ? "h-16" : "h-20",
+              )}
+            >
+              <Link to="/" className="shrink-0" aria-label={t("clinicName")}>
+                <img
+                  src="/CSDC-LOGO.png"
+                  alt="CSDC Logo"
                   className={cn(
-                    "relative py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors",
-                    isActive ? "text-primary" : "text-foreground/70 hover:text-foreground",
+                    "w-auto transition-all duration-500 dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1",
+                    isScrolled ? "h-10" : "h-12",
                   )}
-                >
-                  {t(item.key)}
-                  {isActive && (
-                    <motion.span
-                      className="absolute inset-x-0 -bottom-0.5 h-px bg-gold"
-                      layoutId="activeTab"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
+                />
+              </Link>
 
-          <div className="flex items-center gap-1">
-            <div className="hidden items-center gap-1 sm:flex">
-              {themeButton}
-              {languageButton}
-            </div>
-            <button
-              type="button"
-              onClick={handleBook}
-              className="ms-2 hidden rounded-sm bg-primary px-5 py-2.5 text-xs font-semibold tracking-wide text-primary-foreground transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20 lg:inline-flex"
-            >
-              {t("bookAppointment")}
-            </button>
-            <button
-              type="button"
-              className="ms-1 grid h-10 w-10 place-items-center rounded-full text-foreground transition-colors hover:bg-foreground/5 xl:hidden"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile menu: full-screen ivory sheet */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            key="mobile-menu"
-            className="fixed inset-0 z-50 flex flex-col bg-background xl:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="container mx-auto flex h-20 items-center justify-between px-4">
-              <img src="/CSDC-LOGO.png" alt="CSDC Logo" className="h-12 w-auto dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1" />
-              <button
-                type="button"
-                className="grid h-10 w-10 place-items-center rounded-full text-foreground hover:bg-foreground/5"
-                onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="container mx-auto flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-4">
-              <ul className="flex flex-col">
-                {menuItems.map((item, i) => {
+              {/* Desktop links */}
+              <div className="hidden items-center gap-5 xl:flex">
+                {menuItems.map((item) => {
                   const isActive = location.pathname === item.path;
                   return (
-                    <motion.li
+                    <Link
                       key={item.key}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 + i * 0.04, duration: 0.5, ease: [0.2, 0.7, 0.2, 1] }}
-                      className="border-b border-border/60"
+                      to={item.path}
+                      aria-current={isActive ? "page" : undefined}
+                      className={cn(
+                        "relative py-2 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors",
+                        isActive
+                          ? "text-primary"
+                          : "text-foreground/70 hover:text-foreground",
+                      )}
                     >
-                      <Link
-                        to={item.path}
-                        aria-current={isActive ? "page" : undefined}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={cn(
-                          "block py-3 font-display text-3xl transition-colors",
-                          isActive ? "italic text-primary" : "text-foreground hover:text-primary",
-                        )}
-                      >
-                        {t(item.key)}
-                      </Link>
-                    </motion.li>
+                      {t(item.key)}
+                      {isActive && (
+                        <motion.span
+                          className="absolute inset-x-0 -bottom-0.5 h-px bg-gold"
+                          layoutId="activeTab"
+                          initial={false}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 35,
+                          }}
+                        />
+                      )}
+                    </Link>
                   );
                 })}
-              </ul>
+              </div>
 
-              <div className="mt-8 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <div className="hidden items-center gap-1 sm:flex">
                   {themeButton}
                   {languageButton}
                 </div>
                 <button
                   type="button"
                   onClick={handleBook}
-                  className="rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
+                  className="ms-2 hidden rounded-sm bg-primary px-5 py-2.5 text-xs font-semibold tracking-wide text-primary-foreground transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20 lg:inline-flex"
                 >
                   {t("bookAppointment")}
                 </button>
+                <button
+                  type="button"
+                  className="ms-1 grid h-10 w-10 place-items-center rounded-full text-foreground transition-colors hover:bg-foreground/5 xl:hidden"
+                  onClick={() => setMobileMenuOpen(true)}
+                  aria-label={t("openMenu")}
+                  aria-expanded={mobileMenuOpen}
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+          </div>
+        </nav>
+
+        {/* Mobile menu: a full-screen ivory dialog, portalled outside the nav so the nav's backdrop blur can't clip it */}
+        <Dialog.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <Dialog.Portal>
+            <Dialog.Content
+              aria-describedby={undefined}
+              className="fixed inset-0 z-[60] flex flex-col bg-background duration-300 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 xl:hidden"
+            >
+              <Dialog.Title className="sr-only">{t("clinicName")}</Dialog.Title>
+              <div className="container mx-auto flex h-20 items-center justify-between px-4">
+                <img
+                  src="/CSDC-LOGO.png"
+                  alt="CSDC Logo"
+                  className="h-12 w-auto dark:rounded-sm dark:bg-ivory dark:px-2 dark:py-1"
+                />
+                <Dialog.Close
+                  className="grid h-10 w-10 place-items-center rounded-full text-foreground hover:bg-foreground/5"
+                  aria-label={t("closeMenu")}
+                >
+                  <X className="h-5 w-5" />
+                </Dialog.Close>
+              </div>
+
+              <div className="container mx-auto flex flex-1 flex-col overflow-y-auto px-6 pb-8 pt-4">
+                <ul className="flex flex-col">
+                  {menuItems.map((item, i) => {
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <motion.li
+                        key={item.key}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: 0.05 + i * 0.04,
+                          duration: 0.5,
+                          ease: [0.2, 0.7, 0.2, 1],
+                        }}
+                        className="border-b border-border/60"
+                      >
+                        <Link
+                          to={item.path}
+                          aria-current={isActive ? "page" : undefined}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={cn(
+                            "block py-3 font-display text-3xl transition-colors",
+                            isActive
+                              ? "italic text-primary"
+                              : "text-foreground hover:text-primary",
+                          )}
+                        >
+                          {t(item.key)}
+                        </Link>
+                      </motion.li>
+                    );
+                  })}
+                </ul>
+
+                <div className="mt-8 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {themeButton}
+                    {languageButton}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleBook}
+                    className="rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
+                  >
+                    {t("bookAppointment")}
+                  </button>
+                </div>
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+    </>
   );
 };
 
